@@ -109,8 +109,10 @@ const FALLBACK_DATA = {
   }
 };
 
+const STORAGE_KEY = "home-screen-edits-v1";
+
 const state = {
-  data: FALLBACK_DATA
+  data: cloneData(FALLBACK_DATA)
 };
 
 const elements = {
@@ -136,7 +138,14 @@ const elements = {
   dailyLabel: document.querySelector("#dailyLabel"),
   dailyWord: document.querySelector("#dailyWord"),
   dailyMeaning: document.querySelector("#dailyMeaning"),
-  dailyExample: document.querySelector("#dailyExample")
+  dailyExample: document.querySelector("#dailyExample"),
+  editModal: document.querySelector("#editModal"),
+  editForm: document.querySelector("#editForm"),
+  editTitle: document.querySelector("#editTitle"),
+  editFields: document.querySelector("#editFields"),
+  editClose: document.querySelector("#editClose"),
+  editCancel: document.querySelector("#editCancel"),
+  editDelete: document.querySelector("#editDelete")
 };
 
 init();
@@ -146,23 +155,28 @@ async function init() {
   setInterval(tickClock, 1000);
 
   state.data = await loadData();
+  wireEditors();
   renderAll();
+  window.addEventListener("resize", debounce(renderAll, 160));
 
   // A light refresh keeps long-running screen mode current without rebuilding the page.
   setInterval(renderAll, 30000);
 }
 
 async function loadData() {
+  let data = cloneData(FALLBACK_DATA);
+
   try {
     const response = await fetch("data.json", { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`data.json returned ${response.status}`);
     }
-    return await response.json();
+    data = await response.json();
   } catch (error) {
     console.warn("Using fallback dashboard data:", error);
-    return FALLBACK_DATA;
   }
+
+  return applySavedEdits(data);
 }
 
 function tickClock() {
@@ -356,6 +370,12 @@ function renderMonthCalendar(holidays) {
       .filter((holiday) => holiday.dateObject && holiday.dateObject.getFullYear() === year && holiday.dateObject.getMonth() === month)
       .map((holiday) => [holiday.dateObject.getDate(), holiday.label])
   );
+  const eventDayMap = new Map(
+    (state.data.calendar || [])
+      .map((event) => ({ ...event, dateObject: parseLocalDate(event.date) }))
+      .filter((event) => isManualCalendarEvent(event) && event.dateObject && event.dateObject.getFullYear() === year && event.dateObject.getMonth() === month)
+      .map((event) => [event.dateObject.getDate(), event.title])
+  );
 
   elements.monthLabel.textContent = new Intl.DateTimeFormat("en-US", {
     month: "long",
@@ -381,27 +401,32 @@ function renderMonthCalendar(holidays) {
     const date = new Date(year, month, day);
     const isWeekend = date.getDay() === 0 || date.getDay() === 6;
     const holidayLabel = holidayMap.get(day);
-    const cell = document.createElement("span");
+    const eventTitle = eventDayMap.get(day);
+    const cell = document.createElement("button");
+    cell.type = "button";
     cell.className = [
       "month-day",
       isWeekend ? "is-weekend" : "",
       holidayLabel ? "is-holiday" : "",
+      eventTitle ? "has-event" : "",
       day === todayDate ? "is-today" : ""
     ].filter(Boolean).join(" ");
     cell.textContent = day;
-    cell.title = holidayLabel || "";
-    cell.setAttribute("aria-label", holidayLabel ? `${day}, ${holidayLabel}` : `${day}`);
+    cell.dataset.date = formatDateInput(date);
+    cell.title = eventTitle || holidayLabel || "";
+    cell.setAttribute("aria-label", eventTitle ? `${day}, ${eventTitle}` : holidayLabel ? `${day}, ${holidayLabel}` : `${day}`);
     elements.monthCalendar.append(cell);
   }
 }
 
 function renderCalendar(events) {
   const today = startOfToday();
+  const limit = getLayoutMode().compactLandscape ? 4 : 5;
   const upcoming = events
-    .map((event) => ({ ...event, dateObject: parseLocalDate(event.date) }))
+    .map((event, sourceIndex) => ({ ...event, sourceIndex, dateObject: parseLocalDate(event.date) }))
     .filter((event) => event.dateObject && event.dateObject >= today)
     .sort((a, b) => a.dateObject - b.dateObject || String(a.time).localeCompare(String(b.time)))
-    .slice(0, 5);
+    .slice(0, limit);
 
   elements.calendarList.innerHTML = "";
 
@@ -413,6 +438,8 @@ function renderCalendar(events) {
   upcoming.forEach((event) => {
     const row = document.createElement("article");
     row.className = `event${isSameLocalDay(event.dateObject, today) ? " is-today" : ""}`;
+    row.dataset.eventIndex = String(event.sourceIndex);
+    row.tabIndex = 0;
     row.innerHTML = `
       <span class="event-marker" aria-hidden="true"></span>
       <div>
@@ -431,10 +458,14 @@ function renderCalendar(events) {
 function renderCountdowns(countdowns) {
   elements.countdownList.innerHTML = "";
 
-  countdowns.slice(0, 4).forEach((item) => {
+  const limit = getLayoutMode().compactLandscape ? 3 : 4;
+
+  countdowns.slice(0, limit).forEach((item, index) => {
     const days = daysUntil(item.targetDate);
     const row = document.createElement("article");
     row.className = "countdown";
+    row.dataset.countdownIndex = String(index);
+    row.tabIndex = 0;
     row.innerHTML = `
       <span class="event-marker" aria-hidden="true"></span>
       <div>
@@ -448,6 +479,229 @@ function renderCountdowns(countdowns) {
     row.querySelector(".countdown-days").innerHTML = `${days}<span>days</span>`;
     elements.countdownList.append(row);
   });
+}
+
+function getLayoutMode() {
+  return {
+    compactLandscape: window.matchMedia("(orientation: landscape) and (max-width: 1180px), (orientation: landscape) and (max-height: 760px)").matches
+  };
+}
+
+function debounce(callback, delay) {
+  let timer;
+  return () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(callback, delay);
+  };
+}
+
+function wireEditors() {
+  elements.calendarList.addEventListener("click", (event) => {
+    const row = event.target.closest(".event");
+    if (row?.dataset.eventIndex) {
+      openEventEditor(Number(row.dataset.eventIndex));
+    }
+  });
+
+  elements.calendarList.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") {
+      return;
+    }
+    const row = event.target.closest(".event");
+    if (row?.dataset.eventIndex) {
+      openEventEditor(Number(row.dataset.eventIndex));
+    }
+  });
+
+  elements.monthCalendar.addEventListener("click", (event) => {
+    const day = event.target.closest(".month-day:not(.is-empty)");
+    if (day?.dataset.date) {
+      openEventEditor(null, day.dataset.date);
+    }
+  });
+
+  elements.countdownList.addEventListener("click", (event) => {
+    const row = event.target.closest(".countdown");
+    if (row?.dataset.countdownIndex) {
+      openCountdownEditor(Number(row.dataset.countdownIndex));
+    }
+  });
+
+  elements.countdownList.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") {
+      return;
+    }
+    const row = event.target.closest(".countdown");
+    if (row?.dataset.countdownIndex) {
+      openCountdownEditor(Number(row.dataset.countdownIndex));
+    }
+  });
+
+  elements.editClose.addEventListener("click", closeEditor);
+  elements.editCancel.addEventListener("click", closeEditor);
+  elements.editModal.addEventListener("click", (event) => {
+    if (event.target === elements.editModal) {
+      closeEditor();
+    }
+  });
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && elements.editModal.classList.contains("is-open")) {
+      closeEditor();
+    }
+  });
+}
+
+function openEventEditor(index = null, presetDate = "") {
+  const isNew = index === null;
+  const event = isNew
+    ? { title: "", date: presetDate || formatDateInput(new Date()), time: "19:00", type: "family" }
+    : state.data.calendar[index];
+
+  openEditor({
+    title: isNew ? "ADD CALENDAR" : "EDIT CALENDAR",
+    deleteLabel: isNew ? "" : "Delete",
+    fields: [
+      { name: "title", label: "TITLE", value: event.title || "", placeholder: "Dinner with friends" },
+      { name: "date", label: "DATE", value: event.date || formatDateInput(new Date()), type: "date" },
+      { name: "time", label: "TIME", value: event.time || "", type: "time" },
+      { name: "type", label: "TYPE", value: event.type || "", placeholder: "family" }
+    ],
+    onSave(values) {
+      const nextEvent = {
+        title: values.title.trim() || "Untitled",
+        date: values.date || formatDateInput(new Date()),
+        time: values.time || "All day",
+        type: values.type.trim() || "note",
+        manual: isNew ? true : Boolean(event.manual)
+      };
+
+      if (isNew) {
+        state.data.calendar.push(nextEvent);
+      } else {
+        state.data.calendar[index] = nextEvent;
+      }
+      saveEditableData();
+      renderAll();
+    },
+    onDelete: isNew ? null : () => {
+      state.data.calendar.splice(index, 1);
+      saveEditableData();
+      renderAll();
+    }
+  });
+}
+
+function openCountdownEditor(index) {
+  const item = state.data.countdowns[index];
+
+  openEditor({
+    title: "EDIT COUNTDOWN",
+    deleteLabel: "Delete",
+    fields: [
+      { name: "title", label: "TITLE", value: item.title || "", placeholder: "Next Family Trip" },
+      { name: "targetDate", label: "TARGET DATE", value: item.targetDate || formatDateInput(new Date()), type: "date" },
+      { name: "subtitle", label: "SUBTITLE", value: item.subtitle || "", placeholder: "The next journey begins." }
+    ],
+    onSave(values) {
+      state.data.countdowns[index] = {
+        title: values.title.trim() || "Countdown",
+        targetDate: values.targetDate || formatDateInput(new Date()),
+        subtitle: values.subtitle.trim()
+      };
+      saveEditableData();
+      renderAll();
+    },
+    onDelete() {
+      state.data.countdowns.splice(index, 1);
+      saveEditableData();
+      renderAll();
+    }
+  });
+}
+
+function openEditor(config) {
+  elements.editTitle.textContent = config.title;
+  elements.editFields.innerHTML = config.fields.map((field) => `
+    <label class="edit-field">
+      <span>${field.label}</span>
+      <input name="${field.name}" type="${field.type || "text"}" value="${escapeAttribute(field.value || "")}" placeholder="${escapeAttribute(field.placeholder || "")}">
+    </label>
+  `).join("");
+
+  elements.editDelete.hidden = !config.onDelete;
+  elements.editDelete.textContent = config.deleteLabel || "Delete";
+
+  elements.editForm.onsubmit = (event) => {
+    event.preventDefault();
+    const values = Object.fromEntries(new FormData(elements.editForm).entries());
+    config.onSave(values);
+    closeEditor();
+  };
+
+  elements.editDelete.onclick = () => {
+    if (config.onDelete) {
+      config.onDelete();
+    }
+    closeEditor();
+  };
+
+  elements.editModal.classList.add("is-open");
+  elements.editModal.setAttribute("aria-hidden", "false");
+  elements.editFields.querySelector("input")?.focus();
+}
+
+function closeEditor() {
+  elements.editModal.classList.remove("is-open");
+  elements.editModal.setAttribute("aria-hidden", "true");
+}
+
+function applySavedEdits(data) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    if (Array.isArray(saved.calendar)) {
+      data.calendar = saved.calendar;
+    }
+    if (Array.isArray(saved.countdowns)) {
+      data.countdowns = saved.countdowns;
+    }
+  } catch (error) {
+    console.warn("Unable to read saved dashboard edits:", error);
+  }
+  return data;
+}
+
+function saveEditableData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      calendar: state.data.calendar,
+      countdowns: state.data.countdowns
+    }));
+  } catch (error) {
+    console.warn("Unable to save dashboard edits:", error);
+  }
+}
+
+function cloneData(data) {
+  return JSON.parse(JSON.stringify(data));
+}
+
+function isManualCalendarEvent(event) {
+  return event.manual === true;
+}
+
+function escapeAttribute(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function formatDateInput(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function renderDailyCard(card) {
