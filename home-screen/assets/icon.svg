@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Home Screen">
+  <defs>
+    <linearGradient id="sky" x1="60" y1="40" x2="450" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b9d8eb"/>
+      <stop offset="0.38" stop-color="#d9c8f3"/>
+      <stop offset="0.7" stop-color="#f8d48c"/>
+      <stop offset="1" stop-color="#ff8d4f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="34%" cy="28%" r="56%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#sky)"/>
+  <rect width="512" height="512" rx="112" fill="url(#glow)"/>
+  <path d="M112 344h288" fill="none" stroke="#171717" stroke-opacity="0.42" stroke-width="12" stroke-linecap="round"/>
+  <path d="M170 344a86 86 0 0 1 172 0" fill="none" stroke="#171717" stroke-opacity="0.42" stroke-width="12" stroke-linecap="round"/>
+</svg>
