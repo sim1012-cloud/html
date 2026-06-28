@@ -1,0 +1,122 @@
+{
+  "profile": {
+    "city": "Shanghai",
+    "timezone": "Asia/Shanghai"
+  },
+  "integrations": {
+    "publicIcalUrl": ""
+  },
+  "weather": {
+    "condition": "Cloudy",
+    "temperature": 27,
+    "high": 31,
+    "low": 24,
+    "feelsLike": 29,
+    "humidity": 68,
+    "aqi": 42,
+    "sunrise": "05:01",
+    "sunset": "19:04",
+    "wind": "SE 12 km/h",
+    "forecast": [
+      {
+        "date": "2026-06-28",
+        "label": "Today",
+        "condition": "Cloudy",
+        "high": 31,
+        "low": 24
+      },
+      {
+        "date": "2026-06-29",
+        "label": "Mon",
+        "condition": "Light Rain",
+        "high": 29,
+        "low": 23
+      },
+      {
+        "date": "2026-06-30",
+        "label": "Tue",
+        "condition": "Partly Cloudy",
+        "high": 32,
+        "low": 25
+      }
+    ]
+  },
+  "calendar": [
+    {
+      "title": "English Reading",
+      "date": "2026-06-29",
+      "time": "20:00",
+      "type": "study"
+    },
+    {
+      "title": "Football Training",
+      "date": "2026-06-30",
+      "time": "18:30",
+      "type": "sport"
+    },
+    {
+      "title": "Family Dinner",
+      "date": "2026-07-03",
+      "time": "19:00",
+      "type": "family"
+    },
+    {
+      "title": "Quiet Reading Hour",
+      "date": "2026-07-05",
+      "time": "21:00",
+      "type": "home"
+    },
+    {
+      "title": "Weekend Breakfast",
+      "date": "2026-07-11",
+      "time": "09:30",
+      "type": "family"
+    }
+  ],
+  "holidays": [
+    {
+      "date": "2026-06-19",
+      "label": "Juneteenth"
+    },
+    {
+      "date": "2026-07-04",
+      "label": "Independence Day"
+    },
+    {
+      "date": "2026-10-01",
+      "label": "National Day"
+    },
+    {
+      "date": "2026-10-06",
+      "label": "Mid-Autumn"
+    }
+  ],
+  "countdowns": [
+    {
+      "title": "距离高考",
+      "targetDate": "2031-06-07",
+      "subtitle": "Keep going, one day at a time."
+    },
+    {
+      "title": "距离生日",
+      "targetDate": "2026-09-01",
+      "subtitle": "A quiet celebration is coming."
+    },
+    {
+      "title": "Next Family Trip",
+      "targetDate": "2026-10-01",
+      "subtitle": "The next journey begins."
+    },
+    {
+      "title": "Lisbon Dinner Show",
+      "targetDate": "2026-10-20",
+      "subtitle": "Set Sail for the Next Horizon."
+    }
+  ],
+  "dailyCard": {
+    "label": "Word of the Day",
+    "word": "vanish",
+    "meaning": "to disappear suddenly",
+    "example": "The sound vanished into the night."
+  }
+}
