@@ -12,7 +12,7 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="assets/icon.svg">
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="style.css?v=no-controls-1">
+    <link rel="stylesheet" href="style.css?v=editable-1">
   </head>
   <body>
     <main class="screen" aria-label="Home ambient dashboard">
@@ -114,6 +114,23 @@
       </section>
     </main>
 
-    <script src="app.js?v=no-controls-1" defer></script>
+    <div id="editModal" class="edit-modal" aria-hidden="true">
+      <form id="editForm" class="edit-sheet" autocomplete="off">
+        <div class="edit-heading">
+          <p id="editTitle" class="eyebrow">EDIT</p>
+          <button type="button" id="editClose" class="edit-icon-button" aria-label="Close editor">×</button>
+        </div>
+        <div id="editFields" class="edit-fields"></div>
+        <div class="edit-actions">
+          <button type="button" id="editDelete" class="edit-delete">Delete</button>
+          <div>
+            <button type="button" id="editCancel" class="edit-secondary">Cancel</button>
+            <button type="submit" class="edit-primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="app.js?v=editable-1" defer></script>
   </body>
 </html>
