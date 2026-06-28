@@ -110,11 +110,7 @@ const FALLBACK_DATA = {
 };
 
 const state = {
-  data: FALLBACK_DATA,
-  wakeLock: null,
-  controlsTimer: null,
-  screenHintTimer: null,
-  installGuideTimer: null
+  data: FALLBACK_DATA
 };
 
 const elements = {
@@ -140,11 +136,7 @@ const elements = {
   dailyLabel: document.querySelector("#dailyLabel"),
   dailyWord: document.querySelector("#dailyWord"),
   dailyMeaning: document.querySelector("#dailyMeaning"),
-  dailyExample: document.querySelector("#dailyExample"),
-  installGuide: document.querySelector("#installGuide"),
-  installApp: document.querySelector("#installApp"),
-  screenModeHint: document.querySelector("#screenModeHint"),
-  startScreenMode: document.querySelector("#startScreenMode")
+  dailyExample: document.querySelector("#dailyExample")
 };
 
 init();
@@ -158,8 +150,6 @@ async function init() {
 
   // A light refresh keeps long-running screen mode current without rebuilding the page.
   setInterval(renderAll, 30000);
-  wireScreenMode();
-  wireControlsAutoHide();
 }
 
 async function loadData() {
@@ -513,126 +503,4 @@ function formatShortDate(date) {
     month: "short",
     day: "numeric"
   }).format(date);
-}
-
-function wireScreenMode() {
-  elements.installApp.addEventListener("click", () => {
-    showInstallGuide();
-    showScreenModeHint("Install from Share → Add to Home Screen for real iPad fullscreen");
-  });
-
-  elements.startScreenMode.addEventListener("click", async () => {
-    const fullscreenResult = await enterFullscreen();
-    const wakeLockResult = await requestWakeLock();
-    document.body.classList.add("screen-mode-active");
-    updateScreenModeButton();
-
-    if (isStandaloneDisplay()) {
-      showScreenModeHint("Screen mode active");
-      return;
-    }
-
-    if (fullscreenResult) {
-      showScreenModeHint(wakeLockResult ? "Fullscreen on · Wake lock on" : "Fullscreen on");
-      return;
-    }
-
-    showScreenModeHint("For true fullscreen on iPad: Share → Add to Home Screen, then open Home Screen");
-  });
-
-  document.addEventListener("visibilitychange", async () => {
-    if (document.visibilityState === "visible" && state.wakeLock === null) {
-      await requestWakeLock();
-    }
-  });
-
-  document.addEventListener("fullscreenchange", updateScreenModeButton);
-  updateScreenModeButton();
-  updateInstallControls();
-}
-
-async function enterFullscreen() {
-  try {
-    if (isStandaloneDisplay()) {
-      return true;
-    }
-
-    const root = document.documentElement;
-    const requestFullscreen = root.requestFullscreen ||
-      root.webkitRequestFullscreen ||
-      root.msRequestFullscreen;
-
-    if (!document.fullscreenElement && requestFullscreen) {
-      await requestFullscreen.call(root);
-      return true;
-    }
-  } catch (error) {
-    console.info("Fullscreen is not available in this browser:", error);
-  }
-
-  return false;
-}
-
-async function requestWakeLock() {
-  try {
-    if ("wakeLock" in navigator) {
-      state.wakeLock = await navigator.wakeLock.request("screen");
-      state.wakeLock.addEventListener("release", () => {
-        state.wakeLock = null;
-      });
-      return true;
-    }
-  } catch (error) {
-    console.info("Wake Lock is not available in this browser:", error);
-    state.wakeLock = null;
-  }
-
-  return false;
-}
-
-function isStandaloneDisplay() {
-  return window.navigator.standalone === true || window.matchMedia("(display-mode: fullscreen)").matches || window.matchMedia("(display-mode: standalone)").matches;
-}
-
-function updateScreenModeButton() {
-  const isActive = isStandaloneDisplay() || Boolean(document.fullscreenElement || document.webkitFullscreenElement) || document.body.classList.contains("screen-mode-active");
-  elements.startScreenMode.textContent = isActive ? "Screen Mode On" : "Start Screen Mode";
-  elements.startScreenMode.classList.toggle("is-active", isActive);
-}
-
-function updateInstallControls() {
-  elements.installApp.hidden = isStandaloneDisplay();
-}
-
-function showInstallGuide() {
-  elements.installGuide.classList.add("is-visible");
-  window.clearTimeout(state.installGuideTimer);
-  state.installGuideTimer = window.setTimeout(() => {
-    elements.installGuide.classList.remove("is-visible");
-  }, 9000);
-}
-
-function showScreenModeHint(message) {
-  elements.screenModeHint.textContent = message;
-  elements.screenModeHint.classList.add("is-visible");
-  window.clearTimeout(state.screenHintTimer);
-  state.screenHintTimer = window.setTimeout(() => {
-    elements.screenModeHint.classList.remove("is-visible");
-  }, 5200);
-}
-
-function wireControlsAutoHide() {
-  const showControls = () => {
-    document.body.classList.remove("controls-idle");
-    window.clearTimeout(state.controlsTimer);
-    state.controlsTimer = window.setTimeout(() => {
-      document.body.classList.add("controls-idle");
-    }, 3000);
-  };
-
-  ["pointermove", "pointerdown", "touchstart", "keydown"].forEach((eventName) => {
-    window.addEventListener(eventName, showControls, { passive: true });
-  });
-
-  showControls();
 }
