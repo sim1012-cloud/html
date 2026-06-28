@@ -1027,16 +1027,145 @@ body.sky-night .metric-wind {
   }
 }
 
-@media (max-width: 760px) and (orientation: portrait) {
+@media (orientation: landscape) and (max-width: 1180px) {
   .screen {
-    grid-template-rows: minmax(220px, 37vh) minmax(0, 1fr);
-    padding: 10px;
+    grid-template-columns: minmax(300px, 32vw) minmax(0, 1fr);
+    gap: 14px;
+    padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  }
+
+  .info-card {
+    grid-template-columns: minmax(270px, 1fr) minmax(230px, 0.82fr);
+    gap: 18px;
+    padding: 28px;
+  }
+
+  .hero-copy {
+    left: 42px;
+    bottom: clamp(300px, 38vh, 360px);
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(38px, 4.6vw, 56px);
+  }
+
+  .hero-weather-panel {
+    left: 34px;
+    right: 34px;
+    bottom: 34px;
+  }
+
+  .hero-weather-panel .section-heading {
+    margin-bottom: 8px;
+    padding-top: 10px;
+  }
+
+  .hero-weather-panel .section-value {
+    max-width: 58%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hero-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px 12px;
+  }
+
+  .hero-metric-grid div {
+    padding-top: 7px;
+    padding-bottom: 8px;
+  }
+
+  .metric {
+    padding-left: 22px;
+  }
+
+  .metric::before {
+    width: 15px;
+    height: 15px;
+    font-size: 11px;
+  }
+
+  .metric.has-meter {
+    background-position: 22px calc(100% - 1px);
+    background-size: calc(100% - 22px) 3px;
+  }
+
+  .forecast-list {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .forecast-item {
+    padding-top: 6px;
+  }
+
+  .time-value {
+    font-size: clamp(58px, 7vw, 92px);
+  }
+
+  .time-period {
+    font-size: clamp(15px, 1.8vw, 24px);
+  }
+
+  .date-value {
+    font-size: clamp(17px, 1.75vw, 23px);
+  }
+
+  .month-calendar {
+    width: min(100%, 330px);
+    gap: 4px 7px;
+  }
+
+  .month-weekday,
+  .month-day {
+    width: clamp(20px, 1.75vw, 28px);
+    height: clamp(20px, 1.75vw, 28px);
+    font-size: 10px;
+  }
+
+  .event,
+  .countdown {
+    grid-template-columns: 7px minmax(0, 1fr) minmax(62px, auto);
+    gap: 10px;
+    min-height: 38px;
+  }
+
+  .event-title,
+  .countdown-title {
+    font-size: clamp(13px, 1.25vw, 17px);
+    line-height: 1.12;
+  }
+
+  .event-meta,
+  .countdown-subtitle {
+    font-size: clamp(10px, 0.95vw, 12px);
+  }
+
+  .event-type {
+    max-width: 52px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .countdown-days {
+    min-width: 62px;
+    font-size: clamp(24px, 2.6vw, 36px);
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .screen {
+    grid-template-rows: minmax(220px, 34vh) minmax(0, 1fr);
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
 
   .info-card {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto minmax(0, 1fr) minmax(0, 1fr);
-    gap: 14px;
+    gap: 12px;
     padding: 18px;
   }
 
@@ -1057,17 +1186,63 @@ body.sky-night .metric-wind {
   }
 
   .time-value {
-    font-size: clamp(70px, 22vw, 118px);
+    font-size: clamp(64px, 17vw, 118px);
+  }
+
+  .time-period {
+    font-size: clamp(16px, 4vw, 30px);
+  }
+
+  .date-value {
+    font-size: clamp(17px, 4vw, 24px);
+  }
+
+  .section-heading {
+    margin-bottom: 9px;
+  }
+
+  .month-calendar {
+    width: min(100%, 360px);
+    gap: 4px 8px;
+    margin-top: 10px;
+  }
+
+  .month-weekday,
+  .month-day {
+    width: clamp(22px, 4.2vw, 32px);
+    height: clamp(22px, 4.2vw, 32px);
   }
 
   .event,
   .countdown {
-    min-height: 36px;
+    grid-template-columns: 7px minmax(0, 1fr) minmax(62px, auto);
+    gap: 10px;
+    min-height: 34px;
   }
 
   .countdown-list,
   .event-list {
-    gap: 6px;
+    gap: 5px;
+  }
+
+  .event-title,
+  .countdown-title {
+    font-size: clamp(13px, 3.3vw, 17px);
+    line-height: 1.1;
+  }
+
+  .event-meta,
+  .countdown-subtitle {
+    font-size: clamp(10px, 2.6vw, 12px);
+  }
+
+  .event-type {
+    display: none;
+  }
+
+  .countdown-days {
+    min-width: 62px;
+    font-size: clamp(24px, 6.4vw, 36px);
   }
 
   .hero-weather-panel {
