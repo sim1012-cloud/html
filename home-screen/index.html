@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Home Screen">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>Home Screen</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icon.svg">
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css?v=fullscreen-button-1">
+  </head>
+  <body>
+    <main class="screen" aria-label="Home ambient dashboard">
+      <section class="hero-sunset" aria-label="Ambient sky">
+        <div class="noise"></div>
+        <div class="weather-atmosphere" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="palette-dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="sun-line" aria-hidden="true">
+          <span></span>
+        </div>
+        <div class="hero-copy">
+          <p id="heroCity">Shanghai</p>
+          <h1 id="heroCondition">Cloudy</h1>
+        </div>
+        <div class="hero-weather-panel" aria-label="Weather details">
+          <div class="section-heading">
+            <p class="eyebrow">WEATHER</p>
+            <p id="weatherSummary" class="section-value">Cloudy / 27°C</p>
+          </div>
+          <div class="metric-grid hero-metric-grid">
+            <div class="metric metric-sunrise">
+              <span>TODAY'S SUNRISE</span>
+              <strong id="sunrise">05:01</strong>
+            </div>
+            <div class="metric metric-sunset">
+              <span>TODAY'S SUNSET</span>
+              <strong id="sunset">19:04</strong>
+            </div>
+            <div class="metric metric-humidity has-meter">
+              <span>HUMIDITY</span>
+              <strong id="humidity">68%</strong>
+            </div>
+            <div class="metric metric-aqi has-meter">
+              <span>AQI</span>
+              <strong id="aqi">42</strong>
+            </div>
+            <div class="metric metric-feels has-meter">
+              <span>FEELS LIKE</span>
+              <strong id="feelsLike">29°C</strong>
+            </div>
+            <div class="metric metric-wind has-meter">
+              <span>WIND</span>
+              <strong id="wind">SE 12 km/h</strong>
+            </div>
+          </div>
+          <div id="forecastList" class="forecast-list" aria-label="3-day weather forecast"></div>
+        </div>
+      </section>
+
+      <section class="info-card" aria-label="Home information">
+        <div class="panel time-panel">
+          <p class="eyebrow">LOCAL TIME</p>
+          <div class="time-row">
+            <time id="currentTime" class="time-value">--:--</time>
+            <span id="timePeriod" class="time-period">--</span>
+          </div>
+          <p id="currentDate" class="date-value">Loading date</p>
+          <p id="cityLine" class="quiet-line">Shanghai</p>
+        </div>
+
+        <div class="panel month-panel">
+          <div class="section-heading">
+            <p class="eyebrow">MONTH</p>
+            <p id="monthLabel" class="section-value">June 2026</p>
+          </div>
+          <div id="monthCalendar" class="month-calendar" aria-live="polite"></div>
+        </div>
+
+        <div class="panel calendar-panel">
+          <div class="section-heading">
+            <p class="eyebrow">CALENDAR</p>
+            <p id="todayNumber" class="section-value">28</p>
+          </div>
+          <div id="calendarList" class="event-list" aria-live="polite"></div>
+        </div>
+
+        <div class="panel countdown-panel">
+          <div class="section-heading">
+            <p class="eyebrow">COUNTDOWN</p>
+            <p class="section-value">Important days</p>
+          </div>
+          <div id="countdownList" class="countdown-list" aria-live="polite"></div>
+        </div>
+
+        <div class="panel daily-panel">
+          <p id="dailyLabel" class="eyebrow">WORD OF THE DAY</p>
+          <p id="dailyWord" class="daily-word">vanish</p>
+          <p id="dailyMeaning" class="daily-meaning">to disappear suddenly</p>
+          <p id="dailyExample" class="daily-example">The sound vanished into the night.</p>
+        </div>
+      </section>
+    </main>
+
+    <div id="installGuide" class="install-guide" aria-live="polite">
+      <strong>iPad fullscreen app</strong>
+      <span>Tap Share → Add to Home Screen, then open from the Home Screen icon.</span>
+    </div>
+    <div id="screenModeHint" class="screen-mode-hint" role="status" aria-live="polite"></div>
+    <div class="screen-actions" aria-label="Screen controls">
+      <button id="installApp" class="screen-button secondary" type="button">Install as iPad App</button>
+      <button id="startScreenMode" class="screen-button" type="button">Start Screen Mode</button>
+    </div>
+
+    <script src="app.js?v=fullscreen-2" defer></script>
+  </body>
+</html>
