@@ -1,0 +1,20 @@
+{
+  "name": "Home Screen",
+  "short_name": "Home",
+  "description": "A quiet iPad ambient dashboard for family time, weather, calendar, and countdowns.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display_override": ["fullscreen", "standalone"],
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
