@@ -13,39 +13,17 @@
     }
   },
   "weather": {
-    "condition": "Cloudy",
-    "temperature": 27,
-    "high": 31,
-    "low": 24,
-    "feelsLike": 29,
-    "humidity": 68,
-    "aqi": 42,
-    "sunrise": "05:01",
-    "sunset": "19:04",
-    "wind": "SE 12 km/h",
-    "forecast": [
-      {
-        "date": "2026-06-28",
-        "label": "Today",
-        "condition": "Cloudy",
-        "high": 31,
-        "low": 24
-      },
-      {
-        "date": "2026-06-29",
-        "label": "Mon",
-        "condition": "Light Rain",
-        "high": 29,
-        "low": 23
-      },
-      {
-        "date": "2026-06-30",
-        "label": "Tue",
-        "condition": "Partly Cloudy",
-        "high": 32,
-        "low": 25
-      }
-    ]
+    "condition": "Updating",
+    "temperature": "--",
+    "high": "--",
+    "low": "--",
+    "feelsLike": "--",
+    "humidity": "--",
+    "aqi": "--",
+    "sunrise": "--:--",
+    "sunset": "--:--",
+    "wind": "--",
+    "forecast": []
   },
   "calendar": [
     {
@@ -124,5 +102,123 @@
     "word": "vanish",
     "meaning": "to disappear suddenly",
     "example": "The sound vanished into the night."
+  },
+  "summerSchedule": {
+    "title": "Michael's Summer Plan",
+    "days": [
+      {
+        "key": "sun",
+        "label": "周日",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "和爸爸打篮球", "type": "sport"},
+          {"time": "11:30-12:30", "title": "游戏 1 小时", "type": "play"},
+          {"time": "12:30-13:30", "title": "午餐", "type": "home"},
+          {"time": "13:30-14:00", "title": "钢琴", "type": "music"},
+          {"time": "14:30-15:30", "title": "四季数学", "type": "study"},
+          {"time": "18:30-20:00", "title": "学而通英语上课", "type": "study"},
+          {"time": "20:00-21:00", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      },
+      {
+        "key": "mon",
+        "label": "周一",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "English + I&S", "type": "study"},
+          {"time": "11:30-12:30", "title": "午餐（看电视）", "type": "home"},
+          {"time": "12:30-13:30", "title": "英文深度阅读", "type": "study"},
+          {"time": "14:00-15:00", "title": "英语练习 + 练习讲解", "type": "study"},
+          {"time": "15:00-15:30", "title": "钢琴", "type": "music"},
+          {"time": "15:30-17:00", "title": "足球自主训练", "type": "sport"},
+          {"time": "18:00-19:00", "title": "晚餐（看电视）", "type": "home"},
+          {"time": "19:00-20:30", "title": "四季数学", "type": "study"},
+          {"time": "20:30-21:30", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      },
+      {
+        "key": "tue",
+        "label": "周二",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "English + I&S", "type": "study"},
+          {"time": "11:30-12:30", "title": "午餐（看电视）", "type": "home"},
+          {"time": "12:30-13:30", "title": "英文深度阅读", "type": "study"},
+          {"time": "14:00-15:00", "title": "新闻阅读 + 写作 / 习作评讲", "type": "study"},
+          {"time": "15:00-15:30", "title": "钢琴", "type": "music"},
+          {"time": "16:00-17:00", "title": "游泳（16:00 课程）", "type": "sport"},
+          {"time": "18:00-19:00", "title": "晚餐（看电视）", "type": "home"},
+          {"time": "19:00-20:30", "title": "四季数学", "type": "study"},
+          {"time": "20:30-21:30", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      },
+      {
+        "key": "wed",
+        "label": "周三",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "Science", "type": "study"},
+          {"time": "11:30-12:30", "title": "午餐（看电视）", "type": "home"},
+          {"time": "12:30-13:30", "title": "英文深度阅读", "type": "study"},
+          {"time": "14:00-15:00", "title": "英语练习 + 练习讲解", "type": "study"},
+          {"time": "15:00-15:30", "title": "钢琴", "type": "music"},
+          {"time": "16:00-17:00", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "17:00-18:00", "title": "晚餐", "type": "home"},
+          {"time": "18:00-20:30", "title": "西班牙人足球训练", "type": "sport"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      },
+      {
+        "key": "thu",
+        "label": "周四",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "Math", "type": "study"},
+          {"time": "11:30-12:30", "title": "午餐（看电视）", "type": "home"},
+          {"time": "12:30-13:30", "title": "英文深度阅读", "type": "study"},
+          {"time": "14:00-15:00", "title": "新闻阅读 + 写作 / 习作评讲", "type": "study"},
+          {"time": "15:00-15:30", "title": "钢琴", "type": "music"},
+          {"time": "16:00-17:00", "title": "游泳（16:00 课程）", "type": "sport"},
+          {"time": "18:00-19:00", "title": "晚餐（看电视）", "type": "home"},
+          {"time": "19:00-20:30", "title": "四季数学", "type": "study"},
+          {"time": "20:30-21:30", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      },
+      {
+        "key": "fri",
+        "label": "周五",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "Math", "type": "study"},
+          {"time": "11:30-12:30", "title": "午餐（看电视）", "type": "home"},
+          {"time": "12:30-13:30", "title": "英文深度阅读", "type": "study"},
+          {"time": "14:00-15:00", "title": "英语练习 + 练习讲解", "type": "study"},
+          {"time": "15:00-15:30", "title": "钢琴", "type": "music"},
+          {"time": "16:00-17:00", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "17:00-18:00", "title": "晚餐", "type": "home"},
+          {"time": "18:00-20:30", "title": "西班牙人足球训练", "type": "sport"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      },
+      {
+        "key": "sat",
+        "label": "周六",
+        "items": [
+          {"time": "09:00-09:30", "title": "起床 / 早餐", "type": "home"},
+          {"time": "09:45-11:15", "title": "钢琴课（没有课就练琴）", "type": "music"},
+          {"time": "11:30-12:30", "title": "游戏 1 小时", "type": "play"},
+          {"time": "12:30-13:30", "title": "午餐", "type": "home"},
+          {"time": "14:00-16:00", "title": "足球比赛（没有比赛就游泳）", "type": "sport"},
+          {"time": "19:00-19:30", "title": "完成学而通作业", "type": "study"},
+          {"time": "19:30-20:00", "title": "English + I&S", "type": "study"},
+          {"time": "20:00-21:00", "title": "打游戏 1 小时", "type": "play"},
+          {"time": "22:00", "title": "上床睡觉", "type": "rest"}
+        ]
+      }
+    ]
   }
 }
