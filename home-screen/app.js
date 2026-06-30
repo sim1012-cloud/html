@@ -4,7 +4,13 @@ const FALLBACK_DATA = {
     timezone: "Asia/Shanghai"
   },
   integrations: {
-    publicIcalUrl: ""
+    publicIcalUrl: "",
+    weatherProvider: {
+      enabled: false,
+      type: "open-meteo",
+      latitude: 31.2304,
+      longitude: 121.4737
+    }
   },
   weather: {
     condition: "Cloudy",
@@ -156,11 +162,13 @@ async function init() {
 
   state.data = await loadData();
   wireEditors();
+  await refreshLiveWeather();
   renderAll();
   window.addEventListener("resize", debounce(renderAll, 160));
 
   // A light refresh keeps long-running screen mode current without rebuilding the page.
   setInterval(renderAll, 30000);
+  setInterval(refreshLiveWeather, 30 * 60 * 1000);
 }
 
 async function loadData() {
@@ -234,6 +242,93 @@ function renderProfileAndWeather(data) {
   elements.wind.textContent = weather.wind || "--";
   updateWeatherMeters(weather);
   renderForecast(weather);
+}
+
+async function refreshLiveWeather() {
+  const provider = state.data.integrations?.weatherProvider;
+  if (!provider?.enabled || provider.type !== "open-meteo") {
+    return;
+  }
+
+  try {
+    const weather = await fetchOpenMeteoWeather(provider, state.data.profile);
+    state.data.weather = {
+      ...state.data.weather,
+      ...weather
+    };
+    renderProfileAndWeather(state.data);
+  } catch (error) {
+    console.warn("Using configured fallback weather:", error);
+  }
+}
+
+async function fetchOpenMeteoWeather(provider, profile) {
+  const params = new URLSearchParams({
+    latitude: String(provider.latitude),
+    longitude: String(provider.longitude),
+    timezone: profile?.timezone || "auto",
+    current: "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset",
+    forecast_days: "3"
+  });
+  const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`, {
+    cache: "no-store"
+  });
+  if (!response.ok) {
+    throw new Error(`Open-Meteo returned ${response.status}`);
+  }
+  const data = await response.json();
+  return normalizeOpenMeteoWeather(data);
+}
+
+function normalizeOpenMeteoWeather(data) {
+  const currentCode = Number(data.current?.weather_code ?? 3);
+  const daily = data.daily || {};
+  return {
+    condition: weatherCodeLabel(currentCode),
+    temperature: Math.round(Number(data.current?.temperature_2m ?? 0)),
+    high: Math.round(Number(daily.temperature_2m_max?.[0] ?? data.current?.temperature_2m ?? 0)),
+    low: Math.round(Number(daily.temperature_2m_min?.[0] ?? data.current?.temperature_2m ?? 0)),
+    feelsLike: Math.round(Number(data.current?.apparent_temperature ?? data.current?.temperature_2m ?? 0)),
+    humidity: Math.round(Number(data.current?.relative_humidity_2m ?? 0)),
+    sunrise: formatApiTime(daily.sunrise?.[0]),
+    sunset: formatApiTime(daily.sunset?.[0]),
+    wind: `${windDirectionLabel(data.current?.wind_direction_10m)} ${Math.round(Number(data.current?.wind_speed_10m ?? 0))} km/h`,
+    forecast: (daily.time || []).slice(0, 3).map((date, index) => ({
+      date,
+      label: index === 0 ? "Today" : formatForecastLabel(date, index),
+      condition: weatherCodeLabel(Number(daily.weather_code?.[index] ?? currentCode)),
+      high: Math.round(Number(daily.temperature_2m_max?.[index] ?? 0)),
+      low: Math.round(Number(daily.temperature_2m_min?.[index] ?? 0))
+    }))
+  };
+}
+
+function weatherCodeLabel(code) {
+  if ([0].includes(code)) return "Clear";
+  if ([1, 2].includes(code)) return "Partly Cloudy";
+  if ([3, 45, 48].includes(code)) return "Cloudy";
+  if ([51, 53, 55, 56, 57].includes(code)) return "Drizzle";
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "Rain";
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "Snow";
+  if ([95, 96, 99].includes(code)) return "Thunderstorm";
+  return "Weather";
+}
+
+function formatApiTime(value) {
+  if (!value) {
+    return "--:--";
+  }
+  return String(value).slice(11, 16);
+}
+
+function windDirectionLabel(degrees) {
+  const value = Number(degrees);
+  if (!Number.isFinite(value)) {
+    return "--";
+  }
+  const labels = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  return labels[Math.round(value / 45) % 8];
 }
 
 function updateWeatherMeters(weather) {
