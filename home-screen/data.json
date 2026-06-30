@@ -4,7 +4,13 @@
     "timezone": "Asia/Shanghai"
   },
   "integrations": {
-    "publicIcalUrl": ""
+    "publicIcalUrl": "",
+    "weatherProvider": {
+      "enabled": true,
+      "type": "open-meteo",
+      "latitude": 31.2304,
+      "longitude": 121.4737
+    }
   },
   "weather": {
     "condition": "Cloudy",
