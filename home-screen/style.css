@@ -31,6 +31,43 @@ body {
   touch-action: manipulation;
 }
 
+.page-track {
+  display: flex;
+  width: 200vw;
+  height: 100dvh;
+  transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.page {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100dvh;
+}
+
+.page-dots {
+  position: fixed;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+  opacity: 0.34;
+}
+
+.page-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(23, 23, 23, 0.28);
+}
+
+.page-dot.is-active {
+  width: 22px;
+  background: rgba(23, 23, 23, 0.68);
+}
+
 button,
 input,
 textarea {
@@ -72,6 +109,144 @@ body.sky-rain {
   padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
   isolation: isolate;
   animation: screenDrift 360s ease-in-out infinite alternate;
+}
+
+.schedule-page {
+  display: grid;
+  place-items: center;
+  padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  background:
+    radial-gradient(circle at 18% 16%, rgba(185, 216, 235, 0.5), transparent 24%),
+    radial-gradient(circle at 78% 18%, rgba(217, 200, 243, 0.42), transparent 26%),
+    linear-gradient(145deg, #f6f4ef 0%, #efede8 100%);
+}
+
+.schedule-shell {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: clamp(18px, 2vw, 28px);
+  width: min(1180px, 100%);
+  height: min(820px, 100%);
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: 34px;
+  background: rgba(247, 246, 241, 0.94);
+  box-shadow: 0 20px 90px rgba(39, 34, 28, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.schedule-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: clamp(14px, 2vh, 24px);
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule-hero h2 {
+  margin: 10px 0 0;
+  color: var(--ink);
+  font-size: clamp(46px, 6vw, 92px);
+  font-weight: 230;
+  line-height: 0.95;
+}
+
+.schedule-date {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: clamp(16px, 1.5vw, 22px);
+  font-weight: 300;
+}
+
+.schedule-day-name {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(28px, 4vw, 64px);
+  font-weight: 230;
+  line-height: 1;
+}
+
+.schedule-tabs {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.schedule-tab {
+  min-height: 42px;
+  border-radius: 999px;
+  background: rgba(22, 24, 28, 0.045);
+  color: var(--muted);
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 450;
+  letter-spacing: 0.08em;
+}
+
+.schedule-tab.is-today {
+  color: #9a5b2f;
+  background: rgba(240, 182, 129, 0.18);
+}
+
+.schedule-tab.is-active {
+  color: #fff;
+  background: #171717;
+}
+
+.schedule-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  min-height: 0;
+}
+
+.schedule-item {
+  display: grid;
+  grid-template-columns: minmax(92px, 0.42fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  min-height: 54px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.schedule-item time {
+  color: var(--soft);
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 620;
+  letter-spacing: 0.04em;
+}
+
+.schedule-item p {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(16px, 1.45vw, 24px);
+  font-weight: 330;
+  line-height: 1.16;
+}
+
+.schedule-item span {
+  display: block;
+  margin-top: 4px;
+  color: var(--soft);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.schedule-study {
+  border-top-color: rgba(198, 107, 84, 0.24);
+}
+
+.schedule-sport {
+  border-top-color: rgba(124, 168, 211, 0.34);
+}
+
+.schedule-play {
+  border-top-color: rgba(248, 212, 140, 0.42);
+}
+
+.schedule-rest {
+  opacity: 0.78;
 }
 
 .hero-sunset {
@@ -1371,6 +1546,47 @@ body.sky-night .metric-wind {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .schedule-shell {
+    gap: 12px;
+    padding: 22px;
+    border-radius: 28px;
+  }
+
+  .schedule-hero {
+    padding-bottom: 12px;
+  }
+
+  .schedule-hero h2 {
+    font-size: clamp(38px, 4.8vw, 62px);
+  }
+
+  .schedule-day-name {
+    font-size: clamp(28px, 3.6vw, 46px);
+  }
+
+  .schedule-tab {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  .schedule-list {
+    gap: 6px 14px;
+  }
+
+  .schedule-item {
+    min-height: 41px;
+    padding: 7px 0;
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .schedule-item p {
+    font-size: clamp(13px, 1.18vw, 17px);
+  }
+
+  .schedule-item span {
+    display: none;
+  }
 }
 
 @media (max-width: 1100px) and (orientation: portrait) {
@@ -1468,6 +1684,51 @@ body.sky-night .metric-wind {
 
   .hero-copy {
     bottom: clamp(30px, 5vh, 66px);
+  }
+
+  .schedule-page {
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  }
+
+  .schedule-shell {
+    gap: 14px;
+    height: 100%;
+    padding: 20px;
+    border-radius: 28px;
+  }
+
+  .schedule-hero h2 {
+    font-size: clamp(42px, 10vw, 82px);
+  }
+
+  .schedule-day-name {
+    font-size: clamp(28px, 8vw, 56px);
+  }
+
+  .schedule-tabs {
+    gap: 6px;
+  }
+
+  .schedule-tab {
+    min-height: 36px;
+    padding: 0;
+    font-size: 11px;
+  }
+
+  .schedule-list {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  .schedule-item {
+    min-height: 42px;
+    padding: 7px 0;
+    grid-template-columns: 92px minmax(0, 1fr);
+  }
+
+  .schedule-item p {
+    font-size: clamp(14px, 3.4vw, 19px);
   }
 }
 
