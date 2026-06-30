@@ -13,39 +13,17 @@ const FALLBACK_DATA = {
     }
   },
   weather: {
-    condition: "Cloudy",
-    temperature: 27,
-    high: 31,
-    low: 24,
-    feelsLike: 29,
-    humidity: 68,
-    aqi: 42,
-    sunrise: "05:01",
-    sunset: "19:04",
-    wind: "SE 12 km/h",
-    forecast: [
-      {
-        date: "2026-06-28",
-        label: "Today",
-        condition: "Cloudy",
-        high: 31,
-        low: 24
-      },
-      {
-        date: "2026-06-29",
-        label: "Mon",
-        condition: "Light Rain",
-        high: 29,
-        low: 23
-      },
-      {
-        date: "2026-06-30",
-        label: "Tue",
-        condition: "Partly Cloudy",
-        high: 32,
-        low: 25
-      }
-    ]
+    condition: "Updating",
+    temperature: "--",
+    high: "--",
+    low: "--",
+    feelsLike: "--",
+    humidity: "--",
+    aqi: "--",
+    sunrise: "--:--",
+    sunset: "--:--",
+    wind: "--",
+    forecast: []
   },
   calendar: [
     {
@@ -118,7 +96,11 @@ const FALLBACK_DATA = {
 const STORAGE_KEY = "home-screen-edits-v1";
 
 const state = {
-  data: cloneData(FALLBACK_DATA)
+  data: cloneData(FALLBACK_DATA),
+  pageIndex: 0,
+  selectedScheduleDay: null,
+  touchStartX: 0,
+  touchStartY: 0
 };
 
 const elements = {
@@ -151,7 +133,13 @@ const elements = {
   editFields: document.querySelector("#editFields"),
   editClose: document.querySelector("#editClose"),
   editCancel: document.querySelector("#editCancel"),
-  editDelete: document.querySelector("#editDelete")
+  editDelete: document.querySelector("#editDelete"),
+  pageTrack: document.querySelector("#pageTrack"),
+  pageDots: document.querySelector("#pageDots"),
+  scheduleDate: document.querySelector("#scheduleDate"),
+  scheduleDayName: document.querySelector("#scheduleDayName"),
+  scheduleTabs: document.querySelector("#scheduleTabs"),
+  scheduleList: document.querySelector("#scheduleList")
 };
 
 init();
@@ -162,6 +150,7 @@ async function init() {
 
   state.data = await loadData();
   wireEditors();
+  wirePageSwipe();
   await refreshLiveWeather();
   renderAll();
   window.addEventListener("resize", debounce(renderAll, 160));
@@ -223,6 +212,7 @@ function renderAll() {
   renderCalendar(state.data.calendar || []);
   renderCountdowns(state.data.countdowns || []);
   renderDailyCard(state.data.dailyCard);
+  renderSummerSchedule();
 }
 
 function renderProfileAndWeather(data) {
@@ -258,7 +248,13 @@ async function refreshLiveWeather() {
     };
     renderProfileAndWeather(state.data);
   } catch (error) {
-    console.warn("Using configured fallback weather:", error);
+    state.data.weather = {
+      ...state.data.weather,
+      condition: "Weather Offline",
+      forecast: []
+    };
+    renderProfileAndWeather(state.data);
+    console.warn("Live weather unavailable:", error);
   }
 }
 
@@ -370,8 +366,14 @@ function renderForecast(weather) {
 }
 
 function normalizeForecast(weather) {
-  if (Array.isArray(weather.forecast) && weather.forecast.length) {
-    return weather.forecast;
+  const forecast = Array.isArray(weather.forecast) ? weather.forecast : [];
+  const currentOrFuture = forecast.filter((day) => {
+    const date = parseLocalDate(day.date);
+    return !date || date >= startOfToday();
+  });
+
+  if (currentOrFuture.length) {
+    return currentOrFuture;
   }
 
   return [
@@ -808,6 +810,122 @@ function renderDailyCard(card) {
   elements.dailyWord.textContent = card.word || "";
   elements.dailyMeaning.textContent = card.meaning || "";
   elements.dailyExample.textContent = card.example || "";
+}
+
+function renderSummerSchedule() {
+  const schedule = state.data.summerSchedule;
+  if (!schedule?.days?.length || !elements.scheduleList) {
+    return;
+  }
+
+  const todayKey = getTodayScheduleKey();
+  const activeKey = state.selectedScheduleDay || todayKey;
+  const activeDay = schedule.days.find((day) => day.key === activeKey) || schedule.days[0];
+  state.selectedScheduleDay = activeDay.key;
+
+  elements.scheduleDate.textContent = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    timeZone: state.data.profile?.timezone
+  }).format(new Date());
+  elements.scheduleDayName.textContent = activeDay.label;
+
+  elements.scheduleTabs.innerHTML = "";
+  schedule.days.forEach((day) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = [
+      "schedule-tab",
+      day.key === activeDay.key ? "is-active" : "",
+      day.key === todayKey ? "is-today" : ""
+    ].filter(Boolean).join(" ");
+    button.textContent = day.label;
+    button.dataset.day = day.key;
+    elements.scheduleTabs.append(button);
+  });
+
+  elements.scheduleList.innerHTML = "";
+  activeDay.items.forEach((item) => {
+    const row = document.createElement("article");
+    row.className = `schedule-item schedule-${item.type || "default"}`;
+    row.innerHTML = `
+      <time></time>
+      <div>
+        <p></p>
+        <span></span>
+      </div>
+    `;
+    row.querySelector("time").textContent = item.time || "";
+    row.querySelector("p").textContent = item.title || "";
+    row.querySelector("span").textContent = scheduleTypeLabel(item.type);
+    elements.scheduleList.append(row);
+  });
+}
+
+function wirePageSwipe() {
+  document.addEventListener("touchstart", (event) => {
+    const touch = event.touches[0];
+    state.touchStartX = touch.clientX;
+    state.touchStartY = touch.clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", (event) => {
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - state.touchStartX;
+    const dy = touch.clientY - state.touchStartY;
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.2) {
+      return;
+    }
+    setPageIndex(dx > 0 ? 1 : 0);
+  }, { passive: true });
+
+  elements.pageDots?.addEventListener("click", (event) => {
+    const dot = event.target.closest(".page-dot");
+    if (!dot?.dataset.page) {
+      return;
+    }
+    setPageIndex(Number(dot.dataset.page));
+  });
+
+  elements.scheduleTabs?.addEventListener("click", (event) => {
+    const button = event.target.closest(".schedule-tab");
+    if (!button?.dataset.day) {
+      return;
+    }
+    state.selectedScheduleDay = button.dataset.day;
+    renderSummerSchedule();
+  });
+}
+
+function setPageIndex(index) {
+  state.pageIndex = Math.max(0, Math.min(1, index));
+  elements.pageTrack.style.transform = `translate3d(${-100 * state.pageIndex}vw, 0, 0)`;
+  elements.pageDots?.querySelectorAll(".page-dot").forEach((dot) => {
+    dot.classList.toggle("is-active", Number(dot.dataset.page) === state.pageIndex);
+  });
+}
+
+function getTodayScheduleKey() {
+  const order = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const weekday = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    timeZone: state.data.profile?.timezone
+  }).format(new Date()).toLowerCase();
+  const map = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
+  return order[map[weekday.slice(0, 3)] ?? new Date().getDay()];
+}
+
+function scheduleTypeLabel(type) {
+  const labels = {
+    study: "Study",
+    sport: "Sport",
+    home: "Home",
+    music: "Music",
+    play: "Play",
+    rest: "Rest"
+  };
+  return labels[type] || "Plan";
 }
 
 function createEmptyLine(message) {
