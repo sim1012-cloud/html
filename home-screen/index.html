@@ -12,10 +12,11 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="assets/icon.svg">
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="style.css?v=weather-1">
+    <link rel="stylesheet" href="style.css?v=schedule-2">
   </head>
   <body>
-    <main class="screen" aria-label="Home ambient dashboard">
+    <div id="pageTrack" class="page-track">
+      <main class="screen page" aria-label="Home ambient dashboard">
       <section class="hero-sunset" aria-label="Ambient sky">
         <div class="noise"></div>
         <div class="weather-atmosphere" aria-hidden="true">
@@ -33,12 +34,12 @@
         </div>
         <div class="hero-copy">
           <p id="heroCity">Shanghai</p>
-          <h1 id="heroCondition">Cloudy</h1>
+          <h1 id="heroCondition">Updating</h1>
         </div>
         <div class="hero-weather-panel" aria-label="Weather details">
           <div class="section-heading">
             <p class="eyebrow">WEATHER</p>
-            <p id="weatherSummary" class="section-value">Cloudy / 27°C</p>
+            <p id="weatherSummary" class="section-value">Updating / --°C</p>
           </div>
           <div class="metric-grid hero-metric-grid">
             <div class="metric metric-sunrise">
@@ -112,7 +113,28 @@
           <p id="dailyExample" class="daily-example">The sound vanished into the night.</p>
         </div>
       </section>
-    </main>
+      </main>
+
+      <section class="schedule-page page" aria-label="Michael summer schedule">
+        <div class="schedule-shell">
+          <header class="schedule-hero">
+            <div>
+              <p class="eyebrow">SUMMER PLAN</p>
+              <h2>Michael's Day</h2>
+              <p id="scheduleDate" class="schedule-date">Today</p>
+            </div>
+            <p id="scheduleDayName" class="schedule-day-name">Tuesday</p>
+          </header>
+
+          <nav id="scheduleTabs" class="schedule-tabs" aria-label="Weekdays"></nav>
+          <div id="scheduleList" class="schedule-list" aria-live="polite"></div>
+        </div>
+      </section>
+    </div>
+    <div id="pageDots" class="page-dots" aria-label="Pages">
+      <button type="button" class="page-dot is-active" data-page="0" aria-label="Dashboard"></button>
+      <button type="button" class="page-dot" data-page="1" aria-label="Summer schedule"></button>
+    </div>
 
     <div id="editModal" class="edit-modal" aria-hidden="true">
       <form id="editForm" class="edit-sheet" autocomplete="off">
@@ -131,6 +153,6 @@
       </form>
     </div>
 
-    <script src="app.js?v=weather-1" defer></script>
+    <script src="app.js?v=schedule-2" defer></script>
   </body>
 </html>
