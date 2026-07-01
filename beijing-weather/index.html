@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0f172a">
+    <title>北京实时天气</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="weather-app" aria-live="polite">
+      <section class="hero-card">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <header class="app-header">
+          <div>
+            <p class="eyebrow">BEIJING WEATHER</p>
+            <h1>北京天气</h1>
+          </div>
+          <button id="refreshButton" class="refresh-button" type="button">刷新</button>
+        </header>
+
+        <div id="status" class="status">正在获取北京实时天气...</div>
+
+        <section class="current-weather" aria-label="当前天气">
+          <div>
+            <p id="condition" class="condition">--</p>
+            <p id="updatedAt" class="updated-at">更新时间 --</p>
+          </div>
+          <div class="temperature-wrap">
+            <span id="temperature" class="temperature">--</span>
+            <span class="degree">°C</span>
+          </div>
+        </section>
+
+        <section class="metrics" aria-label="天气指标">
+          <article class="metric-card">
+            <span>体感温度</span>
+            <strong id="feelsLike">--°C</strong>
+          </article>
+          <article class="metric-card">
+            <span>相对湿度</span>
+            <strong id="humidity">--%</strong>
+          </article>
+          <article class="metric-card">
+            <span>风速</span>
+            <strong id="windSpeed">-- km/h</strong>
+          </article>
+          <article class="metric-card">
+            <span>风向</span>
+            <strong id="windDirection">--</strong>
+          </article>
+        </section>
+
+        <section class="forecast-panel" aria-label="未来三天天气预报">
+          <div class="panel-heading">
+            <h2>未来三天</h2>
+            <span>最高 / 最低</span>
+          </div>
+          <div id="forecastList" class="forecast-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
