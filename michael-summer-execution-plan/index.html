@@ -2583,6 +2583,114 @@
       }
     }
 
+    /* Responsive correction: make the live dashboard fill the viewport */
+    #home.hero.view-section.active {
+      display: block;
+      width: 100%;
+    }
+
+    main {
+      width: 100%;
+    }
+
+    @media (min-width: 1181px) {
+      .live-dashboard {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 761px) and (max-width: 1180px) {
+      .sidebar {
+        display: none;
+      }
+
+      .app-shell {
+        display: block;
+      }
+
+      main {
+        padding: 14px 16px 32px;
+      }
+
+      .topbar {
+        margin-bottom: 10px;
+      }
+
+      .live-dashboard {
+        grid-template-columns: minmax(0, 1fr) minmax(360px, 0.95fr);
+        width: 100%;
+      }
+
+      .now-panel {
+        padding: 18px 18px;
+      }
+
+      .clock-time {
+        font-size: clamp(58px, 8vw, 86px);
+      }
+
+      .current-task-label {
+        font-size: clamp(40px, 5.8vw, 60px);
+      }
+
+      .current-task {
+        font-size: clamp(48px, 7vw, 72px);
+      }
+
+      .current-task.long-text {
+        font-size: clamp(40px, 5.8vw, 56px);
+      }
+
+      .weather-box {
+        min-width: 190px;
+      }
+
+      .next-title {
+        font-size: clamp(36px, 5.2vw, 58px);
+      }
+
+      .task-list li {
+        font-size: 14px;
+      }
+
+      .today-slot {
+        grid-template-columns: 78px 1fr;
+        min-height: 32px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .sidebar {
+        display: none;
+      }
+
+      #home.hero.view-section.active {
+        display: block;
+      }
+
+      .live-dashboard {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+
+      .now-panel {
+        border-right: 0;
+        border-bottom: 2px solid #050505;
+      }
+
+      .clock-time {
+        font-size: clamp(54px, 18vw, 82px);
+      }
+
+      .current-task-label {
+        font-size: clamp(38px, 12vw, 58px);
+      }
+
+      .current-task {
+        font-size: clamp(44px, 14vw, 68px);
+      }
+    }
+
     @media print {
       body {
         background: #ffffff;
