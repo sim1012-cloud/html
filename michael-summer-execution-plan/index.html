@@ -2495,6 +2495,295 @@
       font-weight: 900;
     }
 
+    .solo-drill-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .solo-drill-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+      border: 2px solid #050505;
+      background: #ffffff;
+      padding: 12px;
+    }
+
+    .solo-card-top {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .solo-card-top span {
+      display: inline-grid;
+      place-items: center;
+      height: 34px;
+      border: 2px solid #050505;
+      background: #ffe200;
+      color: #050505;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .solo-card-top h3 {
+      margin: 0;
+      color: #050505;
+      font-size: clamp(18px, 1.35vw, 26px);
+      font-weight: 950;
+      line-height: 1.08;
+    }
+
+    .solo-field {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border: 2px solid #050505;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        #11783f;
+      background-size: 38px 38px, 38px 38px, auto;
+    }
+
+    .solo-field::before {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 2px solid rgba(255, 255, 255, 0.82);
+    }
+
+    .solo-goal,
+    .solo-mini-goal {
+      position: absolute;
+      left: 50%;
+      top: 7%;
+      width: 34%;
+      height: 13%;
+      border: 3px solid #ffffff;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+      background-size: 9px 9px;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .solo-mini-goal {
+      width: 18%;
+      height: 9%;
+      top: auto;
+      bottom: 8%;
+    }
+
+    .solo-cone,
+    .solo-marker {
+      position: absolute;
+      z-index: 4;
+    }
+
+    .solo-cone {
+      width: 14px;
+      height: 18px;
+      background: #ffe200;
+      border: 2px solid #050505;
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .solo-marker {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #050505;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .solo-player,
+    .solo-ball,
+    .solo-wall {
+      position: absolute;
+      z-index: 5;
+      border: 2px solid #050505;
+    }
+
+    .solo-player {
+      width: 24px;
+      height: 32px;
+      background: #ff3b22;
+      border-radius: 999px 999px 6px 6px;
+    }
+
+    .solo-ball {
+      width: 16px;
+      height: 16px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .solo-wall {
+      width: 36px;
+      height: 42px;
+      background: #1c66e5;
+    }
+
+    .solo-route,
+    .solo-curve {
+      position: absolute;
+      z-index: 3;
+      border-color: #ffffff;
+      pointer-events: none;
+    }
+
+    .solo-route {
+      height: 0;
+      border-top: 4px dashed #ffffff;
+      transform-origin: left center;
+    }
+
+    .solo-route::after,
+    .solo-curve::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      top: -8px;
+      width: 12px;
+      height: 12px;
+      border-top: 4px solid #ffffff;
+      border-right: 4px solid #ffffff;
+      transform: rotate(45deg);
+    }
+
+    .solo-curve {
+      border: 4px dashed #ffffff;
+      border-left: 0;
+      border-bottom: 0;
+      border-radius: 0 80px 0 0;
+      width: 36%;
+      height: 42%;
+    }
+
+    .solo-label {
+      position: absolute;
+      z-index: 6;
+      padding: 2px 6px;
+      border: 2px solid #050505;
+      background: #ffe200;
+      color: #050505;
+      font-size: 12px;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .drill-square .solo-player { left: 42%; top: 45%; }
+    .drill-square .solo-ball { left: 50%; top: 57%; }
+    .drill-square .c1 { left: 26%; top: 26%; }
+    .drill-square .c2 { right: 26%; top: 26%; }
+    .drill-square .c3 { left: 26%; bottom: 25%; }
+    .drill-square .c4 { right: 26%; bottom: 25%; }
+    .drill-square .r1 { left: 45%; top: 57%; width: 28%; transform: rotate(-28deg); }
+    .drill-square .r2 { left: 54%; top: 47%; width: 26%; transform: rotate(32deg); }
+    .drill-square .l1 { right: 10%; bottom: 12%; }
+
+    .drill-wall .solo-goal { top: 6%; }
+    .drill-wall .solo-player { left: 43%; bottom: 18%; }
+    .drill-wall .solo-ball { left: 50%; bottom: 28%; }
+    .drill-wall .solo-wall { left: 45%; top: 42%; }
+    .drill-wall .r1 { left: 49%; bottom: 33%; width: 29%; transform: rotate(-42deg); }
+    .drill-wall .r2 { left: 51%; top: 38%; width: 28%; transform: rotate(38deg); }
+    .drill-wall .c1 { left: 22%; bottom: 22%; }
+    .drill-wall .c2 { right: 22%; bottom: 22%; }
+    .drill-wall .l1 { left: 8%; top: 10%; }
+
+    .drill-diagonal .solo-player { left: 16%; bottom: 16%; }
+    .drill-diagonal .solo-ball { left: 26%; bottom: 20%; }
+    .drill-diagonal .c1 { left: 34%; bottom: 31%; }
+    .drill-diagonal .c2 { left: 48%; bottom: 48%; }
+    .drill-diagonal .c3 { left: 61%; bottom: 64%; }
+    .drill-diagonal .c4 { left: 74%; bottom: 78%; }
+    .drill-diagonal .r1 { left: 25%; bottom: 25%; width: 60%; transform: rotate(-37deg); }
+    .drill-diagonal .r2 { left: 47%; bottom: 45%; width: 24%; transform: rotate(32deg); }
+    .drill-diagonal .l1 { right: 8%; top: 8%; }
+
+    .drill-curve .solo-goal { top: 6%; }
+    .drill-curve .solo-player { left: 18%; bottom: 17%; }
+    .drill-curve .solo-ball { left: 31%; bottom: 24%; }
+    .drill-curve .solo-wall { left: 46%; top: 43%; }
+    .drill-curve .solo-curve { left: 35%; top: 20%; }
+    .drill-curve .c1 { left: 38%; bottom: 22%; }
+    .drill-curve .c2 { left: 58%; bottom: 34%; }
+    .drill-curve .l1 { right: 9%; top: 16%; }
+
+    .drill-finish .solo-goal { top: 6%; }
+    .drill-finish .solo-player { left: 24%; bottom: 18%; }
+    .drill-finish .solo-ball { left: 37%; bottom: 26%; }
+    .drill-finish .solo-wall { left: 56%; top: 42%; }
+    .drill-finish .r1 { left: 36%; bottom: 30%; width: 34%; transform: rotate(-30deg); }
+    .drill-finish .r2 { left: 55%; top: 37%; width: 28%; transform: rotate(-34deg); }
+    .drill-finish .c1 { left: 20%; bottom: 32%; }
+    .drill-finish .c2 { right: 19%; bottom: 32%; }
+    .drill-finish .l1 { left: 8%; top: 12%; }
+
+    .drill-dual .solo-mini-goal:nth-of-type(1) { left: 28%; }
+    .drill-dual .solo-mini-goal:nth-of-type(2) { left: 72%; }
+    .drill-dual .solo-player { left: 20%; bottom: 16%; }
+    .drill-dual .solo-ball { left: 32%; bottom: 22%; }
+    .drill-dual .solo-wall { left: 48%; top: 43%; }
+    .drill-dual .r1 { left: 31%; bottom: 27%; width: 32%; transform: rotate(-24deg); }
+    .drill-dual .r2 { left: 52%; top: 44%; width: 30%; transform: rotate(30deg); }
+    .drill-dual .c1 { left: 44%; bottom: 20%; }
+    .drill-dual .c2 { right: 24%; bottom: 20%; }
+    .drill-dual .l1 { left: 8%; top: 10%; }
+
+    .drill-speed .solo-goal { top: auto; bottom: 8%; width: 22%; height: 10%; }
+    .drill-speed .solo-player { left: 44%; top: 43%; }
+    .drill-speed .solo-ball { left: 52%; top: 55%; }
+    .drill-speed .c1 { left: 14%; top: 50%; }
+    .drill-speed .c2 { left: 32%; top: 50%; }
+    .drill-speed .c3 { left: 64%; top: 50%; }
+    .drill-speed .c4 { left: 82%; top: 50%; }
+    .drill-speed .r1 { left: 16%; top: 56%; width: 68%; transform: rotate(0deg); }
+    .drill-speed .r2 { left: 59%; top: 55%; width: 26%; transform: rotate(42deg); }
+    .drill-speed .l1 { right: 8%; top: 12%; }
+
+    .drill-fourfinish .solo-goal:nth-of-type(1) { left: 28%; top: 7%; width: 22%; height: 10%; }
+    .drill-fourfinish .solo-goal:nth-of-type(2) { left: 72%; top: 7%; width: 22%; height: 10%; }
+    .drill-fourfinish .solo-mini-goal:nth-of-type(3) { left: 28%; bottom: 8%; }
+    .drill-fourfinish .solo-mini-goal:nth-of-type(4) { left: 72%; bottom: 8%; }
+    .drill-fourfinish .solo-player { left: 44%; top: 45%; }
+    .drill-fourfinish .solo-ball { left: 52%; top: 55%; }
+    .drill-fourfinish .r1 { left: 50%; top: 52%; width: 30%; transform: rotate(-48deg); }
+    .drill-fourfinish .r2 { left: 45%; top: 52%; width: 28%; transform: rotate(136deg); }
+    .drill-fourfinish .c1 { left: 30%; top: 38%; }
+    .drill-fourfinish .c2 { right: 30%; top: 38%; }
+    .drill-fourfinish .l1 { right: 8%; bottom: 10%; }
+
+    .solo-drill-card .detail-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .solo-drill-card .detail-list li {
+      margin-bottom: 5px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1180px) {
+      .solo-drill-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .solo-drill-board {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* Detail page color cleanup */
     .day-map {
       gap: 0;
@@ -3033,117 +3322,142 @@
           <span class="pill">By Weekly Schedule</span>
         </div>
 
-        <div class="visual-panel">
-          <div class="field-diagram" aria-label="足球训练场地示意">
-            <div class="goal-box">
-              <span>3</span><span>2</span><span>3</span>
-              <span>2</span><span>1</span><span>2</span>
-              <span>2</span><span>1</span><span>2</span>
-            </div>
-            <i class="cone c1"></i>
-            <i class="cone c2"></i>
-            <i class="cone c3"></i>
-            <i class="cone c4"></i>
-            <i class="cone c5"></i>
-            <i class="shot-line"></i>
-            <i class="dribble-line"></i>
-            <i class="ball-dot"></i>
-            <div class="field-label">一块小场地即可：上方是九宫格球门，下方是起射点，中段用标志碟做盘带路线。</div>
-          </div>
-
-          <div class="tool-board" aria-label="足球道具图形清单">
-            <div class="tool-item"><div class="tool-icon">9</div><strong>九宫格</strong><span>目标布、胶带或彩色贴纸，训练远角命中。</span></div>
-            <div class="tool-item"><div class="tool-icon">C</div><strong>标志碟</strong><span>8-12 个，用于小方格、变向点和起射区。</span></div>
-            <div class="tool-item"><div class="tool-icon">G</div><strong>门框</strong><span>折叠门或固定球门，配合得分区。</span></div>
-            <div class="tool-item"><div class="tool-icon">B</div><strong>足球</strong><span>2-3 个 5 号球，减少捡球中断。</span></div>
-            <div class="tool-item"><div class="tool-icon">T</div><strong>计时</strong><span>秒表记录限时盘带和组间休息。</span></div>
-            <div class="tool-item"><div class="tool-icon">V</div><strong>视频</strong><span>手机三脚架拍侧面射门和正面盘带。</span></div>
-          </div>
+        <div class="tool-board" aria-label="单人足球训练道具清单">
+          <div class="tool-item"><div class="tool-icon">G</div><strong>球门</strong><span>折叠门或固定门，贴 3×3 九宫格做命中区。</span></div>
+          <div class="tool-item"><div class="tool-icon">C</div><strong>标志碟</strong><span>至少 12 个，用来做小方格、蛇形线、起射点和目标门。</span></div>
+          <div class="tool-item"><div class="tool-icon">M</div><strong>标志杆/假人</strong><span>多人防守全部改为静态防守点，训练摆脱角度。</span></div>
+          <div class="tool-item"><div class="tool-icon">W</div><strong>墙面/反弹板</strong><span>代替传球手，练背身接球、第一脚处理和转身。</span></div>
+          <div class="tool-item"><div class="tool-icon">T</div><strong>计时器</strong><span>每组必须限时，速度和命中率一起算。</span></div>
+          <div class="tool-item"><div class="tool-icon">V</div><strong>手机录像</strong><span>每周拍侧面射门和正面盘带，修支撑脚和触球距离。</span></div>
         </div>
 
-        <div class="grid-3">
-          <article class="training-card">
-            <div class="card-top">
-              <h3>弧线球射门</h3>
-              <span class="tag">射门</span>
+        <div class="solo-drill-board" aria-label="单人高阶足球训练图">
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>01</span><h3>5米小方格护球出圈</h3></div>
+            <div class="solo-field drill-square" aria-label="5米小方格护球出圈示意图">
+              <i class="solo-cone c1"></i><i class="solo-cone c2"></i><i class="solo-cone c3"></i><i class="solo-cone c4"></i>
+              <i class="solo-player"></i><i class="solo-ball"></i><i class="solo-route r1"></i><i class="solo-route r2"></i>
+              <span class="solo-label l1">5m BOX</span>
             </div>
             <ul class="detail-list">
-              <li>距离球门 10-16 米，球放在偏左或偏右 45 度位置，目标是远角上半区。</li>
-              <li>支撑脚落在球侧 20-25 厘米，脚尖指向目标外侧，击球点选择球的外侧下方。</li>
-              <li>先做 3 组无门框练习，每组 10 脚，只看球旋转；再做 3 组有目标射门。</li>
-              <li>左右脚都练：强脚 30 脚，弱脚 15 脚。记录命中九宫格的数量。</li>
+              <li>4 个标志碟围成 5×5 米，单人持球 4 秒内不能出界。</li>
+              <li>每次听口令后用拉球、外拨、扣球任选一边出圈。</li>
+              <li>出圈后 2 秒内完成小门传球或射门。</li>
+              <li>进阶：弱脚连续 6 次成功才算一组。</li>
             </ul>
-            <div class="equipment"><strong>道具：</strong>球门或折叠门框、九宫格目标布或 9 个贴纸标记、5 号球 2-3 个、手机三脚架。</div>
+            <div class="equipment"><strong>难度：</strong>8 组，每组 40 秒；碰碟、球离脚超过 1 米、低头超过 2 秒都重来。</div>
           </article>
 
-          <article class="training-card">
-            <div class="card-top">
-              <h3>微调整后射门</h3>
-              <span class="tag orange">比赛动作</span>
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>02</span><h3>背身接墙转身射门</h3></div>
+            <div class="solo-field drill-wall" aria-label="背身接墙转身射门示意图">
+              <i class="solo-goal"></i><i class="solo-wall"></i><i class="solo-cone c1"></i><i class="solo-cone c2"></i>
+              <i class="solo-player"></i><i class="solo-ball"></i><i class="solo-route r1"></i><i class="solo-route r2"></i>
+              <span class="solo-label l1">WALL PASS</span>
             </div>
             <ul class="detail-list">
-              <li>用 4 个标志碟做 1.5 米小方格，接球后第一脚调整，第二脚射门。</li>
-              <li>训练节奏：侧向拨球、向前趟球、回拉横拨、假射扣球，各 8 次。</li>
-              <li>要求调整步不超过两步，射门前抬头看一次目标。</li>
-              <li>加入压力：家长或同伴从侧后方慢速逼近，逼迫快速完成动作。</li>
+              <li>站在反弹墙前 6-8 米，背身接反弹球，第一脚护到远侧。</li>
+              <li>第二脚完成半转身，第三脚射门或推入目标门。</li>
+              <li>每 5 次换方向：右肩转、左肩转、回拉转身。</li>
+              <li>进阶：接球前先回头扫描目标角一次。</li>
             </ul>
-            <div class="equipment"><strong>道具：</strong>标志碟 8 个、弹力绳或线条做起射区、球门、秒表。</div>
+            <div class="equipment"><strong>难度：</strong>30 次，至少 18 次射正；第一脚停死或停到身体正前方不算。</div>
           </article>
 
-          <article class="training-card">
-            <div class="card-top">
-              <h3>九宫格目标训练</h3>
-              <span class="tag green">命中率</span>
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>03</span><h3>斜线连续变向突破</h3></div>
+            <div class="solo-field drill-diagonal" aria-label="斜线连续变向突破示意图">
+              <i class="solo-cone c1"></i><i class="solo-cone c2"></i><i class="solo-cone c3"></i><i class="solo-cone c4"></i>
+              <i class="solo-player"></i><i class="solo-ball"></i><i class="solo-route r1"></i><i class="solo-route r2"></i>
+              <span class="solo-label l1">5 CONES</span>
             </div>
             <ul class="detail-list">
-              <li>球门划成 3×3：上远角 3 分，下远角 2 分，中路 1 分，偏出 0 分。</li>
-              <li>每轮 10 脚，必须从不同角度起脚：正面、左肋、右肋各一轮。</li>
-              <li>目标不是大力，而是脚法稳定。连续 3 脚偏同一侧时，立刻停下来改支撑脚方向。</li>
-              <li>每周末做一次 30 脚测试，记录总分。</li>
+              <li>按训练 8 的思路布 5 个斜线标志桶，间距 2.5-3 米。</li>
+              <li>每到桶前必须先小变向，再斜向加速，不走直线。</li>
+              <li>动作组合：内扣外拨、外脚背切线、拉球跨步各 4 轮。</li>
+              <li>最后一桶后接 5 米冲刺和低平球射门。</li>
             </ul>
-            <div class="equipment"><strong>道具：</strong>九宫格目标布最佳；没有的话用胶带、绳子、衣夹或彩色标记分区。</div>
+            <div class="equipment"><strong>难度：</strong>12 轮计时；优秀标准是单轮 11 秒内且不碰桶。</div>
           </article>
 
-          <article class="training-card">
-            <div class="card-top">
-              <h3>连续过人盘带</h3>
-              <span class="tag violet">盘带</span>
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>04</span><h3>弧线任意球绕标志墙</h3></div>
+            <div class="solo-field drill-curve" aria-label="弧线任意球绕标志墙示意图">
+              <i class="solo-goal"></i><i class="solo-wall"></i><i class="solo-cone c1"></i><i class="solo-cone c2"></i>
+              <i class="solo-player"></i><i class="solo-ball"></i><i class="solo-curve"></i>
+              <span class="solo-label l1">CURVE</span>
             </div>
             <ul class="detail-list">
-              <li>6 个标志桶间距 1.2 米，做内外脚背连续变向，要求身体压低、球不离脚超过一步。</li>
-              <li>动作组合：踩单车、外拨内扣、拉球转身、假射扣球，每个动作接 5 米加速。</li>
-              <li>每次做 5 轮慢速准确、5 轮比赛速度、3 轮限时挑战。</li>
-              <li>评价标准：不碰桶、抬头次数不少于 3 次、最后一脚能衔接传球或射门。</li>
+              <li>用 2-3 根标志杆做人墙，球距门 18-22 米，偏左偏右各练。</li>
+              <li>目标不是只踢高，而是绕过人墙后落到远角区域。</li>
+              <li>每 10 脚记录：过墙、射正、命中角区三个数据。</li>
+              <li>进阶：最后 10 脚只能用弱脚或非惯用侧。</li>
             </ul>
-            <div class="equipment"><strong>道具：</strong>标志桶 6-10 个、标志碟、计时器、可移动小门。</div>
+            <div class="equipment"><strong>难度：</strong>40 脚；过墙且射正达到 45% 后，再加大距离。</div>
           </article>
 
-          <article class="training-card">
-            <div class="card-top">
-              <h3>快速盘带与急停</h3>
-              <span class="tag red">速度</span>
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>05</span><h3>两步吸引后终结</h3></div>
+            <div class="solo-field drill-finish" aria-label="两步吸引后终结示意图">
+              <i class="solo-goal"></i><i class="solo-wall"></i><i class="solo-cone c1"></i><i class="solo-cone c2"></i>
+              <i class="solo-player"></i><i class="solo-ball"></i><i class="solo-route r1"></i><i class="solo-route r2"></i>
+              <span class="solo-label l1">2 TOUCH</span>
             </div>
             <ul class="detail-list">
-              <li>设置 12 米直线，前 8 米加速带球，最后 4 米急停变向。</li>
-              <li>做右脚外侧推进、左脚外侧推进、左右脚交替三种方式。</li>
-              <li>每轮结束必须把球停在 1 米目标圈内，不能只顾速度失控。</li>
-              <li>进阶：听到口令后临时选择左转、右转、回拉，训练反应。</li>
+              <li>用标志杆当防守点，先向它带两步，迫使自己做假动作。</li>
+              <li>第三脚必须横向离开防守点，第四脚完成射门。</li>
+              <li>左右两侧都做：内切射远角、外拨打近角。</li>
+              <li>进阶：从接墙球开始，不能静止起步。</li>
             </ul>
-            <div class="equipment"><strong>道具：</strong>12 米空地、标志碟 6 个、目标圈、口令卡片。</div>
+            <div class="equipment"><strong>难度：</strong>左右各 20 次；4 脚以内完成，超过脚数不计分。</div>
           </article>
 
-          <article class="training-card">
-            <div class="card-top">
-              <h3>训练记录方法</h3>
-              <span class="tag green">复盘</span>
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>06</span><h3>双标志门连续突破</h3></div>
+            <div class="solo-field drill-dual" aria-label="双标志门连续突破示意图">
+              <i class="solo-mini-goal"></i><i class="solo-mini-goal"></i><i class="solo-wall"></i>
+              <i class="solo-cone c1"></i><i class="solo-cone c2"></i><i class="solo-player"></i><i class="solo-ball"></i>
+              <i class="solo-route r1"></i><i class="solo-route r2"></i><span class="solo-label l1">2 GATES</span>
             </div>
             <ul class="detail-list">
-              <li>每次只记录 3 个数字：射门脚数、命中数、盘带失误次数。</li>
-              <li>每周拍 2 段视频：一个射门侧面角度，一个盘带正面角度。</li>
-              <li>复盘只看一个问题，例如支撑脚太远、触球太大、射门前没有抬头。</li>
-              <li>下一次训练开头先修上一次的问题，再进入新动作。</li>
+              <li>用两组标志碟做左右小门，中间放标志杆当第二防守人。</li>
+              <li>第一门完成变向，第二门前再做一次假动作或急停。</li>
+              <li>最后必须从指定小门穿出，再接 8 米加速。</li>
+              <li>进阶：家长只喊颜色，不参与防守，临时决定出口。</li>
             </ul>
-            <div class="equipment"><strong>道具：</strong>手机、三脚架、训练表、笔。视频每段 20-40 秒即可。</div>
+            <div class="equipment"><strong>难度：</strong>10 轮随机口令；触球过大、漏过小门、停球超过 1 秒都失败。</div>
+          </article>
+
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>07</span><h3>慢快慢快推进射门</h3></div>
+            <div class="solo-field drill-speed" aria-label="慢快慢快推进射门示意图">
+              <i class="solo-goal"></i><i class="solo-cone c1"></i><i class="solo-cone c2"></i><i class="solo-cone c3"></i><i class="solo-cone c4"></i>
+              <i class="solo-player"></i><i class="solo-ball"></i><i class="solo-route r1"></i><i class="solo-route r2"></i>
+              <span class="solo-label l1">20m</span>
+            </div>
+            <ul class="detail-list">
+              <li>20 米推进通道，4 个标志点分别是慢控、加速、急停、再加速。</li>
+              <li>每段触球距离不同：慢控小触球，加速允许趟大一步。</li>
+              <li>急停后必须抬头，再决定传小门或射门。</li>
+              <li>进阶：最后 5 米加入弱脚调整射门。</li>
+            </ul>
+            <div class="equipment"><strong>难度：</strong>8 轮；单轮 14 秒内且最后一脚射正才算完成。</div>
+          </article>
+
+          <article class="solo-drill-card">
+            <div class="solo-card-top"><span>08</span><h3>四象限终结射门</h3></div>
+            <div class="solo-field drill-fourfinish" aria-label="四象限终结射门示意图">
+              <i class="solo-goal"></i><i class="solo-goal"></i><i class="solo-mini-goal"></i><i class="solo-mini-goal"></i>
+              <i class="solo-cone c1"></i><i class="solo-cone c2"></i><i class="solo-player"></i><i class="solo-ball"></i>
+              <i class="solo-route r1"></i><i class="solo-route r2"></i><span class="solo-label l1">FINISH</span>
+            </div>
+            <ul class="detail-list">
+              <li>四个小区域对应四种终结：一脚、带球、背身转身、对抗假人后射门。</li>
+              <li>每轮随机选一个区域，不能提前准备固定动作。</li>
+              <li>射门前必须看门将位置，用贴纸标出远角和近角。</li>
+              <li>进阶：每轮最后两脚必须弱脚完成。</li>
+            </ul>
+            <div class="equipment"><strong>难度：</strong>32 脚测试；射正 20 脚、命中角区 8 脚为合格。</div>
           </article>
         </div>
       </section>
