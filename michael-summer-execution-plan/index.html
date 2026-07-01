@@ -1,0 +1,3798 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Michael 暑假执行计划</title>
+  <style>
+    :root {
+      --ink: #162033;
+      --muted: #667085;
+      --line: #d7dde8;
+      --paper: #f6f7fb;
+      --panel: #ffffff;
+      --blue: #1f66e5;
+      --green: #14926f;
+      --orange: #e57224;
+      --red: #c43d3d;
+      --violet: #6941c6;
+      --lime: #c9ff1f;
+      --amber: #ff970f;
+      --night: #0c0e0f;
+      --shadow: 0 18px 46px rgba(32, 45, 72, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(201, 255, 31, 0.22), transparent 24%),
+        radial-gradient(circle at 22% 78%, rgba(255, 151, 15, 0.12), transparent 28%),
+        linear-gradient(180deg, #fbfbfb 0%, #eef0f2 100%);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 20px;
+      color: #e7ecf7;
+      background:
+        radial-gradient(circle at 35% 12%, rgba(201, 255, 31, 0.14), transparent 26%),
+        linear-gradient(180deg, #101313, #050606);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--lime), #35a000);
+      color: #111111;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.2;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 4px;
+      color: #aab4c7;
+      font-size: 12px;
+    }
+
+    .nav-group {
+      margin: 18px 0 10px;
+      color: #7f8aa0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 38px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #d4dbea;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible,
+    .nav-link.active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      outline: none;
+    }
+
+    .nav-link span:last-child {
+      color: #7f8aa0;
+      font-size: 12px;
+    }
+
+    .sidebar-note {
+      margin-top: 24px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: #cbd5e8;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    main {
+      min-width: 0;
+      padding: 28px clamp(18px, 4vw, 56px) 64px;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .date-tag {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #30363d;
+      background: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .icon-button,
+    .primary-button {
+      min-height: 38px;
+      border: 2px solid #050505;
+      border-radius: 0;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .icon-button {
+      width: 38px;
+      color: #050505;
+      background: #ffffff;
+    }
+
+    .primary-button {
+      padding: 0 14px;
+      color: #111111;
+      background: #ffe200;
+      border-color: #050505;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    .hero.view-section.active {
+      display: grid;
+    }
+
+    .live-dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(310px, 0.52fr);
+      gap: 20px;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .now-panel,
+    .next-panel,
+    .today-panel,
+    .task-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 34px;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(120, 155, 82, 0.34), transparent 30%),
+        radial-gradient(circle at 78% 72%, rgba(255, 151, 15, 0.12), transparent 26%),
+        linear-gradient(145deg, #171a1a, #080909 72%);
+      box-shadow:
+        0 34px 80px rgba(0, 0, 0, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .now-panel::before,
+    .next-panel::before,
+    .today-panel::before,
+    .task-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+      background-size: 16px 16px;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .now-panel {
+      min-height: 500px;
+      padding: clamp(28px, 4vw, 54px);
+      border-radius: 42px;
+    }
+
+    .calendar-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .calendar-date {
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .weather-box {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+    }
+
+    .weather-box label {
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .weather-box input {
+      width: 150px;
+      border: 0;
+      color: #ffffff;
+      background: transparent;
+      outline: none;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .weather-box input[readonly] {
+      cursor: default;
+    }
+
+    .route-row {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(18px, 4vw, 42px);
+      margin-bottom: 24px;
+    }
+
+    .route-code {
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+    }
+
+    .route-name {
+      margin-top: 8px;
+      color: #ffffff;
+      font-size: clamp(20px, 3vw, 34px);
+      font-weight: 900;
+    }
+
+    .route-sub {
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.46);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .route-arrow {
+      color: var(--amber);
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 0.9;
+      text-shadow: 0 0 20px rgba(255, 151, 15, 0.34);
+    }
+
+    .progress-rail {
+      position: relative;
+      height: 72px;
+      margin-top: 24px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.42);
+    }
+
+    .progress-fill {
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      width: 48%;
+      height: 54px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e9ff4a, #73c900);
+      box-shadow: 0 0 34px rgba(201, 255, 31, 0.65);
+      transition: width 260ms ease;
+    }
+
+    .progress-plane {
+      position: absolute;
+      top: 50%;
+      right: 22px;
+      transform: translateY(-50%);
+      color: #ffffff;
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .progress-note {
+      position: absolute;
+      right: 22px;
+      top: 50%;
+      color: rgba(255, 255, 255, 0.36);
+      font-size: 18px;
+      font-weight: 900;
+      transform: translateY(-50%);
+    }
+
+    .clock-time {
+      margin: 0;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: clamp(68px, 10vw, 142px);
+      line-height: 0.92;
+      letter-spacing: 0;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.14);
+    }
+
+    .current-label {
+      margin: 28px 0 10px;
+      color: var(--amber);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .current-task {
+      margin: 0;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: clamp(46px, 7vw, 96px);
+      line-height: 1;
+      letter-spacing: 0;
+      color: #ffffff;
+    }
+
+    .current-window {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      margin-top: 18px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: #111111;
+      background: var(--lime);
+      box-shadow: 0 0 26px rgba(201, 255, 31, 0.46);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .now-subgrid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .mini-stat {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .mini-stat span {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .next-panel,
+    .today-panel,
+    .task-panel {
+      padding: 22px;
+      border-radius: 28px;
+    }
+
+    .panel-kicker {
+      margin: 0 0 8px;
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .next-title {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+
+    .next-time {
+      margin: 8px 0 0;
+      color: var(--amber);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 9px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .task-list li {
+      position: relative;
+      padding-left: 18px;
+      color: #475467;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .task-list li::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 16px rgba(201, 255, 31, 0.34);
+    }
+
+    .today-strip {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .today-slot {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .today-slot.active {
+      color: #111111;
+      background: var(--lime);
+      border-color: var(--lime);
+      box-shadow: 0 0 24px rgba(201, 255, 31, 0.36);
+    }
+
+    .today-slot span:first-child {
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .today-slot span:last-child {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* Brutalist schedule dashboard */
+    .hero {
+      margin-bottom: 0;
+    }
+
+    .live-dashboard {
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.72fr);
+      gap: 0;
+      border: 2px solid #050505;
+      background: #ffffff;
+    }
+
+    .now-panel,
+    .next-panel,
+    .today-panel,
+    .task-panel {
+      border: 0;
+      border-radius: 0;
+      color: #050505;
+      background: #ffffff;
+      box-shadow: none;
+    }
+
+    .now-panel::before,
+    .next-panel::before,
+    .today-panel::before,
+    .task-panel::before {
+      display: none;
+    }
+
+    .now-panel {
+      min-height: calc(100vh - 108px);
+      padding: clamp(22px, 3.4vw, 44px);
+      border-right: 2px solid #050505;
+    }
+
+    .side-stack {
+      gap: 0;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      min-height: calc(100vh - 108px);
+    }
+
+    .next-panel,
+    .task-panel,
+    .today-panel {
+      padding: 18px;
+      border-bottom: 2px solid #050505;
+    }
+
+    .today-panel {
+      border-bottom: 0;
+      overflow: hidden;
+    }
+
+    .calendar-row {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #050505;
+    }
+
+    .calendar-date,
+    .route-sub {
+      color: #4b4b4b;
+    }
+
+    .weather-box {
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #ffe200;
+      backdrop-filter: none;
+    }
+
+    .weather-box label,
+    .weather-box input {
+      color: #050505;
+    }
+
+    .route-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+      margin: 10px 0 18px;
+    }
+
+    .route-code {
+      font-size: clamp(28px, 3.4vw, 52px);
+      color: #050505;
+      letter-spacing: 0;
+    }
+
+    .route-name {
+      color: #050505;
+    }
+
+    .route-arrow {
+      display: none;
+      color: #ff3b22;
+      text-shadow: none;
+    }
+
+    .clock-time {
+      color: #050505;
+      font-size: clamp(64px, 10vw, 132px);
+      text-shadow: none;
+    }
+
+    .current-label {
+      color: #050505;
+      margin-top: 18px;
+    }
+
+    .current-task {
+      display: inline;
+      padding: 0 8px;
+      color: #050505;
+      background: #ff3b22;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      font-size: clamp(48px, 7.4vw, 112px);
+      line-height: 1.02;
+    }
+
+    .current-window {
+      border-radius: 0;
+      color: #050505;
+      background: #ffe200;
+      box-shadow: none;
+    }
+
+    .progress-rail {
+      height: 54px;
+      margin-top: 22px;
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #f1f1f1;
+      box-shadow: none;
+    }
+
+    .progress-fill {
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 0;
+      background: #c9ff1f;
+      box-shadow: none;
+    }
+
+    .progress-note {
+      color: #050505;
+      right: 16px;
+    }
+
+    .progress-plane {
+      display: none;
+    }
+
+    .now-subgrid {
+      display: none;
+    }
+
+    .panel-kicker {
+      color: #050505;
+    }
+
+    .next-panel {
+      background: #ffe200;
+    }
+
+    .next-title {
+      color: #050505;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+    }
+
+    .next-time {
+      color: #050505;
+    }
+
+    .task-list {
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .task-list li {
+      color: #050505;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .task-list li::before {
+      background: #ff3b22;
+      box-shadow: none;
+    }
+
+    .today-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .today-slot {
+      grid-template-columns: 76px 1fr;
+      gap: 7px;
+      min-height: 34px;
+      padding: 6px 7px;
+      border: 1px solid #050505;
+      border-radius: 0;
+      color: #050505;
+      background: #ffffff;
+      opacity: 1;
+    }
+
+    .today-slot.done {
+      color: #b9b9b9;
+      background: #eeeeee;
+      border-color: #d6d6d6;
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+
+    .today-slot.upcoming {
+      color: #050505;
+      background: #ffffff;
+      border-color: #050505;
+      opacity: 1;
+      text-decoration: none;
+    }
+
+    .today-slot.active {
+      color: #050505;
+      background: #ff3b22;
+      border-color: #050505;
+      box-shadow: none;
+      opacity: 1;
+      text-decoration: none;
+    }
+
+    .today-slot span:first-child {
+      font-size: 10px;
+    }
+
+    .today-slot span:last-child {
+      font-size: 12px;
+    }
+
+    /* Final brutalist layout refinements */
+    .app-shell {
+      grid-template-columns: 250px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      color: #050505;
+      background: #ffffff;
+      border-right: 2px solid #050505;
+    }
+
+    .brand {
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #050505;
+      grid-template-columns: 38px minmax(0, 1fr);
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #c9ff1f;
+    }
+
+    .brand span,
+    .nav-group,
+    .nav-link span:last-child {
+      color: #555555;
+    }
+
+    .brand strong {
+      font-size: 15px;
+      letter-spacing: 0;
+    }
+
+    .nav-link {
+      min-height: 32px;
+      padding: 6px 8px;
+      border-radius: 0;
+      color: #050505;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible,
+    .nav-link.active {
+      color: #050505;
+      background: #ffe200;
+      outline: 2px solid #050505;
+    }
+
+    .sidebar-note {
+      padding: 12px;
+      border: 2px solid #050505;
+      border-radius: 0;
+      color: #050505;
+      background: #f2f2f2;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    main {
+      padding: 14px 22px 24px;
+    }
+
+    .topbar {
+      margin-bottom: 14px;
+    }
+
+    .live-dashboard {
+      grid-template-columns: minmax(0, 1fr) 39%;
+      max-height: calc(100vh - 112px);
+      overflow: hidden;
+    }
+
+    .now-panel {
+      min-height: auto;
+      height: calc(100vh - 112px);
+      padding: clamp(18px, 2.4vw, 30px);
+    }
+
+    .side-stack {
+      min-height: auto;
+      height: calc(100vh - 112px);
+      grid-template-rows: auto auto minmax(0, 1fr);
+    }
+
+    .calendar-row {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+    }
+
+    .route-row {
+      gap: 12px;
+      margin: 8px 0 14px;
+    }
+
+    .route-code {
+      font-size: clamp(42px, 6.2vw, 84px);
+      line-height: 0.86;
+    }
+
+    .route-name {
+      font-size: clamp(18px, 2.4vw, 28px);
+    }
+
+    .route-sub {
+      font-size: 14px;
+    }
+
+    .route-arrow {
+      font-size: clamp(34px, 4.4vw, 56px);
+    }
+
+    .clock-time {
+      font-size: clamp(58px, 7.8vw, 104px);
+      line-height: 0.9;
+    }
+
+    .current-label {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+
+    .current-task {
+      display: inline-block;
+      max-width: 100%;
+      font-size: clamp(42px, 5.8vw, 76px);
+      line-height: 1.04;
+      overflow-wrap: anywhere;
+    }
+
+    .current-window {
+      min-height: 28px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .progress-rail {
+      height: 42px;
+      margin-top: 14px;
+    }
+
+    .progress-note {
+      font-size: 14px;
+    }
+
+    .progress-plane {
+      font-size: 20px;
+    }
+
+    .next-panel,
+    .task-panel,
+    .today-panel {
+      padding: 12px 14px;
+    }
+
+    .panel-kicker {
+      margin-bottom: 6px;
+      font-size: 10px;
+    }
+
+    .next-title {
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.02;
+    }
+
+    .next-time {
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .task-list {
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .task-list li {
+      padding-left: 14px;
+      font-size: 12px;
+      line-height: 1.32;
+    }
+
+    .task-list li::before {
+      top: 7px;
+      width: 5px;
+      height: 5px;
+    }
+
+    .today-panel {
+      min-height: 0;
+    }
+
+    .today-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+      margin-top: 6px;
+      max-height: calc(100vh - 332px);
+      overflow: hidden;
+    }
+
+    .today-slot {
+      grid-template-columns: 66px 1fr;
+      min-height: 27px;
+      padding: 4px 5px;
+    }
+
+    .today-slot span:first-child {
+      font-size: 9px;
+    }
+
+    .today-slot span:last-child {
+      font-size: 10px;
+      line-height: 1.08;
+    }
+
+    /* Final override: fix wrapping, scale, and top controls */
+    .topbar {
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .date-tag,
+    .icon-button,
+    .primary-button {
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #ffffff;
+      color: #050505;
+      box-shadow: none;
+    }
+
+    .date-tag {
+      min-height: 32px;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .icon-button {
+      width: 32px;
+      min-height: 32px;
+      font-size: 14px;
+    }
+
+    .primary-button {
+      min-height: 32px;
+      padding: 0 12px;
+      background: #ffe200;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .live-dashboard {
+      grid-template-columns: minmax(0, 0.94fr) minmax(470px, 0.82fr);
+      align-items: start;
+    }
+
+    .now-panel,
+    .side-stack {
+      height: auto;
+      min-height: 0;
+    }
+
+    .now-panel {
+      padding: 18px 24px;
+      min-height: 0;
+    }
+
+    .route-code {
+      font-size: clamp(28px, 3.2vw, 46px);
+    }
+
+    .route-name {
+      font-size: clamp(16px, 2vw, 24px);
+    }
+
+    .route-sub {
+      font-size: 12px;
+    }
+
+    .clock-time {
+      font-size: clamp(52px, 6.6vw, 90px);
+      line-height: 0.9;
+      white-space: nowrap;
+    }
+
+    .current-task-label {
+      margin: 10px 0 6px;
+      color: #050505;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: clamp(28px, 3.4vw, 48px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .current-task {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      padding: 0 8px 4px;
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1.02;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+
+    .current-task.long-text {
+      font-size: clamp(26px, 3.2vw, 44px);
+    }
+
+    .current-window {
+      min-height: 26px;
+      padding: 0 8px;
+      font-size: 11px;
+    }
+
+    .progress-rail {
+      height: 34px;
+      margin-top: 10px;
+    }
+
+    .progress-note {
+      right: 10px;
+      font-size: 12px;
+    }
+
+    .next-panel,
+    .task-panel,
+    .today-panel {
+      padding: 14px 16px;
+    }
+
+    .next-title {
+      font-size: clamp(34px, 3.8vw, 56px);
+      line-height: 1;
+      word-break: keep-all;
+    }
+
+    .next-time {
+      font-size: 14px;
+    }
+
+    .panel-kicker {
+      font-size: 12px;
+    }
+
+    .task-list li {
+      font-size: 14px;
+      line-height: 1.22;
+    }
+
+    .today-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+      max-height: none;
+    }
+
+    .today-slot {
+      grid-template-columns: 82px 1fr;
+      min-height: 34px;
+      padding: 5px 7px;
+    }
+
+    .today-slot span:first-child {
+      font-size: 10px;
+    }
+
+    .today-slot span:last-child {
+      font-size: 12px;
+      line-height: 1.08;
+      word-break: keep-all;
+    }
+
+    .compact-route {
+      margin: 10px 0 8px;
+      padding: 10px 0;
+      border-top: 2px solid #050505;
+      border-bottom: 2px solid #050505;
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .compact-route .route-code {
+      margin-bottom: 4px;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .compact-route .route-name {
+      margin-top: 0;
+      font-size: clamp(18px, 2.1vw, 28px);
+      line-height: 1.05;
+    }
+
+    .compact-route .route-sub {
+      margin-top: 4px;
+      font-size: 12px;
+    }
+
+    .compact-route + .current-task {
+      margin-top: 10px;
+    }
+
+    .date-only-route {
+      grid-template-columns: 1fr;
+      margin-top: 10px;
+      padding: 8px 0;
+    }
+
+    .notes-route {
+      grid-template-columns: 1fr;
+      margin-top: 10px;
+      padding: 10px 0;
+    }
+
+    .task-notes {
+      display: grid;
+      gap: 4px;
+      margin: 6px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .task-notes li {
+      display: inline-flex;
+      width: fit-content;
+      padding: 3px 7px;
+      border: 2px solid #050505;
+      color: #050505;
+      background: #f2f2f2;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .task-notes li.important {
+      background: #ffe200;
+    }
+
+    .eyebrow {
+      color: #050505;
+    }
+
+    .now-panel .eyebrow {
+      color: #4b4b4b;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .hero-panel,
+    .scoreboard,
+    .section,
+    .training-card,
+    .check-card,
+    .routine-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      padding: clamp(24px, 4vw, 42px);
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin: 0;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 780px;
+      margin: 18px 0 0;
+      color: #475467;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .visual-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .visual-block {
+      min-height: 76px;
+      padding: 10px;
+      border: 1px solid #dfe6f1;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .visual-block b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .visual-block span {
+      display: block;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .visual-block:first-child span {
+      width: 100%;
+    }
+
+    .visual-block small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .visual-block:nth-child(2) span {
+      width: 80%;
+      background: var(--green);
+    }
+
+    .visual-block:nth-child(3) span {
+      width: 55%;
+      background: var(--orange);
+    }
+
+    .visual-block:nth-child(4) span {
+      width: 70%;
+      background: var(--violet);
+    }
+
+    .visual-block:nth-child(5) span {
+      width: 45%;
+      background: var(--red);
+    }
+
+    .visual-block:nth-child(6) span {
+      width: 60%;
+      background: #344054;
+    }
+
+    .metric {
+      padding: 14px;
+      border: 1px solid #e4e9f2;
+      border-radius: 8px;
+      background: #f9fbff;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .scoreboard {
+      padding: 22px;
+    }
+
+    .scoreboard h2,
+    .section h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .score-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .module-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .home-companion {
+      display: none;
+    }
+
+    .home-companion.active {
+      display: grid;
+    }
+
+    .module-card {
+      display: block;
+      min-height: 170px;
+      padding: 18px;
+      border: 1px solid #dfe6f1;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #ffffff;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+    }
+
+    .module-card:hover,
+    .module-card:focus-visible {
+      border-color: var(--blue);
+      outline: none;
+      transform: translateY(-2px);
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+
+    .module-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--blue);
+      font-weight: 900;
+    }
+
+    .module-card:nth-child(2) .module-icon { background: var(--green); }
+    .module-card:nth-child(3) .module-icon { background: var(--orange); }
+    .module-card:nth-child(4) .module-icon { background: var(--violet); }
+    .module-card:nth-child(5) .module-icon { background: #344054; }
+    .module-card:nth-child(6) .module-icon { background: var(--red); }
+    .module-card:nth-child(7) .module-icon { background: #0878bd; }
+    .module-card:nth-child(8) .module-icon { background: #475467; }
+
+    .module-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .module-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .detail-tools {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .score-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #e4e9f2;
+      border-radius: 8px;
+      background: #fbfcff;
+    }
+
+    .score-number {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--ink);
+      font-weight: 800;
+    }
+
+    .score-item strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+
+    .score-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: clamp(20px, 3vw, 30px);
+    }
+
+    .section-header {
+      display: flex;
+      gap: 18px;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-header p {
+      max-width: 760px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: #eef2f8;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .time-row {
+      display: grid;
+      grid-template-columns: 96px 148px minmax(0, 1fr) 164px;
+      gap: 12px;
+      align-items: stretch;
+      padding: 12px;
+      border: 1px solid #e3e8f1;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .time {
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .task {
+      font-weight: 800;
+    }
+
+    .method,
+    .output {
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .output {
+      padding-left: 12px;
+      border-left: 3px solid #e7edf7;
+    }
+
+    .day-map {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 18px;
+      padding: 12px;
+      border: 1px solid #e1e7f0;
+      border-radius: 8px;
+      background: #f8fafd;
+    }
+
+    .day-segment {
+      min-height: 68px;
+      padding: 9px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .day-segment strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .day-segment:nth-child(2) {
+      grid-column: span 2;
+      background: var(--green);
+    }
+
+    .day-segment:nth-child(3) {
+      grid-column: span 2;
+      background: #2857a8;
+    }
+
+    .day-segment:nth-child(4) {
+      grid-column: span 2;
+      background: var(--orange);
+    }
+
+    .day-segment:nth-child(5) {
+      background: var(--violet);
+    }
+
+    .day-segment:nth-child(6) {
+      background: #344054;
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .training-card {
+      padding: 18px;
+      box-shadow: none;
+    }
+
+    .card-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .card-top h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tag.green {
+      background: var(--green);
+    }
+
+    .tag.orange {
+      background: var(--orange);
+    }
+
+    .tag.violet {
+      background: var(--violet);
+    }
+
+    .tag.red {
+      background: var(--red);
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .detail-list li {
+      position: relative;
+      padding-left: 18px;
+      color: #475467;
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .detail-list li::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.36;
+    }
+
+    .equipment {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f5f7fb;
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .equipment strong {
+      color: var(--ink);
+    }
+
+    .visual-panel {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .field-diagram,
+    .tool-board,
+    .flow-visual,
+    .piano-keys {
+      border: 1px solid #dfe6f1;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .field-diagram {
+      position: relative;
+      min-height: 310px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(135deg, #177d58, #0f6b4c);
+      background-size: 52px 52px, 52px 52px, auto;
+    }
+
+    .field-diagram::before,
+    .field-diagram::after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(255, 255, 255, 0.78);
+      pointer-events: none;
+    }
+
+    .field-diagram::before {
+      inset: 18px;
+      border-radius: 8px;
+    }
+
+    .field-diagram::after {
+      top: 50%;
+      left: 50%;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .goal-box {
+      position: absolute;
+      top: 36px;
+      left: 50%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      width: 158px;
+      height: 92px;
+      border: 3px solid #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .goal-box span {
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .cone {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffcf33;
+      border: 2px solid #ffffff;
+      z-index: 2;
+    }
+
+    .cone.c1 { left: 30%; top: 66%; }
+    .cone.c2 { left: 39%; top: 58%; }
+    .cone.c3 { left: 48%; top: 66%; }
+    .cone.c4 { left: 57%; top: 58%; }
+    .cone.c5 { left: 66%; top: 66%; }
+
+    .ball-dot {
+      position: absolute;
+      left: 50%;
+      bottom: 35px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 5px solid #111827;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+
+    .shot-line,
+    .dribble-line {
+      position: absolute;
+      left: 50%;
+      width: 3px;
+      border-radius: 999px;
+      transform-origin: bottom center;
+      z-index: 1;
+    }
+
+    .shot-line {
+      bottom: 58px;
+      height: 165px;
+      background: #ffffff;
+      transform: rotate(-18deg);
+    }
+
+    .dribble-line {
+      bottom: 58px;
+      height: 120px;
+      background: rgba(255, 207, 51, 0.9);
+      transform: rotate(22deg);
+    }
+
+    .field-label {
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      max-width: 140px;
+      padding: 10px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: rgba(17, 24, 39, 0.72);
+      font-size: 12px;
+      line-height: 1.45;
+      z-index: 4;
+    }
+
+    .tool-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .tool-item {
+      min-height: 94px;
+      padding: 12px;
+      border: 1px solid #e5eaf2;
+      border-radius: 8px;
+      background: #f8fafd;
+    }
+
+    .tool-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--blue);
+      font-weight: 900;
+    }
+
+    .tool-item:nth-child(2) .tool-icon { background: var(--green); }
+    .tool-item:nth-child(3) .tool-icon { background: var(--orange); }
+    .tool-item:nth-child(4) .tool-icon { background: var(--violet); }
+    .tool-item:nth-child(5) .tool-icon { background: var(--red); }
+    .tool-item:nth-child(6) .tool-icon { background: #344054; }
+
+    .tool-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .tool-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .schedule-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .family-schedule {
+      width: 100%;
+      min-width: 1120px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .family-schedule th,
+    .family-schedule td {
+      padding: 10px 8px;
+      border: 1px solid #1f2937;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .family-schedule thead th {
+      color: #ffffff;
+      background: #0878bd;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .family-schedule .time-cell {
+      width: 132px;
+      color: #ffffff;
+      background: #7a7f84;
+      font-weight: 800;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .family-schedule .meal { background: #fff7e8; }
+    .family-schedule .study { background: #eef5ff; }
+    .family-schedule .english { background: #ecfdf4; }
+    .family-schedule .piano { background: #f5efff; }
+    .family-schedule .football { background: #eaf8ef; }
+    .family-schedule .game { background: #fff0f0; }
+    .family-schedule .rest { background: #f8fafc; color: #667085; }
+    .family-schedule .sleep { background: #111827; color: #ffffff; }
+
+    .schedule-note-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 0;
+    }
+
+    .schedule-note {
+      padding: 12px;
+      border: 1px solid #e3e8f1;
+      border-radius: 8px;
+      background: #f8fafd;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .schedule-note strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+    }
+
+    .week-board {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .day-card {
+      min-height: 180px;
+      padding: 14px;
+      border: 1px solid #e3e8f1;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .day-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .day-card p {
+      margin: 0 0 9px;
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.48;
+    }
+
+    .day-bars {
+      display: flex;
+      gap: 4px;
+      margin-top: 12px;
+    }
+
+    .day-bars span {
+      display: block;
+      height: 8px;
+      border-radius: 999px;
+      flex: 1;
+      background: var(--blue);
+    }
+
+    .day-bars span:nth-child(2) { background: var(--green); }
+    .day-bars span:nth-child(3) { background: var(--orange); }
+    .day-bars span:nth-child(4) { background: var(--violet); }
+
+    .routine-card {
+      padding: 18px;
+      box-shadow: none;
+    }
+
+    .routine-card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .piano-keys {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      gap: 4px;
+      margin-bottom: 14px;
+      padding: 12px;
+      min-height: 104px;
+      background: #1f2937;
+    }
+
+    .piano-key {
+      position: relative;
+      min-height: 78px;
+      border-radius: 0 0 6px 6px;
+      background: #ffffff;
+    }
+
+    .piano-key::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -9px;
+      width: 18px;
+      height: 46px;
+      border-radius: 0 0 5px 5px;
+      background: #111827;
+      z-index: 1;
+    }
+
+    .piano-key:nth-child(3)::before,
+    .piano-key:nth-child(7)::before,
+    .piano-key:nth-child(10)::before {
+      display: none;
+    }
+
+    .flow-visual {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 12px;
+      background: #f8fafd;
+    }
+
+    .flow-node {
+      position: relative;
+      min-height: 92px;
+      padding: 12px 10px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .flow-node::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -8px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid currentColor;
+      color: inherit;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .flow-node:last-child::after {
+      display: none;
+    }
+
+    .flow-node strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .flow-node:nth-child(2) { background: var(--green); }
+    .flow-node:nth-child(3) { background: var(--orange); }
+    .flow-node:nth-child(4) { background: var(--violet); }
+    .flow-node:nth-child(5) { background: #344054; }
+
+    .routine-step {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 12px;
+      padding: 11px 0;
+      border-top: 1px solid #edf0f5;
+    }
+
+    .routine-step:first-of-type {
+      border-top: 0;
+    }
+
+    .routine-step strong {
+      color: var(--blue);
+      font-size: 13px;
+    }
+
+    .routine-step span {
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .check-card {
+      padding: 16px;
+      box-shadow: none;
+    }
+
+    .check-card h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+    }
+
+    .checkbox-line {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin: 9px 0;
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .checkbox-line input {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: var(--blue);
+    }
+
+    .review-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .review-table th,
+    .review-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e5eaf2;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .review-table th {
+      color: #344054;
+      background: #f3f6fb;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .review-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .print-note {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Detail pages: unified brutalist UI */
+    .section.view-section {
+      margin-top: 0;
+      padding: 22px;
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #ffffff;
+      box-shadow: none;
+    }
+
+    .section-header {
+      align-items: flex-start;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #050505;
+    }
+
+    .section h2 {
+      max-width: 760px;
+      color: #050505;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: clamp(34px, 4.8vw, 72px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .section-header p {
+      max-width: 920px;
+      color: #343434;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.55;
+    }
+
+    .back-link,
+    .pill {
+      min-height: 34px;
+      border: 2px solid #050505;
+      border-radius: 0;
+      color: #050505;
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .pill {
+      padding: 0 10px;
+      background: #ffe200;
+    }
+
+    .schedule-wrap,
+    .review-table,
+    .field-diagram,
+    .tool-board,
+    .flow-visual,
+    .piano-keys {
+      border: 2px solid #050505;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .family-schedule {
+      border-collapse: collapse;
+    }
+
+    .family-schedule th,
+    .family-schedule td,
+    .review-table th,
+    .review-table td {
+      border: 2px solid #050505;
+      color: #050505;
+      font-weight: 900;
+    }
+
+    .family-schedule thead th,
+    .review-table th {
+      color: #050505;
+      background: #ffe200;
+    }
+
+    .family-schedule .time-cell {
+      color: #ffffff;
+      background: #050505;
+    }
+
+    .family-schedule .meal,
+    .family-schedule .study,
+    .family-schedule .english,
+    .family-schedule .piano,
+    .family-schedule .football,
+    .family-schedule .game,
+    .family-schedule .rest {
+      color: #050505;
+    }
+
+    .family-schedule .meal { background: #fff4cc; }
+    .family-schedule .study { background: #ffffff; }
+    .family-schedule .english { background: #ffffff; }
+    .family-schedule .piano { background: #f0f0f0; }
+    .family-schedule .football { background: #dfff4f; }
+    .family-schedule .game { background: #ff3b22; color: #050505; }
+    .family-schedule .rest { background: #e8e8e8; }
+    .family-schedule .sleep { background: #050505; color: #ffffff; }
+
+    .schedule-note,
+    .training-card,
+    .routine-card,
+    .check-card,
+    .day-card,
+    .tool-item {
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #ffffff;
+      box-shadow: none;
+    }
+
+    .training-card h3,
+    .routine-card h3,
+    .check-card h3,
+    .day-card strong {
+      color: #050505;
+      font-weight: 900;
+    }
+
+    .tag,
+    .tag.green,
+    .tag.orange,
+    .tag.violet,
+    .tag.red,
+    .tool-icon,
+    .score-number {
+      border-radius: 0;
+      color: #050505;
+      background: #ffe200;
+      border: 2px solid #050505;
+    }
+
+    .equipment {
+      border: 2px solid #050505;
+      border-radius: 0;
+      color: #050505;
+      background: #f2f2f2;
+      font-weight: 800;
+    }
+
+    .detail-list li,
+    .day-card p,
+    .routine-step span,
+    .checkbox-line,
+    .review-table td {
+      color: #202020;
+      font-weight: 800;
+    }
+
+    .checkbox-line input {
+      accent-color: #ff3b22;
+    }
+
+    .print-note {
+      color: #050505;
+      font-weight: 900;
+    }
+
+    /* Detail page color cleanup */
+    .day-map {
+      gap: 0;
+      padding: 0;
+      border: 2px solid #050505;
+      border-radius: 0;
+      background: #ffffff;
+    }
+
+    .day-segment,
+    .day-segment:nth-child(2),
+    .day-segment:nth-child(3),
+    .day-segment:nth-child(4),
+    .day-segment:nth-child(5),
+    .day-segment:nth-child(6) {
+      min-height: 74px;
+      padding: 12px;
+      border-right: 2px solid #050505;
+      border-radius: 0;
+      color: #050505;
+      background: #ffffff;
+    }
+
+    .day-segment:nth-child(2),
+    .day-segment:nth-child(5) {
+      background: #c9ff1f;
+    }
+
+    .day-segment:nth-child(4) {
+      background: #ffe200;
+    }
+
+    .day-segment:nth-child(6) {
+      color: #ffffff;
+      background: #050505;
+      border-right: 0;
+    }
+
+    .day-segment strong {
+      color: inherit;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .day-bars {
+      gap: 0;
+      margin-top: 14px;
+      border: 2px solid #050505;
+    }
+
+    .day-bars span {
+      height: 10px;
+      border-radius: 0;
+      background: #050505;
+    }
+
+    .day-bars span:nth-child(1) { background: #ffe200; }
+    .day-bars span:nth-child(2) { background: #c9ff1f; border-left: 2px solid #050505; }
+    .day-bars span:nth-child(3) { background: #ff3b22; border-left: 2px solid #050505; }
+    .day-bars span:nth-child(4) { background: #050505; border-left: 2px solid #050505; }
+
+    .flow-visual {
+      gap: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    .flow-node,
+    .flow-node:nth-child(2),
+    .flow-node:nth-child(3),
+    .flow-node:nth-child(4),
+    .flow-node:nth-child(5) {
+      min-height: 104px;
+      padding: 16px;
+      border-right: 2px solid #050505;
+      border-radius: 0;
+      color: #050505;
+      background: #ffffff;
+    }
+
+    .flow-node:nth-child(2) { background: #c9ff1f; }
+    .flow-node:nth-child(3) { background: #ffe200; }
+    .flow-node:nth-child(4) { background: #ff3b22; }
+    .flow-node:nth-child(5) { color: #ffffff; background: #050505; border-right: 0; }
+
+    .flow-node::after {
+      display: none;
+    }
+
+    .flow-node strong {
+      color: inherit;
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    @media (max-width: 1180px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+      }
+
+      .hero,
+      .live-dashboard,
+      .grid-3,
+      .check-grid,
+      .visual-panel,
+      .module-board {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .week-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        padding: 20px 14px 44px;
+      }
+
+      .topbar,
+      .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero,
+      .hero-meta,
+      .live-dashboard,
+      .now-subgrid,
+      .visual-strip,
+      .grid-2,
+      .grid-3,
+      .check-grid,
+      .week-board,
+      .visual-panel,
+      .module-board,
+      .tool-board,
+      .flow-visual,
+      .schedule-note-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .day-map {
+        grid-template-columns: 1fr;
+      }
+
+      .day-segment,
+      .day-segment:nth-child(2),
+      .day-segment:nth-child(3),
+      .day-segment:nth-child(4) {
+        grid-column: auto;
+      }
+
+      .time-row {
+        grid-template-columns: 1fr;
+      }
+
+      .output {
+        padding-left: 0;
+        border-left: 0;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .app-shell {
+        display: block;
+      }
+
+      .sidebar,
+      .topbar,
+      .actions {
+        display: none;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .section,
+      .hero-panel,
+      .scoreboard {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="页面导航">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div>
+          <strong>Michael 暑假计划</strong>
+          <span>每日执行版 / 2026 Summer</span>
+        </div>
+      </div>
+
+      <div class="nav-group">模块导航</div>
+      <a class="nav-link active" href="#home" data-view-link="home"><span>计划总览</span><span>00</span></a>
+      <a class="nav-link" href="#day" data-view-link="day"><span>家庭周计划</span><span>01</span></a>
+      <a class="nav-link" href="#football" data-view-link="football"><span>足球专项</span><span>02</span></a>
+      <a class="nav-link" href="#week" data-view-link="week"><span>每周摘要</span><span>03</span></a>
+      <a class="nav-link" href="#piano" data-view-link="piano"><span>钢琴训练</span><span>04</span></a>
+      <a class="nav-link" href="#ai" data-view-link="ai"><span>AI 学习辅助</span><span>05</span></a>
+      <a class="nav-link" href="#study" data-view-link="study"><span>学习与英文</span><span>06</span></a>
+      <a class="nav-link" href="#fitness" data-view-link="fitness"><span>运动安排</span><span>07</span></a>
+      <a class="nav-link" href="#today-check" data-view-link="today-check"><span>今日打卡</span><span>08</span></a>
+      <a class="nav-link" href="#review" data-view-link="review"><span>复盘验收</span><span>09</span></a>
+
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div class="actions" aria-label="页面操作">
+          <button class="icon-button" type="button" onclick="window.print()" title="打印计划">P</button>
+          <button class="primary-button" type="button" data-open-view="today-check">今日打卡</button>
+        </div>
+      </div>
+
+      <section class="hero view-section active" id="home" aria-labelledby="page-title">
+        <div class="live-dashboard">
+          <div class="now-panel">
+            <div class="calendar-row">
+              <div>
+                <div class="eyebrow">Live Schedule</div>
+                <div class="calendar-date" id="live-date">--</div>
+              </div>
+              <div class="weather-box">
+                <label for="weather-input">天气</label>
+                <input id="weather-input" type="text" placeholder="雨 / 28°C">
+              </div>
+            </div>
+
+            <h1 class="clock-time" id="live-clock">--:--</h1>
+            <div class="current-task-label">当前任务</div>
+            <h2 class="current-task" id="current-task">读取计划中</h2>
+            <div class="current-window" id="current-window">--</div>
+            <div class="route-row compact-route notes-route" aria-label="当前任务备注">
+              <div>
+                <div class="route-code">Notes</div>
+                <ul class="task-notes" id="task-notes"></ul>
+              </div>
+            </div>
+
+            <div class="progress-rail" aria-label="当前任务进度">
+              <div class="progress-fill" id="progress-fill"></div>
+              <div class="progress-note" id="progress-note">--</div>
+            </div>
+
+          </div>
+
+          <div class="side-stack">
+            <div class="next-panel">
+              <p class="panel-kicker">Next Step</p>
+              <h3 class="next-title" id="next-task">--</h3>
+              <p class="next-time" id="next-time">--</p>
+            </div>
+
+            <div class="task-panel">
+              <p class="panel-kicker">当前任务清单</p>
+              <ul class="task-list" id="current-task-list"></ul>
+            </div>
+
+            <div class="today-panel">
+              <p class="panel-kicker">今天时间线</p>
+              <div class="today-strip" id="today-strip"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-board home-companion" aria-label="模块总览">
+        <a class="module-card" href="#day" data-view-link="day">
+          <div class="module-icon">01</div>
+          <h3>家庭周计划</h3>
+          <p>按原始表格查看周一到周日的时间安排，是整份计划的主控表。</p>
+        </a>
+        <a class="module-card" href="#football" data-view-link="football">
+          <div class="module-icon">02</div>
+          <h3>足球专项</h3>
+          <p>只服务于周一自训、周三/五训练和周六比赛，包含场地、道具和动作方法。</p>
+        </a>
+        <a class="module-card" href="#week" data-view-link="week">
+          <div class="module-icon">03</div>
+          <h3>每周摘要</h3>
+          <p>把大表压缩成每天的重点节奏，方便家里快速看今天该做什么。</p>
+        </a>
+        <a class="module-card" href="#piano" data-view-link="piano">
+          <div class="module-icon">04</div>
+          <h3>钢琴训练</h3>
+          <p>对应工作日 15:00、周六钢琴课和周日练琴，拆成可执行的 30 分钟结构。</p>
+        </a>
+        <a class="module-card" href="#study" data-view-link="study">
+          <div class="module-icon">05</div>
+          <h3>学科与英文</h3>
+          <p>覆盖 English+I&amp;S、Science、Math、英文阅读、新闻写作和课程订正。</p>
+        </a>
+        <a class="module-card" href="#ai" data-view-link="ai">
+          <div class="module-icon">06</div>
+          <h3>AI 学习辅助</h3>
+          <p>不额外占时间，只在阅读、写作、订正、复盘里作为辅助工具。</p>
+        </a>
+        <a class="module-card" href="#fitness" data-view-link="fitness">
+          <div class="module-icon">07</div>
+          <h3>运动安排</h3>
+          <p>整理周一足球自训、周三/五西班牙人训练、周六比赛/游泳和周日篮球。</p>
+        </a>
+        <a class="module-card" href="#today-check" data-view-link="today-check">
+          <div class="module-icon">08</div>
+          <h3>打卡与复盘</h3>
+          <p>今日检查清单和每周复盘表，确认是否按家庭原表执行。</p>
+        </a>
+      </section>
+
+      <section class="section view-section" id="day">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>家庭原表版周计划</h2>
+            <p>以下时间和内容按家里主人制定的表格重排。网页后面的训练方法只作为这些固定时段内的执行细化，不改变原表时间。</p>
+          </div>
+          <span class="pill">Family Schedule</span>
+        </div>
+
+        <div class="day-map" aria-label="每日节奏图">
+          <div class="day-segment"><strong>09:00</strong>起床 / 早餐</div>
+          <div class="day-segment"><strong>09:45</strong>主课程：English+I&S / Science / Math</div>
+          <div class="day-segment"><strong>12:30</strong>英文深度阅读</div>
+          <div class="day-segment"><strong>14:00</strong>英语练习 / 新闻阅读写作</div>
+          <div class="day-segment"><strong>15:00</strong>钢琴 / 足球 / 游戏按天切换</div>
+          <div class="day-segment"><strong>22:00</strong>上床睡觉</div>
+        </div>
+
+        <div class="schedule-wrap">
+          <table class="family-schedule" aria-label="Michael 暑假家庭原表周计划">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>周一</th>
+                <th>周二</th>
+                <th>周三</th>
+                <th>周四</th>
+                <th>周五</th>
+                <th>周六</th>
+                <th>周日</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="time-cell">09:00-09:30</td><td class="meal">起床/早餐</td><td class="meal">起床/早餐</td><td class="meal">起床/早餐</td><td class="meal">起床/早餐</td><td class="meal">起床/早餐</td><td class="meal">起床/早餐</td><td class="meal">起床/早餐</td></tr>
+              <tr><td class="time-cell">09:45-11:15</td><td class="study">English+I&amp;S</td><td class="study">English+I&amp;S</td><td class="study">Science</td><td class="study">Math</td><td class="study">Math</td><td class="piano">钢琴课<br><small>没有课就练琴</small></td><td class="football">可以和爸爸<br>打篮球</td></tr>
+              <tr><td class="time-cell">11:15-11:30</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td><td class="piano">钢琴课<br><small>没有课就练琴</small></td><td class="football">可以和爸爸<br>打篮球</td></tr>
+              <tr><td class="time-cell">11:30-12:30</td><td class="meal">午餐（看电视）</td><td class="meal">午餐（看电视）</td><td class="meal">午餐（看电视）</td><td class="meal">午餐（看电视）</td><td class="meal">午餐（看电视）</td><td class="game">游戏1小时</td><td class="game">游戏1小时</td></tr>
+              <tr><td class="time-cell">12:30-13:30</td><td class="english">英文深度阅读</td><td class="english">英文深度阅读</td><td class="english">英文深度阅读</td><td class="english">英文深度阅读</td><td class="english">英文深度阅读</td><td class="meal">午餐</td><td class="meal">午餐</td></tr>
+              <tr><td class="time-cell">13:30-14:00</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td><td class="football">足球比赛<br><small>没有比赛，就游泳</small></td><td class="piano">钢琴</td></tr>
+              <tr><td class="time-cell">14:00-14:30</td><td class="english">英语练习</td><td class="english">新闻阅读+写作</td><td class="english">英语练习</td><td class="english">新闻阅读+写作</td><td class="english">英语练习</td><td class="football">足球比赛<br><small>没有比赛，就游泳</small></td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">14:30-15:00</td><td class="english">练习讲解</td><td class="english">习作评讲</td><td class="english">练习讲解</td><td class="english">习作评讲</td><td class="english">练习讲解</td><td class="football">足球比赛<br><small>没有比赛，就游泳</small></td><td class="study">四季数学</td></tr>
+              <tr><td class="time-cell">15:00-15:30</td><td class="piano">钢琴</td><td class="piano">钢琴</td><td class="piano">钢琴</td><td class="piano">钢琴</td><td class="piano">钢琴</td><td class="football">足球比赛<br><small>没有比赛，就游泳</small></td><td class="study">四季数学</td></tr>
+              <tr><td class="time-cell">15:30-16:00</td><td class="football">足球自主训练</td><td class="game">游戏<br><small>16:00课程</small></td><td class="rest">/</td><td class="game">游戏<br><small>16:00课程</small></td><td class="rest">/</td><td class="football">足球比赛<br><small>没有比赛，就游泳</small></td><td class="study">四季数学</td></tr>
+              <tr><td class="time-cell">16:00-16:30</td><td class="football">足球自主训练</td><td class="game">游戏<br><small>16:00课程</small></td><td class="game">打游戏1小时</td><td class="game">游戏<br><small>16:00课程</small></td><td class="game">打游戏1小时</td><td class="rest">/</td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">16:30-17:00</td><td class="football">足球自主训练</td><td class="game">游戏<br><small>16:00课程</small></td><td class="game">打游戏1小时</td><td class="game">游戏<br><small>16:00课程</small></td><td class="game">打游戏1小时</td><td class="rest">/</td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">17:00-17:30</td><td class="rest">/</td><td class="rest">/</td><td class="meal">晚餐</td><td class="rest">/</td><td class="meal">晚餐</td><td class="rest">/</td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">17:30-18:00</td><td class="meal">晚餐（看电视）</td><td class="rest">/</td><td class="football">西班牙人<br>足球训练</td><td class="rest">/</td><td class="football">西班牙人<br>足球训练</td><td class="rest">/</td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">18:00-18:30</td><td class="meal">晚餐（看电视）</td><td class="meal">晚餐（看电视）</td><td class="football">西班牙人<br>足球训练</td><td class="meal">晚餐（看电视）</td><td class="football">西班牙人<br>足球训练</td><td class="rest">/</td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">18:30-19:00</td><td class="meal">晚餐（看电视）</td><td class="meal">晚餐（看电视）</td><td class="football">西班牙人<br>足球训练</td><td class="meal">晚餐（看电视）</td><td class="football">西班牙人<br>足球训练</td><td class="rest">/</td><td class="study">学而通英语<br>上课</td></tr>
+              <tr><td class="time-cell">19:00-19:30</td><td class="study">四季数学</td><td class="study">四季数学</td><td class="football">西班牙人<br>足球训练</td><td class="study">四季数学</td><td class="football">西班牙人<br>足球训练</td><td class="study">完成学而通作业</td><td class="study">学而通英语<br>上课</td></tr>
+              <tr><td class="time-cell">19:30-20:00</td><td class="study">四季数学</td><td class="study">四季数学</td><td class="football">西班牙人<br>足球训练</td><td class="study">四季数学</td><td class="football">西班牙人<br>足球训练</td><td class="study">English+I&amp;S</td><td class="study">学而通英语<br>上课</td></tr>
+              <tr><td class="time-cell">20:00-20:30</td><td class="study">四季数学</td><td class="study">四季数学</td><td class="rest">/</td><td class="study">四季数学</td><td class="rest">/</td><td class="game">打游戏1小时</td><td class="game">打游戏1小时</td></tr>
+              <tr><td class="time-cell">20:30-21:00</td><td class="game">打游戏1小时</td><td class="game">打游戏1小时</td><td class="rest">/</td><td class="game">打游戏1小时</td><td class="rest">/</td><td class="game">打游戏1小时</td><td class="game">打游戏1小时</td></tr>
+              <tr><td class="time-cell">21:00-21:30</td><td class="game">打游戏1小时</td><td class="game">打游戏1小时</td><td class="rest">/</td><td class="game">打游戏1小时</td><td class="rest">/</td><td class="rest">/</td><td class="rest">/</td></tr>
+              <tr><td class="time-cell">22:00</td><td class="sleep">上床睡觉</td><td class="sleep">上床睡觉</td><td class="sleep">上床睡觉</td><td class="sleep">上床睡觉</td><td class="sleep">上床睡觉</td><td class="sleep">上床睡觉</td><td class="sleep">上床睡觉</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="schedule-note-grid">
+          <div class="schedule-note"><strong>学习块</strong>上午主课、午后英文深度阅读、14:00 英语练习/新闻写作按原表固定。</div>
+          <div class="schedule-note"><strong>足球块</strong>周一 15:30-17:00 自主训练；周三/周五 17:30-20:00 西班牙人训练；周六比赛或游泳。</div>
+          <div class="schedule-note"><strong>钢琴块</strong>周一到周五 15:00-15:30；周六上午钢琴课，没有课就练琴；周日下午钢琴。</div>
+          <div class="schedule-note"><strong>游戏窗口</strong>只保留表中标注的 1 小时窗口，包括周末午前、周三/五下午和部分晚上。</div>
+        </div>
+      </section>
+
+      <section class="section view-section" id="football">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>足球专项动作库</h2>
+            <p>足球只放在家庭表指定时段内执行：周一 15:30-17:00 自主训练，周三/周五 17:30-20:00 西班牙人足球训练，周六足球比赛；如果周六没有比赛，就改游泳。</p>
+          </div>
+          <span class="pill">By Weekly Schedule</span>
+        </div>
+
+        <div class="visual-panel">
+          <div class="field-diagram" aria-label="足球训练场地示意">
+            <div class="goal-box">
+              <span>3</span><span>2</span><span>3</span>
+              <span>2</span><span>1</span><span>2</span>
+              <span>2</span><span>1</span><span>2</span>
+            </div>
+            <i class="cone c1"></i>
+            <i class="cone c2"></i>
+            <i class="cone c3"></i>
+            <i class="cone c4"></i>
+            <i class="cone c5"></i>
+            <i class="shot-line"></i>
+            <i class="dribble-line"></i>
+            <i class="ball-dot"></i>
+            <div class="field-label">一块小场地即可：上方是九宫格球门，下方是起射点，中段用标志碟做盘带路线。</div>
+          </div>
+
+          <div class="tool-board" aria-label="足球道具图形清单">
+            <div class="tool-item"><div class="tool-icon">9</div><strong>九宫格</strong><span>目标布、胶带或彩色贴纸，训练远角命中。</span></div>
+            <div class="tool-item"><div class="tool-icon">C</div><strong>标志碟</strong><span>8-12 个，用于小方格、变向点和起射区。</span></div>
+            <div class="tool-item"><div class="tool-icon">G</div><strong>门框</strong><span>折叠门或固定球门，配合得分区。</span></div>
+            <div class="tool-item"><div class="tool-icon">B</div><strong>足球</strong><span>2-3 个 5 号球，减少捡球中断。</span></div>
+            <div class="tool-item"><div class="tool-icon">T</div><strong>计时</strong><span>秒表记录限时盘带和组间休息。</span></div>
+            <div class="tool-item"><div class="tool-icon">V</div><strong>视频</strong><span>手机三脚架拍侧面射门和正面盘带。</span></div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="training-card">
+            <div class="card-top">
+              <h3>弧线球射门</h3>
+              <span class="tag">射门</span>
+            </div>
+            <ul class="detail-list">
+              <li>距离球门 10-16 米，球放在偏左或偏右 45 度位置，目标是远角上半区。</li>
+              <li>支撑脚落在球侧 20-25 厘米，脚尖指向目标外侧，击球点选择球的外侧下方。</li>
+              <li>先做 3 组无门框练习，每组 10 脚，只看球旋转；再做 3 组有目标射门。</li>
+              <li>左右脚都练：强脚 30 脚，弱脚 15 脚。记录命中九宫格的数量。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>球门或折叠门框、九宫格目标布或 9 个贴纸标记、5 号球 2-3 个、手机三脚架。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>微调整后射门</h3>
+              <span class="tag orange">比赛动作</span>
+            </div>
+            <ul class="detail-list">
+              <li>用 4 个标志碟做 1.5 米小方格，接球后第一脚调整，第二脚射门。</li>
+              <li>训练节奏：侧向拨球、向前趟球、回拉横拨、假射扣球，各 8 次。</li>
+              <li>要求调整步不超过两步，射门前抬头看一次目标。</li>
+              <li>加入压力：家长或同伴从侧后方慢速逼近，逼迫快速完成动作。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>标志碟 8 个、弹力绳或线条做起射区、球门、秒表。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>九宫格目标训练</h3>
+              <span class="tag green">命中率</span>
+            </div>
+            <ul class="detail-list">
+              <li>球门划成 3×3：上远角 3 分，下远角 2 分，中路 1 分，偏出 0 分。</li>
+              <li>每轮 10 脚，必须从不同角度起脚：正面、左肋、右肋各一轮。</li>
+              <li>目标不是大力，而是脚法稳定。连续 3 脚偏同一侧时，立刻停下来改支撑脚方向。</li>
+              <li>每周末做一次 30 脚测试，记录总分。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>九宫格目标布最佳；没有的话用胶带、绳子、衣夹或彩色标记分区。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>连续过人盘带</h3>
+              <span class="tag violet">盘带</span>
+            </div>
+            <ul class="detail-list">
+              <li>6 个标志桶间距 1.2 米，做内外脚背连续变向，要求身体压低、球不离脚超过一步。</li>
+              <li>动作组合：踩单车、外拨内扣、拉球转身、假射扣球，每个动作接 5 米加速。</li>
+              <li>每次做 5 轮慢速准确、5 轮比赛速度、3 轮限时挑战。</li>
+              <li>评价标准：不碰桶、抬头次数不少于 3 次、最后一脚能衔接传球或射门。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>标志桶 6-10 个、标志碟、计时器、可移动小门。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>快速盘带与急停</h3>
+              <span class="tag red">速度</span>
+            </div>
+            <ul class="detail-list">
+              <li>设置 12 米直线，前 8 米加速带球，最后 4 米急停变向。</li>
+              <li>做右脚外侧推进、左脚外侧推进、左右脚交替三种方式。</li>
+              <li>每轮结束必须把球停在 1 米目标圈内，不能只顾速度失控。</li>
+              <li>进阶：听到口令后临时选择左转、右转、回拉，训练反应。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>12 米空地、标志碟 6 个、目标圈、口令卡片。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>训练记录方法</h3>
+              <span class="tag green">复盘</span>
+            </div>
+            <ul class="detail-list">
+              <li>每次只记录 3 个数字：射门脚数、命中数、盘带失误次数。</li>
+              <li>每周拍 2 段视频：一个射门侧面角度，一个盘带正面角度。</li>
+              <li>复盘只看一个问题，例如支撑脚太远、触球太大、射门前没有抬头。</li>
+              <li>下一次训练开头先修上一次的问题，再进入新动作。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>手机、三脚架、训练表、笔。视频每段 20-40 秒即可。</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section view-section" id="week">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>每周执行摘要</h2>
+            <p>这一组卡片是上方大表的快速阅读版，只保留每天最关键的节奏。所有时间仍以上方家庭原表为准。</p>
+          </div>
+          <span class="pill">Weekly Rhythm</span>
+        </div>
+
+        <div class="week-board">
+          <div class="day-card">
+            <strong>周一</strong>
+            <p>上午：English+I&amp;S。</p>
+            <p>下午：英文深度阅读、英语练习、练习讲解、钢琴。</p>
+            <p>训练：15:30-17:00 足球自主训练。</p>
+            <p>晚上：晚餐看电视、四季数学、游戏1小时、22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+          <div class="day-card">
+            <strong>周二</strong>
+            <p>上午：English+I&amp;S。</p>
+            <p>下午：英文深度阅读、新闻阅读+写作、习作评讲、钢琴。</p>
+            <p>16:00 课程时段：游戏。</p>
+            <p>晚上：晚餐看电视、四季数学、游戏1小时、22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+          <div class="day-card">
+            <strong>周三</strong>
+            <p>上午：Science。</p>
+            <p>下午：英文深度阅读、英语练习、练习讲解、钢琴、打游戏1小时。</p>
+            <p>训练：17:30-20:00 西班牙人足球训练。</p>
+            <p>晚上：20:00 后空档，22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+          <div class="day-card">
+            <strong>周四</strong>
+            <p>上午：Math。</p>
+            <p>下午：英文深度阅读、新闻阅读+写作、习作评讲、钢琴。</p>
+            <p>16:00 课程时段：游戏。</p>
+            <p>晚上：晚餐看电视、四季数学、游戏1小时、22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+          <div class="day-card">
+            <strong>周五</strong>
+            <p>上午：Math。</p>
+            <p>下午：英文深度阅读、英语练习、练习讲解、钢琴、打游戏1小时。</p>
+            <p>训练：17:30-20:00 西班牙人足球训练。</p>
+            <p>晚上：20:00 后空档，22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+          <div class="day-card">
+            <strong>周六</strong>
+            <p>上午：钢琴课；没有课就练琴。</p>
+            <p>11:30：游戏1小时；12:30：午餐。</p>
+            <p>下午：足球比赛；没有比赛，就游泳。</p>
+            <p>晚上：完成学而通作业、English+I&amp;S、游戏1小时、22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+          <div class="day-card">
+            <strong>周日</strong>
+            <p>上午：可以和爸爸打篮球。</p>
+            <p>11:30：游戏1小时；12:30：午餐；13:30：钢琴。</p>
+            <p>下午：四季数学。</p>
+            <p>晚上：学而通英语上课、游戏1小时、22:00睡觉。</p>
+            <div class="day-bars"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section view-section" id="piano">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>钢琴 30 分钟训练结构</h2>
+            <p>钢琴按家庭表执行：周一到周五 15:00-15:30；周六上午钢琴课，没有课就练琴；周日 13:30 钢琴。</p>
+          </div>
+          <span class="pill">By Schedule</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="routine-card">
+            <h3>表内 30 分钟练琴法</h3>
+            <div class="piano-keys" aria-label="钢琴键盘示意">
+              <i class="piano-key"></i><i class="piano-key"></i><i class="piano-key"></i><i class="piano-key"></i><i class="piano-key"></i>
+              <i class="piano-key"></i><i class="piano-key"></i><i class="piano-key"></i><i class="piano-key"></i><i class="piano-key"></i>
+            </div>
+            <div class="routine-step"><strong>0-5</strong><span>音阶与琶音：选当天调性，左右手分开一次，合手一次，节拍器 60-72。</span></div>
+            <div class="routine-step"><strong>5-12</strong><span>难点小节慢练：只练 2-4 小节，速度降到不会错的程度，每遍都说出错点。</span></div>
+            <div class="routine-step"><strong>12-22</strong><span>乐曲分段：按乐句练，不从头到尾乱弹；每段完成后停下检查节奏、指法、力度。</span></div>
+            <div class="routine-step"><strong>22-27</strong><span>完整演奏：允许出错但不中断，训练台上继续演的能力。</span></div>
+            <div class="routine-step"><strong>27-30</strong><span>录音回听：只标一个问题，例如抢拍、弱音不够、左手太重。</span></div>
+          </div>
+
+          <div class="routine-card">
+            <h3>每周重点</h3>
+            <ul class="detail-list">
+              <li>周一：节拍器日，只解决速度不稳。</li>
+              <li>周二：指法日，把容易乱的指法写在谱子上。</li>
+              <li>周三：力度日，练强弱对比和旋律线。</li>
+              <li>周四：慢练日，难点速度降到 50%。</li>
+              <li>周五：表情日，处理句尾、呼吸和踏板。</li>
+              <li>周六：录音日，完整录一遍并听完。</li>
+              <li>周日：复盘日，选下周最需要修的 2 个问题。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>节拍器 App、铅笔、录音设备、谱架。谱面必须允许写指法和错误标记。</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section view-section" id="ai">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>AI 学习辅助</h2>
+            <p>家庭原表里没有单独 AI 时段，所以 AI 只作为学习、阅读、写作、订正和复盘时的辅助工具，不额外占用固定时间。</p>
+          </div>
+          <span class="pill">No Extra Slot</span>
+        </div>
+
+        <div class="flow-visual" aria-label="AI练习流程图">
+          <div class="flow-node"><strong>提问</strong>把任务说清楚：角色、目标、格式。</div>
+          <div class="flow-node"><strong>生成</strong>让 AI 出方案、表格、英文表达。</div>
+          <div class="flow-node"><strong>比较</strong>看哪版更准确、更像自己。</div>
+          <div class="flow-node"><strong>修改</strong>自己改一遍，不直接照抄。</div>
+          <div class="flow-node"><strong>保存</strong>留下 prompt、截图或作品。</div>
+        </div>
+
+        <div class="grid-3">
+          <article class="training-card">
+            <div class="card-top">
+              <h3>English+I&amp;S 辅助</h3>
+              <span class="tag">上午主课</span>
+            </div>
+            <ul class="detail-list">
+              <li>把课堂主题整理成 5 个关键词和 3 个英文句型。</li>
+              <li>让 AI 提 3 个追问，用英文完整回答。</li>
+              <li>只辅助理解和表达，不替代课程作业。</li>
+            </ul>
+            <div class="equipment"><strong>使用时段：</strong>周一、周二 09:45-11:15；周六 19:30-20:00。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>英文深度阅读辅助</h3>
+              <span class="tag green">12:30</span>
+            </div>
+            <ul class="detail-list">
+              <li>读完后让 AI 帮忙生成英文摘要模板。</li>
+              <li>自己先写 3 句，再让 AI 改自然表达。</li>
+              <li>保留 5 个新词和 1 个可以讨论的问题。</li>
+            </ul>
+            <div class="equipment"><strong>使用时段：</strong>周一到周五 12:30-13:30。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>Science / Math 辅助</h3>
+              <span class="tag orange">订正</span>
+            </div>
+            <ul class="detail-list">
+              <li>错题先自己做订正，再让 AI 检查逻辑漏洞。</li>
+              <li>要求 AI 只提示思路，不直接给答案。</li>
+              <li>用英文解释一个关键概念，适应新加坡课堂。</li>
+            </ul>
+            <div class="equipment"><strong>使用时段：</strong>周三 Science；周四、周五 Math；四季数学后复盘。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>新闻阅读+写作辅助</h3>
+              <span class="tag violet">写作</span>
+            </div>
+            <ul class="detail-list">
+              <li>先自己写观点，再让 AI 帮忙检查结构。</li>
+              <li>保留原句、修改句和为什么改。</li>
+              <li>每次只改一个重点：逻辑、连接词或用词。</li>
+            </ul>
+            <div class="equipment"><strong>使用时段：</strong>周二、周四 14:00-15:00。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>足球 / 钢琴复盘辅助</h3>
+              <span class="tag red">展示</span>
+            </div>
+            <ul class="detail-list">
+              <li>足球训练后只记录 1 个技术点，不延长训练时间。</li>
+              <li>钢琴录音后让 AI 帮忙整理文字复盘。</li>
+              <li>复盘用于下次练习，不新增额外任务。</li>
+            </ul>
+            <div class="equipment"><strong>使用时段：</strong>足球、钢琴结束后的 5 分钟内。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>安全规则</h3>
+              <span class="tag green">边界</span>
+            </div>
+            <ul class="detail-list">
+              <li>不输入真实住址、学校账号、证件、银行卡、私人照片。</li>
+              <li>AI答案必须核查，特别是数学步骤、事实信息和学习建议。</li>
+              <li>AI不能替他完成作业，只能解释、提示、改写和陪练。</li>
+            </ul>
+            <div class="equipment"><strong>家长检查：</strong>每周看一次历史记录和作品文件夹。</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section view-section" id="study">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>学习时段执行方法</h2>
+            <p>学习内容按家庭表执行：English+I&amp;S、Science、Math、英文深度阅读、英语练习、新闻阅读+写作、四季数学、学而通英语和周六作业。</p>
+          </div>
+          <span class="pill">2-3h / day</span>
+        </div>
+
+        <div class="grid-3">
+          <article class="training-card">
+            <div class="card-top">
+              <h3>英语口语</h3>
+              <span class="tag">Daily</span>
+            </div>
+            <ul class="detail-list">
+              <li>放在表中的 English+I&amp;S、英语练习或学而通英语时段内完成。</li>
+              <li>结构：30 秒准备、60 秒表达、AI或家长追问 3 个问题。</li>
+              <li>禁止只说单词，必须用完整句子回答。</li>
+            </ul>
+            <div class="equipment"><strong>完成：</strong>保存录音；选 3 句改得更自然。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>英文阅读</h3>
+              <span class="tag green">Input</span>
+            </div>
+            <ul class="detail-list">
+              <li>周一到周五 12:30-13:30 固定英文深度阅读。</li>
+              <li>读完不翻译全文，只做人物、事件、原因、结果四格笔记。</li>
+              <li>每周选一篇做英文口头摘要。</li>
+            </ul>
+            <div class="equipment"><strong>完成：</strong>5 个新词 + 3 句摘要 + 1 个问题。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>数学过渡</h3>
+              <span class="tag orange">Logic</span>
+            </div>
+            <ul class="detail-list">
+              <li>保持计算准确率，同时练英文题干理解。</li>
+              <li>每道应用题先圈关键词，再写出已知、要求、方法。</li>
+              <li>错题必须重做一道同类题，不能只看答案。</li>
+            </ul>
+            <div class="equipment"><strong>完成：</strong>周四、周五上午 Math；周一、周二、周四晚上四季数学；周日四季数学。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>语文阅读</h3>
+              <span class="tag violet">表达</span>
+            </div>
+            <ul class="detail-list">
+              <li>每周 3 次中文阅读，保持理解和表达能力。</li>
+              <li>每次只训练一个点：概括、人物动机、环境描写、观点表达。</li>
+              <li>用 5 句话复述，不写空泛读后感。</li>
+            </ul>
+            <div class="equipment"><strong>完成：</strong>一段 120-180 字复述或观点。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>新加坡课堂准备</h3>
+              <span class="tag red">School</span>
+            </div>
+            <ul class="detail-list">
+              <li>练习课堂英语：I have a question, Could you explain, I agree because...</li>
+              <li>模拟小组讨论：先表达观点，再给理由，再问对方。</li>
+              <li>准备 10 个自我介绍问题，避免入学第一周紧张。</li>
+            </ul>
+            <div class="equipment"><strong>完成：</strong>每周一次 5 分钟 role play。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>订正方法</h3>
+              <span class="tag green">Review</span>
+            </div>
+            <ul class="detail-list">
+              <li>错题分四类：没读懂、概念不清、计算失误、表达不完整。</li>
+              <li>订正必须写“下一次我先做什么”，例如先画图、先圈关键词。</li>
+              <li>每周日只看错题，不做新题，检查是否重复犯错。</li>
+            </ul>
+            <div class="equipment"><strong>完成：</strong>错题表每周更新一次。</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section view-section" id="fitness">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>足球、篮球与游泳执行方法</h2>
+            <p>运动内容只对应家庭表里的时段：周一足球自主训练，周三/周五西班牙人足球训练，周六足球比赛或游泳，周日可和爸爸打篮球。</p>
+          </div>
+          <span class="pill">Fitness</span>
+        </div>
+
+        <div class="grid-3">
+          <article class="training-card">
+            <div class="card-top">
+              <h3>周一足球自主训练</h3>
+              <span class="tag">15:30-17:00</span>
+            </div>
+            <ul class="detail-list">
+              <li>前 15 分钟热身控球，避免一上来大力射门。</li>
+              <li>中段做盘带路线和微调整射门。</li>
+              <li>最后 10 分钟记录命中率和失误点。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>球、标志碟、小门或九宫格目标。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>西班牙人足球训练</h3>
+              <span class="tag green">周三/周五</span>
+            </div>
+            <ul class="detail-list">
+              <li>训练前确认装备、水杯、护腿板和换洗衣物。</li>
+              <li>训练后只做轻复盘，不再追加高强度练习。</li>
+              <li>回家后以拉伸和睡眠恢复为主。</li>
+            </ul>
+            <div class="equipment"><strong>检查：</strong>记录教练当天强调的一件技术点。</div>
+          </article>
+
+          <article class="training-card">
+            <div class="card-top">
+              <h3>周六比赛 / 游泳</h3>
+              <span class="tag orange">周六下午</span>
+            </div>
+            <ul class="detail-list">
+              <li>有比赛则按比赛准备：装备、热身、赛后补水。</li>
+              <li>没有比赛则改游泳，作为低冲击恢复。</li>
+              <li>游泳重点是水感和放松，不临时加大训练量。</li>
+              <li>晚上仍按表完成作业、English+I&amp;S和游戏窗口。</li>
+            </ul>
+            <div class="equipment"><strong>道具：</strong>泳镜、泳帽、浮板、毛巾、水杯。</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section view-section" id="today-check">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>今日打卡清单</h2>
+            <p>这部分可打印，也可以每天在浏览器里勾选。勾选会保存在本机浏览器，不上传云端；第二天可手动清空。</p>
+          </div>
+          <button class="primary-button" id="reset-checks" type="button">清空今日</button>
+        </div>
+
+        <div class="check-grid">
+          <div class="check-card">
+            <h3>每日固定</h3>
+            <label class="checkbox-line"><input type="checkbox">09:00 起床/早餐</label>
+            <label class="checkbox-line"><input type="checkbox">今日表格先看一遍，确认周几</label>
+            <label class="checkbox-line"><input type="checkbox">水杯、纸笔、课程材料放到位</label>
+            <label class="checkbox-line"><input type="checkbox">空档只整理/喝水，不乱加任务</label>
+            <label class="checkbox-line"><input type="checkbox">每段结束前 5 分钟收尾</label>
+          </div>
+          <div class="check-card">
+            <h3>上午学习</h3>
+            <label class="checkbox-line"><input type="checkbox">09:45 主课程按当天表格完成</label>
+            <label class="checkbox-line"><input type="checkbox">English+I&amp;S / Science / Math 对应完成</label>
+            <label class="checkbox-line"><input type="checkbox">课上不懂的问题记下 1-3 个</label>
+            <label class="checkbox-line"><input type="checkbox">11:15-11:30 休息，不开新游戏</label>
+            <label class="checkbox-line"><input type="checkbox">11:30 午餐/游戏按当天表格执行</label>
+          </div>
+          <div class="check-card">
+            <h3>下午学习</h3>
+            <label class="checkbox-line"><input type="checkbox">12:30 英文深度阅读完成</label>
+            <label class="checkbox-line"><input type="checkbox">写 3 句英文摘要或整理 5 个关键词</label>
+            <label class="checkbox-line"><input type="checkbox">14:00 英语练习 / 新闻阅读+写作完成</label>
+            <label class="checkbox-line"><input type="checkbox">14:30 练习讲解 / 习作评讲完成</label>
+            <label class="checkbox-line"><input type="checkbox">错题或新词当天标记出来</label>
+          </div>
+          <div class="check-card">
+            <h3>钢琴 / 运动</h3>
+            <label class="checkbox-line"><input type="checkbox">钢琴：慢练难点小节</label>
+            <label class="checkbox-line"><input type="checkbox">钢琴：节拍器稳定，结束前录 30 秒</label>
+            <label class="checkbox-line"><input type="checkbox">足球/篮球/游泳装备提前检查</label>
+            <label class="checkbox-line"><input type="checkbox">周一足球自训 / 周三周五西班牙人训练按时完成</label>
+            <label class="checkbox-line"><input type="checkbox">周六比赛；无比赛则游泳恢复</label>
+            <label class="checkbox-line"><input type="checkbox">运动后补水、拉伸，记录 1 个技术点</label>
+          </div>
+          <div class="check-card">
+            <h3>游戏 / 晚上</h3>
+            <label class="checkbox-line"><input type="checkbox">游戏只在表格窗口内，不提前开始</label>
+            <label class="checkbox-line"><input type="checkbox">到点停止，不追加一局</label>
+            <label class="checkbox-line"><input type="checkbox">晚餐/看电视按当天表格执行</label>
+            <label class="checkbox-line"><input type="checkbox">四季数学或 English+I&amp;S 按表完成</label>
+            <label class="checkbox-line"><input type="checkbox">20:00 后检查是否还有课程/作业</label>
+          </div>
+          <div class="check-card">
+            <h3>睡前复盘</h3>
+            <label class="checkbox-line"><input type="checkbox">明天课程材料、运动装备放好</label>
+            <label class="checkbox-line"><input type="checkbox">吃钙条</label>
+            <label class="checkbox-line"><input type="checkbox">戴眼镜</label>
+            <label class="checkbox-line"><input type="checkbox">刷牙</label>
+            <label class="checkbox-line"><input type="checkbox">22:00 上床睡觉</label>
+            <label class="checkbox-line"><input type="checkbox">今天最重要的一件事已完成</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="section view-section" id="review">
+        <div class="detail-tools"><a class="back-link" href="#home" data-view-link="home">返回总览</a></div>
+        <div class="section-header">
+          <div>
+            <h2>每周复盘表</h2>
+            <p>周日用 20 分钟复盘。不要写空泛总结，只看数据、视频和下一周一件最重要的调整。</p>
+          </div>
+          <span class="pill">Review</span>
+        </div>
+
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th>项目</th>
+              <th>记录方式</th>
+              <th>达标线</th>
+              <th>如果没达标</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>上午主课</td>
+              <td>核对 English+I&amp;S、Science、Math、钢琴课、篮球是否按周几完成。</td>
+              <td>不缺课，不把上午课程挪到游戏或临时安排。</td>
+              <td>先补当天主课，再考虑其他延伸练习。</td>
+            </tr>
+            <tr>
+              <td>英文阅读与写作</td>
+              <td>核对周一到周五 12:30 英文深度阅读，以及 14:00 英语练习/新闻写作。</td>
+              <td>阅读和讲解时段完整完成。</td>
+              <td>减少当天延伸任务，保住原表核心学习块。</td>
+            </tr>
+            <tr>
+              <td>钢琴</td>
+              <td>周一到周五 15:00-15:30；周六钢琴课或练琴；周日 13:30 钢琴。</td>
+              <td>按表完成，不额外挤占学习和运动时段。</td>
+              <td>如果漏练，只补最关键难点小节，不拖长当天其他安排。</td>
+            </tr>
+            <tr>
+              <td>足球 / 篮球 / 游泳</td>
+              <td>周一自训、周三/周五西班牙人训练、周六比赛或游泳、周日篮球。</td>
+              <td>运动只按表执行，不临时追加高强度训练。</td>
+              <td>疲劳时保留恢复，不用额外补量。</td>
+            </tr>
+            <tr>
+              <td>游戏窗口</td>
+              <td>核对游戏是否只在表格标注的 1 小时内。</td>
+              <td>不提前开始，不延长到睡觉时间。</td>
+              <td>第二天优先恢复表格节奏。</td>
+            </tr>
+            <tr>
+              <td>睡觉</td>
+              <td>每天 22:00 上床睡觉。</td>
+              <td>睡觉时间稳定，第二天 09:00 能正常起床。</td>
+              <td>晚间游戏和屏幕使用立即收紧。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="print-note">建议打印一份贴在书桌旁；电子版用于查看动作细节，纸质版用于每日打勾和家长签字。</p>
+      </section>
+    </main>
+  </div>
+  <script>
+    const storageKey = "michael-summer-plan-checks";
+    const weatherKey = "michael-summer-plan-weather";
+    const checks = Array.from(document.querySelectorAll('#today-check input[type="checkbox"]'));
+    let savedChecks = [];
+    try {
+      savedChecks = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    } catch (error) {
+      localStorage.removeItem(storageKey);
+    }
+    const validViews = new Set(Array.from(document.querySelectorAll(".view-section")).map(section => section.id));
+    const weatherInput = document.querySelector("#weather-input");
+    const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    const detailByType = {
+      meal: ["按表完成用餐", "如果标注看电视，只在这一段看", "结束前 5 分钟准备下一项"],
+      study: ["先看今天课程主题", "完成老师/课程要求", "把不懂的问题记下来"],
+      english: ["读完后写 3 句英文摘要", "整理 5 个关键词", "需要时用 AI 改自然表达"],
+      piano: ["先慢练难点小节", "节拍器保持稳定", "结束前录 30 秒回听"],
+      football: ["先做动态热身", "按当天性质做自训/训练/比赛", "结束后记录一个技术点"],
+      game: ["只在表格窗口内玩", "结束前 5 分钟收尾", "到点停止，不延长"],
+      rest: ["空档不临时加高强度任务", "整理物品、喝水、准备下一项", "保持按表节奏"],
+      sleep: ["停止屏幕", "整理明天要用物品", "按时上床"],
+    };
+    const notesByType = {
+      meal: ["按时吃饭", "准备下一项"],
+      study: ["带好材料", "记录问题"],
+      english: ["读完写摘要", "整理关键词"],
+      piano: ["节拍器", "录音回听"],
+      football: ["装备水杯", "训练后拉伸"],
+      game: ["到点停止", "不看额外视频"],
+      rest: ["喝水", "整理物品"],
+      sleep: ["吃钙条", "戴眼镜", "刷牙"],
+    };
+    const weatherCodeMap = {
+      0: "晴",
+      1: "少云",
+      2: "多云",
+      3: "阴",
+      45: "雾",
+      48: "雾凇",
+      51: "小毛毛雨",
+      53: "毛毛雨",
+      55: "强毛毛雨",
+      61: "小雨",
+      63: "雨",
+      65: "大雨",
+      66: "冻雨",
+      67: "强冻雨",
+      71: "小雪",
+      73: "雪",
+      75: "大雪",
+      80: "阵雨",
+      81: "强阵雨",
+      82: "暴雨",
+      95: "雷雨",
+      96: "雷雨冰雹",
+      99: "强雷雨冰雹",
+    };
+
+    const schedule = {
+      1: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:15", "English+I&S", "study"],
+        ["11:15", "11:30", "空档", "rest"],
+        ["11:30", "12:30", "午餐（看电视）", "meal"],
+        ["12:30", "13:30", "英文深度阅读", "english"],
+        ["13:30", "14:00", "空档", "rest"],
+        ["14:00", "14:30", "英语练习", "english"],
+        ["14:30", "15:00", "练习讲解", "english"],
+        ["15:00", "15:30", "钢琴", "piano"],
+        ["15:30", "17:00", "足球自主训练", "football"],
+        ["17:00", "17:30", "空档", "rest"],
+        ["17:30", "19:00", "晚餐（看电视）", "meal"],
+        ["19:00", "20:30", "四季数学", "study"],
+        ["20:30", "21:30", "打游戏1小时", "game"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+      2: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:15", "English+I&S", "study"],
+        ["11:15", "11:30", "空档", "rest"],
+        ["11:30", "12:30", "午餐（看电视）", "meal"],
+        ["12:30", "13:30", "英文深度阅读", "english"],
+        ["13:30", "14:00", "空档", "rest"],
+        ["14:00", "14:30", "新闻阅读+写作", "english"],
+        ["14:30", "15:00", "习作评讲", "english"],
+        ["15:00", "15:30", "钢琴", "piano"],
+        ["15:30", "17:00", "游戏（16:00课程）", "game"],
+        ["17:00", "18:00", "空档", "rest"],
+        ["18:00", "19:00", "晚餐（看电视）", "meal"],
+        ["19:00", "20:30", "四季数学", "study"],
+        ["20:30", "21:30", "打游戏1小时", "game"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+      3: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:15", "Science", "study"],
+        ["11:15", "11:30", "空档", "rest"],
+        ["11:30", "12:30", "午餐（看电视）", "meal"],
+        ["12:30", "13:30", "英文深度阅读", "english"],
+        ["13:30", "14:00", "空档", "rest"],
+        ["14:00", "14:30", "英语练习", "english"],
+        ["14:30", "15:00", "练习讲解", "english"],
+        ["15:00", "15:30", "钢琴", "piano"],
+        ["15:30", "16:00", "空档", "rest"],
+        ["16:00", "17:00", "打游戏1小时", "game"],
+        ["17:00", "17:30", "晚餐", "meal"],
+        ["17:30", "20:00", "西班牙人足球训练", "football"],
+        ["20:00", "22:00", "空档", "rest"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+      4: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:15", "Math", "study"],
+        ["11:15", "11:30", "空档", "rest"],
+        ["11:30", "12:30", "午餐（看电视）", "meal"],
+        ["12:30", "13:30", "英文深度阅读", "english"],
+        ["13:30", "14:00", "空档", "rest"],
+        ["14:00", "14:30", "新闻阅读+写作", "english"],
+        ["14:30", "15:00", "习作评讲", "english"],
+        ["15:00", "15:30", "钢琴", "piano"],
+        ["15:30", "17:00", "游戏（16:00课程）", "game"],
+        ["17:00", "18:00", "空档", "rest"],
+        ["18:00", "19:00", "晚餐（看电视）", "meal"],
+        ["19:00", "20:30", "四季数学", "study"],
+        ["20:30", "21:30", "打游戏1小时", "game"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+      5: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:15", "Math", "study"],
+        ["11:15", "11:30", "空档", "rest"],
+        ["11:30", "12:30", "午餐（看电视）", "meal"],
+        ["12:30", "13:30", "英文深度阅读", "english"],
+        ["13:30", "14:00", "空档", "rest"],
+        ["14:00", "14:30", "英语练习", "english"],
+        ["14:30", "15:00", "练习讲解", "english"],
+        ["15:00", "15:30", "钢琴", "piano"],
+        ["15:30", "16:00", "空档", "rest"],
+        ["16:00", "17:00", "打游戏1小时", "game"],
+        ["17:00", "17:30", "晚餐", "meal"],
+        ["17:30", "20:00", "西班牙人足球训练", "football"],
+        ["20:00", "22:00", "空档", "rest"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+      6: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:30", "钢琴课（没有课就练琴）", "piano"],
+        ["11:30", "12:30", "游戏1小时", "game"],
+        ["12:30", "13:30", "午餐", "meal"],
+        ["13:30", "16:00", "足球比赛（没有比赛，就游泳）", "football"],
+        ["16:00", "19:00", "空档", "rest"],
+        ["19:00", "19:30", "完成学而通作业", "study"],
+        ["19:30", "20:00", "English+I&S", "study"],
+        ["20:00", "21:00", "打游戏1小时", "game"],
+        ["21:00", "22:00", "空档", "rest"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+      0: [
+        ["09:00", "09:30", "起床/早餐", "meal"],
+        ["09:45", "11:30", "可以和爸爸打篮球", "football"],
+        ["11:30", "12:30", "游戏1小时", "game"],
+        ["12:30", "13:30", "午餐", "meal"],
+        ["13:30", "14:00", "钢琴", "piano"],
+        ["14:00", "14:30", "空档", "rest"],
+        ["14:30", "16:00", "四季数学", "study"],
+        ["16:00", "18:30", "空档", "rest"],
+        ["18:30", "20:00", "学而通英语上课", "study"],
+        ["20:00", "21:00", "打游戏1小时", "game"],
+        ["21:00", "22:00", "空档", "rest"],
+        ["22:00", "09:00", "上床睡觉", "sleep"],
+      ],
+    };
+
+    function toMinutes(value) {
+      const [hour, minute] = value.split(":").map(Number);
+      return hour * 60 + minute;
+    }
+
+    function normalizeDayPlan(dayIndex) {
+      return schedule[dayIndex].map(item => {
+        const startMin = toMinutes(item[0]);
+        let endMin = toMinutes(item[1]);
+        if (endMin <= startMin) {
+          endMin += 24 * 60;
+        }
+        return {
+          start: item[0],
+          end: item[1],
+          title: item[2],
+          type: item[3],
+          startMin,
+          endMin,
+        };
+      });
+    }
+
+    function getCurrentSlot(plan, minuteOfDay) {
+      return plan.find(item => minuteOfDay >= item.startMin && minuteOfDay < item.endMin)
+        || plan.find(item => minuteOfDay + 24 * 60 >= item.startMin && minuteOfDay + 24 * 60 < item.endMin)
+        || { start: "--:--", end: "--:--", title: "当前没有固定安排", type: "rest", startMin: minuteOfDay, endMin: minuteOfDay };
+    }
+
+    function getNextSlot(plan, minuteOfDay) {
+      return plan.find(item => item.startMin > minuteOfDay) || plan[0];
+    }
+
+    function setText(selector, value) {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.textContent = value;
+      }
+      return element;
+    }
+
+    function updateLiveDashboard() {
+      const now = new Date();
+      const dayIndex = now.getDay();
+      const plan = normalizeDayPlan(dayIndex);
+      const minuteOfDay = now.getHours() * 60 + now.getMinutes();
+      const secondOfMinute = now.getSeconds();
+      const nowExact = minuteOfDay + secondOfMinute / 60;
+      const current = getCurrentSlot(plan, minuteOfDay);
+      const next = getNextSlot(plan, minuteOfDay);
+      const effectiveNow = nowExact < current.startMin ? nowExact + 24 * 60 : nowExact;
+      const duration = Math.max(1, current.endMin - current.startMin);
+      const elapsed = Math.max(0, effectiveNow - current.startMin);
+      const progress = Math.max(0, Math.min(100, (elapsed / duration) * 100));
+      const remaining = Math.max(0, Math.ceil(current.endMin - effectiveNow));
+      const dateText = new Intl.DateTimeFormat("zh-CN", {
+        month: "long",
+        day: "numeric",
+        weekday: "long",
+      }).format(now);
+
+      setText("#live-date", dateText);
+      setText("#route-day", dayNames[dayIndex]);
+      setText("#route-date-mini", new Intl.DateTimeFormat("zh-CN", {
+        month: "2-digit",
+        day: "2-digit",
+      }).format(now));
+      setText("#live-clock", now.toLocaleTimeString("zh-CN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      }));
+      const currentTaskEl = setText("#current-task", current.title);
+      if (currentTaskEl) {
+        currentTaskEl.classList.toggle("long-text", current.title.length >= 8);
+      }
+      setText("#current-window", `${current.start}-${current.end}`);
+      setText("#next-task", next.title);
+      setText("#next-time", `下一步 ${next.start}-${next.end}`);
+      const progressFill = document.querySelector("#progress-fill");
+      if (progressFill) {
+        progressFill.style.width = `${Math.max(4, progress)}%`;
+      }
+      setText("#progress-note", remaining > 0 ? `${remaining} MIN LEFT` : "NEXT");
+
+      const taskList = document.querySelector("#current-task-list");
+      if (taskList) {
+        taskList.innerHTML = "";
+        (detailByType[current.type] || detailByType.rest).forEach(text => {
+          const item = document.createElement("li");
+          item.textContent = text;
+          taskList.appendChild(item);
+        });
+      }
+
+      const noteList = document.querySelector("#task-notes");
+      if (noteList) {
+        noteList.innerHTML = "";
+        (notesByType[current.type] || notesByType.rest).forEach((text, index) => {
+          const item = document.createElement("li");
+          item.textContent = text;
+          if (index === 0) {
+            item.classList.add("important");
+          }
+          noteList.appendChild(item);
+        });
+      }
+
+      const todayStrip = document.querySelector("#today-strip");
+      if (todayStrip) {
+        todayStrip.innerHTML = "";
+        plan.forEach(slot => {
+          const row = document.createElement("div");
+          const stateClass = slot === current ? "active" : slot.endMin <= effectiveNow ? "done" : "upcoming";
+          row.className = `today-slot ${stateClass}`;
+          row.innerHTML = `<span>${slot.start}-${slot.end}</span><span>${slot.title}</span>`;
+          todayStrip.appendChild(row);
+        });
+      }
+    }
+
+    async function updateShanghaiWeather() {
+      if (!weatherInput) {
+        return;
+      }
+      weatherInput.value = "上海天气更新中";
+      try {
+        const endpoint = "https://api.open-meteo.com/v1/forecast?latitude=31.2304&longitude=121.4737&current=temperature_2m,weather_code&timezone=Asia%2FShanghai";
+        const response = await fetch(endpoint, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`weather ${response.status}`);
+        }
+        const data = await response.json();
+        const current = data.current || {};
+        const label = weatherCodeMap[current.weather_code] || "天气";
+        const temperature = Number.isFinite(current.temperature_2m) ? Math.round(current.temperature_2m) : "--";
+        const value = `上海 ${label} / ${temperature}°C`;
+        weatherInput.value = value;
+        localStorage.setItem(weatherKey, value);
+      } catch (error) {
+        weatherInput.value = localStorage.getItem(weatherKey) || "上海天气暂不可用";
+      }
+    }
+
+    function showView(viewId, updateHash = true) {
+      const targetId = validViews.has(viewId) ? viewId : "home";
+
+      document.querySelectorAll(".view-section").forEach(section => {
+        section.classList.toggle("active", section.id === targetId);
+      });
+
+      document.querySelectorAll(".home-companion").forEach(section => {
+        section.classList.remove("active");
+      });
+
+      document.querySelectorAll("[data-view-link]").forEach(link => {
+        link.classList.toggle("active", link.dataset.viewLink === targetId);
+      });
+
+      if (updateHash) {
+        history.replaceState(null, "", `#${targetId}`);
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll("[data-view-link]").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        showView(link.dataset.viewLink);
+      });
+    });
+
+    document.querySelectorAll("[data-open-view]").forEach(button => {
+      button.addEventListener("click", () => {
+        showView(button.dataset.openView);
+      });
+    });
+
+    checks.forEach((checkbox, index) => {
+      checkbox.checked = Boolean(savedChecks[index]);
+      checkbox.addEventListener("change", () => {
+        localStorage.setItem(storageKey, JSON.stringify(checks.map(item => item.checked)));
+      });
+    });
+
+    const resetChecksButton = document.querySelector("#reset-checks");
+    if (resetChecksButton) {
+      resetChecksButton.addEventListener("click", () => {
+        checks.forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        localStorage.removeItem(storageKey);
+      });
+    }
+
+    if (weatherInput) {
+      weatherInput.readOnly = true;
+      weatherInput.value = localStorage.getItem(weatherKey) || "上海天气更新中";
+    }
+
+    updateLiveDashboard();
+    updateShanghaiWeather();
+    setInterval(updateLiveDashboard, 15000);
+    setInterval(updateShanghaiWeather, 10 * 60 * 1000);
+    showView(location.hash.replace("#", ""), false);
+  </script>
+</body>
+</html>
