@@ -47,21 +47,12 @@
     }
 
     .app-shell {
-      display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
+      display: block;
       min-height: 100vh;
     }
 
     .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 24px 20px;
-      color: #e7ecf7;
-      background:
-        radial-gradient(circle at 35% 12%, rgba(201, 255, 31, 0.14), transparent 26%),
-        linear-gradient(180deg, #101313, #050606);
-      overflow-y: auto;
+      display: none;
     }
 
     .brand {
@@ -147,7 +138,7 @@
 
     main {
       min-width: 0;
-      padding: 28px clamp(18px, 4vw, 56px) 64px;
+      padding: 18px clamp(16px, 2vw, 34px) 64px;
     }
 
     .topbar {
@@ -156,6 +147,101 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 22px;
+    }
+
+    .top-nav {
+      position: relative;
+      z-index: 20;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 2px solid #050505;
+      color: #050505;
+      background: #ffe200;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 900;
+      list-style: none;
+    }
+
+    .menu-toggle::-webkit-details-marker {
+      display: none;
+    }
+
+    .menu-toggle::after {
+      content: "+";
+      font-family: "Arial Black", Impact, Inter, sans-serif;
+      line-height: 1;
+    }
+
+    .top-nav[open] .menu-toggle::after {
+      content: "-";
+    }
+
+    .top-nav-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: min(360px, calc(100vw - 32px));
+      padding: 10px;
+      border: 2px solid #050505;
+      background: #ffffff;
+      box-shadow: 8px 8px 0 #050505;
+    }
+
+    .top-nav-title {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 4px 4px 10px;
+      border-bottom: 2px solid #050505;
+      margin-bottom: 8px;
+      color: #050505;
+      font-weight: 900;
+    }
+
+    .top-nav-title .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 0;
+    }
+
+    .top-nav-links {
+      display: grid;
+      gap: 4px;
+    }
+
+    .top-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      padding: 6px 8px;
+      border: 2px solid transparent;
+      color: #050505;
+      background: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .top-nav-link:hover,
+    .top-nav-link:focus-visible,
+    .top-nav-link.active {
+      border-color: #050505;
+      background: #ffe200;
+      outline: none;
+    }
+
+    .top-nav-link span:last-child {
+      color: #4b4b4b;
+      font-size: 12px;
     }
 
     .date-tag {
@@ -2746,6 +2832,27 @@
 
     <main>
       <div class="topbar">
+        <details class="top-nav">
+          <summary class="menu-toggle">模块菜单</summary>
+          <div class="top-nav-panel">
+            <div class="top-nav-title">
+              <div class="brand-mark">M</div>
+              <div>Michael 暑假计划</div>
+            </div>
+            <div class="top-nav-links">
+              <a class="top-nav-link active" href="#home" data-view-link="home"><span>计划总览</span><span>00</span></a>
+              <a class="top-nav-link" href="#day" data-view-link="day"><span>家庭周计划</span><span>01</span></a>
+              <a class="top-nav-link" href="#football" data-view-link="football"><span>足球专项</span><span>02</span></a>
+              <a class="top-nav-link" href="#week" data-view-link="week"><span>每周摘要</span><span>03</span></a>
+              <a class="top-nav-link" href="#piano" data-view-link="piano"><span>钢琴训练</span><span>04</span></a>
+              <a class="top-nav-link" href="#ai" data-view-link="ai"><span>AI 学习辅助</span><span>05</span></a>
+              <a class="top-nav-link" href="#study" data-view-link="study"><span>学习与英文</span><span>06</span></a>
+              <a class="top-nav-link" href="#fitness" data-view-link="fitness"><span>运动安排</span><span>07</span></a>
+              <a class="top-nav-link" href="#today-check" data-view-link="today-check"><span>今日打卡</span><span>08</span></a>
+              <a class="top-nav-link" href="#review" data-view-link="review"><span>复盘验收</span><span>09</span></a>
+            </div>
+          </div>
+        </details>
         <div class="actions" aria-label="页面操作">
           <button class="icon-button" type="button" onclick="window.print()" title="打印计划">P</button>
           <button class="primary-button" type="button" data-open-view="today-check">今日打卡</button>
@@ -3865,6 +3972,10 @@
       link.addEventListener("click", event => {
         event.preventDefault();
         showView(link.dataset.viewLink);
+        const openMenu = link.closest(".top-nav");
+        if (openMenu) {
+          openMenu.open = false;
+        }
       });
     });
 
