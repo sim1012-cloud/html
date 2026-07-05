@@ -186,12 +186,22 @@
     .snapshot img { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: #11131c; }
     .contact-board { margin-top: 14px; }
     @media (max-width: 1180px) {
-      .app-shell { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .top-nav { display: block; }
-      .live-dashboard { grid-template-columns: 1fr; min-height: auto; }
+      main { padding: 14px 32px 44px; }
+      .topbar { grid-template-columns: auto 1fr auto; gap: 10px; margin-bottom: 30px; }
+      .date-tag { justify-self: center; max-width: 100%; white-space: nowrap; }
+      .menu-toggle, .date-tag, .icon-button, .primary-button { min-height: 34px; font-size: 12px; }
+      .live-dashboard { grid-template-columns: minmax(0, .9fr) minmax(300px, 1.1fr); gap: 10px; min-height: auto; }
+      .now-panel { min-height: 250px; padding: 22px; }
+      .next-panel, .today-panel { padding: 14px; }
+      .clock-time { margin: 12px 0 6px; font-size: clamp(64px, 10vw, 96px); }
+      .current-task { font-size: clamp(24px, 3vw, 32px); line-height: 1.16; }
+      .current-window, .next-time { font-size: 14px; }
+      .next-title { font-size: 20px; }
+      .today-strip .strip-item { grid-template-columns: 78px 1fr; padding: 7px 0; font-size: 12px; }
       .module-board { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .now-panel { min-height: 280px; }
+      .module-card { min-height: 56px; padding: 10px; }
+      .module-card h3 { font-size: 14px; }
+      .module-icon { width: 30px; height: 24px; font-size: 11px; }
     }
     @media (max-width: 780px) {
       main { padding: 14px 12px 42px; }
