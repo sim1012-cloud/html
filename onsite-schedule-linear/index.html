@@ -375,20 +375,76 @@
       const beijingDate = now.toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai", weekday: "long", month: "long", day: "numeric" });
       const beijingClock = now.toLocaleTimeString("zh-CN", { timeZone: "Asia/Shanghai", hour: "2-digit", minute: "2-digit", hour12: false });
       const beijingFullClock = now.toLocaleTimeString("zh-CN", { timeZone: "Asia/Shanghai", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
-      byId("beijing-info").textContent = `北京实时｜${beijingFullClock}｜${beijingDate}`;
       byId("live-date").textContent = `北京｜${beijingDate}`;
       byId("live-clock").textContent = beijingClock;
-      const browserDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+      const beijingWeather = window.beijingWeatherText || "天气更新中";
+      byId("beijing-info").textContent = `北京实时｜${beijingFullClock}｜${beijingDate}｜${beijingWeather}`;
+      const beijingParts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(now);
+      const part = (type) => beijingParts.find((item) => item.type === type)?.value || "";
+      const browserDate = `${part("year")}-${part("month")}-${part("day")}`;
+      const currentMinutes = Number(part("hour")) * 60 + Number(part("minute"));
       const availableDates = [...new Set(actionData.map((row) => row.date).filter(Boolean))];
       const todayKey = availableDates.includes(browserDate) ? browserDate : "2026-07-05";
       const today = actionData.filter((row) => row.date === todayKey);
-      const current = today[0] || actionData[0];
-      const next = today[1] || actionData[1] || current;
+      const timedToday = today.map((row, index) => ({ ...row, index, window: parseTimeWindow(row.time) }));
+      const current = timedToday.find((row) => row.window && currentMinutes >= row.window.start && currentMinutes < row.window.end)
+        || [...timedToday].reverse().find((row) => row.window && row.window.start <= currentMinutes)
+        || today[0]
+        || actionData[0];
+      const next = timedToday.find((row) => row.window && row.window.start > currentMinutes)
+        || today[(current.index ?? 0) + 1]
+        || actionData[1]
+        || current;
       byId("current-task").textContent = current.task || current.stream;
       byId("current-window").textContent = `${current.date || ""}  ${current.time || ""}  ·  ${current.location || ""}`;
       byId("next-task").textContent = next.task || next.stream;
       byId("next-time").textContent = `${next.date || ""}  ${next.time || ""}  ·  ${next.location || ""}`;
       byId("today-strip").innerHTML = today.slice(0, 6).map((row) => `<div class="strip-item"><div class="strip-time">${esc(row.time)}</div><div>${esc(firstLine(row.task || row.stream, 70))}</div></div>`).join("");
+    }
+
+    function parseTimeWindow(value) {
+      const text = String(value || "");
+      const matches = [...text.matchAll(/(\d{1,2}):(\d{2})/g)].map((match) => Number(match[1]) * 60 + Number(match[2]));
+      if (matches.length >= 2) {
+        let start = matches[0];
+        let end = matches[1];
+        if (end <= start) end += 24 * 60;
+        return { start, end };
+      }
+      if (matches.length === 1) {
+        return { start: matches[0], end: matches[0] + 30 };
+      }
+      if (/全天|全日/.test(text)) {
+        return { start: 0, end: 24 * 60 };
+      }
+      return null;
+    }
+
+    async function updateBeijingWeather() {
+      try {
+        const url = "https://api.open-meteo.com/v1/forecast?latitude=39.9042&longitude=116.4074&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&timezone=Asia%2FShanghai";
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) throw new Error("weather request failed");
+        const data = await response.json();
+        const current = data.current || {};
+        const desc = weatherLabel(current.weather_code);
+        const temp = Math.round(Number(current.temperature_2m));
+        const wind = Math.round(Number(current.wind_speed_10m));
+        window.beijingWeatherText = `${desc}｜${Number.isFinite(temp) ? `${temp}°C` : "--°C"}｜风 ${Number.isFinite(wind) ? wind : "--"} km/h`;
+        updateHome();
+      } catch (error) {
+        window.beijingWeatherText = "天气暂不可用";
+        updateHome();
+      }
+    }
+
+    function weatherLabel(code) {
+      const labels = {
+        0: "晴", 1: "多云", 2: "多云", 3: "阴", 45: "雾", 48: "雾",
+        51: "小雨", 53: "小雨", 55: "小雨", 61: "雨", 63: "雨", 65: "大雨",
+        80: "阵雨", 81: "阵雨", 82: "强阵雨", 95: "雷雨"
+      };
+      return labels[Number(code)] || "天气";
     }
 
     function setView(view) {
@@ -416,7 +472,9 @@
     renderCues();
     renderLists();
     updateHome();
+    updateBeijingWeather();
     setInterval(updateHome, 30000);
+    setInterval(updateBeijingWeather, 10 * 60 * 1000);
     const initial = location.hash.replace("#", "") || "home";
     if (document.getElementById(initial)) setView(initial);
   </script>
