@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)file:///Users/michaelwu/index.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>WOVE Clock - 50% Larger Clock</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            background-color: #f7f7f7; 
+            color: #333; 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            height: 100vh; 
+            overflow: hidden; 
+            display: flex; 
+            position: relative; 
+            user-select: none; 
+            -webkit-user-select: none; 
+            touch-action: none; 
+        }
+        
+        /* 左侧控制容器 (保持不变) */
+        .left-panel { position: absolute; left: 5%; top: 6%; bottom: 6%; display: flex; flex-direction: column; justify-content: space-between; z-index: 10; width: 320px; }
+
+        .date-container { display: flex; flex-direction: column; gap: 4px; }
+        .date-main { font-size: 28px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; }
+        .date-sub { font-size: 13px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+        .schedule-container { width: 100%; margin-top: 30px; flex-grow: 1; }
+        .schedule-header { border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; margin-bottom: 16px; }
+        .schedule-title { font-size: 13px; font-weight: 700; color: #a0a0a0; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .event-item { margin-bottom: 16px; display: flex; flex-direction: column; }
+        .event-time { font-size: 14px; color: #888; font-weight: 600; margin-bottom: 4px; }
+        .event-title { font-size: 18px; color: #2b2b2b; font-weight: 600; position: relative; padding-left: 16px; line-height: 1.3; }
+        .event-title::before { content: ''; position: absolute; left: 0; top: 11px; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background-color: #4285F4; }
+
+        .no-events { font-size: 14px; color: #a0a0a0; font-weight: 500; }
+
+        .weather-container { margin-top: auto; }
+        .weather-box { display: flex; align-items: baseline; gap: 10px; }
+        .weather-temp { font-size: 42px; font-weight: 300; line-height: 1; color: #1a1a1a; }
+        .weather-info { font-size: 15px; font-weight: 600; color: #666; }
+
+        /* 4. 右侧三轮盘 (整体放大 50%) */
+        .wheel-container { position: absolute; right: -150px; top: 50%; width: 0; height: 0; }
+        .wheel-arc { position: absolute; border: 1px solid #e0e0e0; border-radius: 50%; top: 0; left: 0; transform: translate(-50%, -50%); }
+        .arc-hour { width: 1140px; height: 1140px; }     /* 半径 570px */
+        .arc-minute { width: 780px; height: 780px; }     /* 半径 390px */
+        .arc-second { width: 420px; height: 420px; }     /* 半径 210px */
+        
+        .wheel-item { position: absolute; font-weight: 700; color: #d5d5d5; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); font-variant-numeric: slashed-zero; text-align: center; }
+        .wheel-item.active { color: #2b2b2b; }
+        
+        .item-hour { font-size: 84px; width: 150px; height: 120px; line-height: 120px; margin-left: -75px; margin-top: -60px; }
+        .item-hour.active { font-size: 108px; }
+        
+        .item-minute { font-size: 48px; width: 120px; height: 90px; line-height: 90px; margin-left: -60px; margin-top: -45px; }
+        .item-minute.active { font-size: 72px; }
+        
+        .item-second { font-size: 30px; width: 90px; height: 60px; line-height: 60px; margin-left: -45px; margin-top: -30px; }
+        .item-second.active { font-size: 42px; }
+        
+        .wheel-item.active::after { content: ''; position: absolute; top: 50%; transform: translateY(-50%); background-color: #000; border-radius: 50%; }
+        .item-hour.active::after { width: 10px; height: 10px; right: -5px; }
+        .item-minute.active::after { width: 8px; height: 8px; right: -2px; }
+        .item-second.active::after { width: 6px; height: 6px; right: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="left-panel">
+        <div class="date-container">
+            <div class="date-main" id="date-main">2026.08.08</div>
+            <div class="date-sub" id="date-sub">Saturday</div>
+        </div>
+
+        <div class="schedule-container">
+            <div class="schedule-header">
+                <span class="schedule-title">Upcoming Schedule</span>
+            </div>
+            <div id="events-list"><div class="event-item">
+                    <div class="event-time">Aug 21, 09:30 AM - 10:30 AM</div>
+                    <div class="event-title">OFS- New Parent Orientation Morning</div>
+                </div></div>
+        </div>
+
+        <div class="weather-container">
+            <div class="weather-box">
+                <span class="weather-temp">24°C</span>
+                <span class="weather-info">Ambient</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="wheel-container">
+        <div class="wheel-arc arc-hour"></div><div id="wheel-hour"><div class="wheel-item item-hour" id="hour-0" style="transform: translate(-176.14px, -542.102px) rotate(72deg); opacity: 0;">12</div><div class="wheel-item item-hour" id="hour-1" style="transform: translate(-335.038px, -461.14px) rotate(54deg); opacity: 0.142857;">01</div><div class="wheel-item item-hour" id="hour-2" style="transform: translate(-461.14px, -335.038px) rotate(36deg); opacity: 0.428571;">02</div><div class="wheel-item item-hour" id="hour-3" style="transform: translate(-542.102px, -176.14px) rotate(18deg); opacity: 0.714286;">03</div><div class="wheel-item item-hour active" id="hour-4" style="transform: translate(-570px, 0px) rotate(0deg); opacity: 1;">04</div><div class="wheel-item item-hour" id="hour-5" style="transform: translate(-542.102px, 176.14px) rotate(-18deg); opacity: 0.714286;">05</div><div class="wheel-item item-hour" id="hour-6" style="transform: translate(-461.14px, 335.038px) rotate(-36deg); opacity: 0.428571;">06</div><div class="wheel-item item-hour" id="hour-7" style="transform: translate(-335.038px, 461.14px) rotate(-54deg); opacity: 0.142857;">07</div><div class="wheel-item item-hour" id="hour-8" style="transform: translate(-176.14px, 542.102px) rotate(-72deg); opacity: 0;">08</div><div class="wheel-item item-hour" id="hour-9" style="transform: translate(-3.49024e-14px, 570px) rotate(-90deg); opacity: 0;">09</div><div class="wheel-item item-hour" id="hour-10" style="transform: translate(176.14px, 542.102px) rotate(-108deg); opacity: 0;">10</div><div class="wheel-item item-hour" id="hour-11" style="transform: translate(-3.49024e-14px, -570px) rotate(90deg); opacity: 0;">11</div></div>
+        <div class="wheel-arc arc-minute"></div><div id="wheel-minute"><div class="wheel-item item-minute" id="minute-0" style="transform: translate(-330.739px, 206.669px) rotate(-392deg); opacity: 0;">00</div><div class="wheel-item item-minute" id="minute-1" style="transform: translate(-270.917px, 280.543px) rotate(-406deg); opacity: 0;">01</div><div class="wheel-item item-minute" id="minute-2" style="transform: translate(-195px, -337.75px) rotate(420deg); opacity: 0;">02</div><div class="wheel-item item-minute" id="minute-3" style="transform: translate(-270.917px, -280.543px) rotate(406deg); opacity: 0;">03</div><div class="wheel-item item-minute" id="minute-4" style="transform: translate(-330.739px, -206.669px) rotate(392deg); opacity: 0;">04</div><div class="wheel-item item-minute" id="minute-5" style="transform: translate(-370.912px, -120.517px) rotate(378deg); opacity: 0;">05</div><div class="wheel-item item-minute" id="minute-6" style="transform: translate(-389.05px, -27.205px) rotate(364deg); opacity: 0;">06</div><div class="wheel-item item-minute" id="minute-7" style="transform: translate(-384.075px, 67.7228px) rotate(350deg); opacity: 0;">07</div><div class="wheel-item item-minute" id="minute-8" style="transform: translate(-356.283px, 158.627px) rotate(336deg); opacity: 0;">08</div><div class="wheel-item item-minute" id="minute-9" style="transform: translate(-307.324px, 240.108px) rotate(322deg); opacity: 0;">09</div><div class="wheel-item item-minute" id="minute-10" style="transform: translate(-240.108px, 307.324px) rotate(308deg); opacity: 0;">10</div><div class="wheel-item item-minute" id="minute-11" style="transform: translate(-158.627px, 356.283px) rotate(294deg); opacity: 0;">11</div><div class="wheel-item item-minute" id="minute-12" style="transform: translate(-67.7228px, 384.075px) rotate(280deg); opacity: 0;">12</div><div class="wheel-item item-minute" id="minute-13" style="transform: translate(27.205px, 389.05px) rotate(266deg); opacity: 0;">13</div><div class="wheel-item item-minute" id="minute-14" style="transform: translate(120.517px, 370.912px) rotate(252deg); opacity: 0;">14</div><div class="wheel-item item-minute" id="minute-15" style="transform: translate(206.669px, 330.739px) rotate(238deg); opacity: 0;">15</div><div class="wheel-item item-minute" id="minute-16" style="transform: translate(280.543px, 270.917px) rotate(224deg); opacity: 0;">16</div><div class="wheel-item item-minute" id="minute-17" style="transform: translate(337.75px, 195px) rotate(210deg); opacity: 0;">17</div><div class="wheel-item item-minute" id="minute-18" style="transform: translate(374.892px, 107.499px) rotate(196deg); opacity: 0;">18</div><div class="wheel-item item-minute" id="minute-19" style="transform: translate(389.762px, 13.6108px) rotate(182deg); opacity: 0;">19</div><div class="wheel-item item-minute" id="minute-20" style="transform: translate(381.478px, -81.0856px) rotate(168deg); opacity: 0;">20</div><div class="wheel-item item-minute" id="minute-21" style="transform: translate(350.53px, -170.965px) rotate(154deg); opacity: 0;">21</div><div class="wheel-item item-minute" id="minute-22" style="transform: translate(298.757px, -250.687px) rotate(140deg); opacity: 0;">22</div><div class="wheel-item item-minute" id="minute-23" style="transform: translate(229.236px, -315.517px) rotate(126deg); opacity: 0;">23</div><div class="wheel-item item-minute" id="minute-24" style="transform: translate(146.097px, -361.602px) rotate(112deg); opacity: 0;">24</div><div class="wheel-item item-minute" id="minute-25" style="transform: translate(54.2775px, -386.205px) rotate(98deg); opacity: 0;">25</div><div class="wheel-item item-minute" id="minute-26" style="transform: translate(-40.7661px, -387.864px) rotate(84deg); opacity: 0;">26</div><div class="wheel-item item-minute" id="minute-27" style="transform: translate(-133.388px, -366.48px) rotate(70deg); opacity: 0;">27</div><div class="wheel-item item-minute" id="minute-28" style="transform: translate(-218.085px, -323.325px) rotate(56deg); opacity: 0;">28</div><div class="wheel-item item-minute" id="minute-29" style="transform: translate(-289.826px, -260.961px) rotate(42deg); opacity: 0.25;">29</div><div class="wheel-item item-minute" id="minute-30" style="transform: translate(-344.35px, -183.094px) rotate(28deg); opacity: 0.5;">30</div><div class="wheel-item item-minute" id="minute-31" style="transform: translate(-378.415px, -94.3495px) rotate(14deg); opacity: 0.75;">31</div><div class="wheel-item item-minute active" id="minute-32" style="transform: translate(-390px, 0px) rotate(0deg); opacity: 1;">32</div><div class="wheel-item item-minute" id="minute-33" style="transform: translate(-378.415px, 94.3495px) rotate(-14deg); opacity: 0.75;">33</div><div class="wheel-item item-minute" id="minute-34" style="transform: translate(-344.35px, 183.094px) rotate(-28deg); opacity: 0.5;">34</div><div class="wheel-item item-minute" id="minute-35" style="transform: translate(-289.826px, 260.961px) rotate(-42deg); opacity: 0.25;">35</div><div class="wheel-item item-minute" id="minute-36" style="transform: translate(-218.085px, 323.325px) rotate(-56deg); opacity: 0;">36</div><div class="wheel-item item-minute" id="minute-37" style="transform: translate(-133.388px, 366.48px) rotate(-70deg); opacity: 0;">37</div><div class="wheel-item item-minute" id="minute-38" style="transform: translate(-40.7661px, 387.864px) rotate(-84deg); opacity: 0;">38</div><div class="wheel-item item-minute" id="minute-39" style="transform: translate(54.2775px, 386.205px) rotate(-98deg); opacity: 0;">39</div><div class="wheel-item item-minute" id="minute-40" style="transform: translate(146.097px, 361.602px) rotate(-112deg); opacity: 0;">40</div><div class="wheel-item item-minute" id="minute-41" style="transform: translate(229.236px, 315.517px) rotate(-126deg); opacity: 0;">41</div><div class="wheel-item item-minute" id="minute-42" style="transform: translate(298.757px, 250.687px) rotate(-140deg); opacity: 0;">42</div><div class="wheel-item item-minute" id="minute-43" style="transform: translate(350.53px, 170.965px) rotate(-154deg); opacity: 0;">43</div><div class="wheel-item item-minute" id="minute-44" style="transform: translate(381.478px, 81.0856px) rotate(-168deg); opacity: 0;">44</div><div class="wheel-item item-minute" id="minute-45" style="transform: translate(389.762px, -13.6108px) rotate(-182deg); opacity: 0;">45</div><div class="wheel-item item-minute" id="minute-46" style="transform: translate(374.892px, -107.499px) rotate(-196deg); opacity: 0;">46</div><div class="wheel-item item-minute" id="minute-47" style="transform: translate(337.75px, -195px) rotate(-210deg); opacity: 0;">47</div><div class="wheel-item item-minute" id="minute-48" style="transform: translate(280.543px, -270.917px) rotate(-224deg); opacity: 0;">48</div><div class="wheel-item item-minute" id="minute-49" style="transform: translate(206.669px, -330.739px) rotate(-238deg); opacity: 0;">49</div><div class="wheel-item item-minute" id="minute-50" style="transform: translate(120.517px, -370.912px) rotate(-252deg); opacity: 0;">50</div><div class="wheel-item item-minute" id="minute-51" style="transform: translate(27.205px, -389.05px) rotate(-266deg); opacity: 0;">51</div><div class="wheel-item item-minute" id="minute-52" style="transform: translate(-67.7228px, -384.075px) rotate(-280deg); opacity: 0;">52</div><div class="wheel-item item-minute" id="minute-53" style="transform: translate(-158.627px, -356.283px) rotate(-294deg); opacity: 0;">53</div><div class="wheel-item item-minute" id="minute-54" style="transform: translate(-240.108px, -307.324px) rotate(-308deg); opacity: 0;">54</div><div class="wheel-item item-minute" id="minute-55" style="transform: translate(-307.324px, -240.108px) rotate(-322deg); opacity: 0;">55</div><div class="wheel-item item-minute" id="minute-56" style="transform: translate(-356.283px, -158.627px) rotate(-336deg); opacity: 0;">56</div><div class="wheel-item item-minute" id="minute-57" style="transform: translate(-384.075px, -67.7228px) rotate(-350deg); opacity: 0;">57</div><div class="wheel-item item-minute" id="minute-58" style="transform: translate(-389.05px, 27.205px) rotate(-364deg); opacity: 0;">58</div><div class="wheel-item item-minute" id="minute-59" style="transform: translate(-370.912px, 120.517px) rotate(-378deg); opacity: 0;">59</div></div>
+        <div class="wheel-arc arc-second"></div><div id="wheel-second"><div class="wheel-item item-second" id="second-0" style="transform: translate(-169.894px, -123.435px) rotate(396deg); opacity: 0;">00</div><div class="wheel-item item-second" id="second-1" style="transform: translate(-199.722px, -64.8936px) rotate(378deg); opacity: 0;">01</div><div class="wheel-item item-second" id="second-2" style="transform: translate(-210px, 5.14352e-14px) rotate(360deg); opacity: 0;">02</div><div class="wheel-item item-second" id="second-3" style="transform: translate(-199.722px, 64.8936px) rotate(342deg); opacity: 0;">03</div><div class="wheel-item item-second" id="second-4" style="transform: translate(-169.894px, 123.435px) rotate(324deg); opacity: 0;">04</div><div class="wheel-item item-second" id="second-5" style="transform: translate(-123.435px, 169.894px) rotate(306deg); opacity: 0;">05</div><div class="wheel-item item-second" id="second-6" style="transform: translate(-64.8936px, 199.722px) rotate(288deg); opacity: 0;">06</div><div class="wheel-item item-second" id="second-7" style="transform: translate(3.85764e-14px, 210px) rotate(270deg); opacity: 0;">07</div><div class="wheel-item item-second" id="second-8" style="transform: translate(64.8936px, 199.722px) rotate(252deg); opacity: 0;">08</div><div class="wheel-item item-second" id="second-9" style="transform: translate(123.435px, 169.894px) rotate(234deg); opacity: 0;">09</div><div class="wheel-item item-second" id="second-10" style="transform: translate(169.894px, 123.435px) rotate(216deg); opacity: 0;">10</div><div class="wheel-item item-second" id="second-11" style="transform: translate(199.722px, 64.8936px) rotate(198deg); opacity: 0;">11</div><div class="wheel-item item-second" id="second-12" style="transform: translate(210px, -2.57176e-14px) rotate(180deg); opacity: 0;">12</div><div class="wheel-item item-second" id="second-13" style="transform: translate(199.722px, -64.8936px) rotate(162deg); opacity: 0;">13</div><div class="wheel-item item-second" id="second-14" style="transform: translate(169.894px, -123.435px) rotate(144deg); opacity: 0;">14</div><div class="wheel-item item-second" id="second-15" style="transform: translate(123.435px, -169.894px) rotate(126deg); opacity: 0;">15</div><div class="wheel-item item-second" id="second-16" style="transform: translate(64.8936px, -199.722px) rotate(108deg); opacity: 0;">16</div><div class="wheel-item item-second" id="second-17" style="transform: translate(-1.28588e-14px, -210px) rotate(90deg); opacity: 0;">17</div><div class="wheel-item item-second" id="second-18" style="transform: translate(-64.8936px, -199.722px) rotate(72deg); opacity: 0;">18</div><div class="wheel-item item-second" id="second-19" style="transform: translate(-123.435px, -169.894px) rotate(54deg); opacity: 0.142857;">19</div><div class="wheel-item item-second" id="second-20" style="transform: translate(-169.894px, -123.435px) rotate(36deg); opacity: 0.428571;">20</div><div class="wheel-item item-second" id="second-21" style="transform: translate(-199.722px, -64.8936px) rotate(18deg); opacity: 0.714286;">21</div><div class="wheel-item item-second active" id="second-22" style="transform: translate(-210px, 0px) rotate(0deg); opacity: 1;">22</div><div class="wheel-item item-second" id="second-23" style="transform: translate(-199.722px, 64.8936px) rotate(-18deg); opacity: 0.714286;">23</div><div class="wheel-item item-second" id="second-24" style="transform: translate(-169.894px, 123.435px) rotate(-36deg); opacity: 0.428571;">24</div><div class="wheel-item item-second" id="second-25" style="transform: translate(-123.435px, 169.894px) rotate(-54deg); opacity: 0.142857;">25</div><div class="wheel-item item-second" id="second-26" style="transform: translate(-64.8936px, 199.722px) rotate(-72deg); opacity: 0;">26</div><div class="wheel-item item-second" id="second-27" style="transform: translate(-1.28588e-14px, 210px) rotate(-90deg); opacity: 0;">27</div><div class="wheel-item item-second" id="second-28" style="transform: translate(64.8936px, 199.722px) rotate(-108deg); opacity: 0;">28</div><div class="wheel-item item-second" id="second-29" style="transform: translate(123.435px, 169.894px) rotate(-126deg); opacity: 0;">29</div><div class="wheel-item item-second" id="second-30" style="transform: translate(169.894px, 123.435px) rotate(-144deg); opacity: 0;">30</div><div class="wheel-item item-second" id="second-31" style="transform: translate(199.722px, 64.8936px) rotate(-162deg); opacity: 0;">31</div><div class="wheel-item item-second" id="second-32" style="transform: translate(210px, 2.57176e-14px) rotate(-180deg); opacity: 0;">32</div><div class="wheel-item item-second" id="second-33" style="transform: translate(199.722px, -64.8936px) rotate(-198deg); opacity: 0;">33</div><div class="wheel-item item-second" id="second-34" style="transform: translate(169.894px, -123.435px) rotate(-216deg); opacity: 0;">34</div><div class="wheel-item item-second" id="second-35" style="transform: translate(123.435px, -169.894px) rotate(-234deg); opacity: 0;">35</div><div class="wheel-item item-second" id="second-36" style="transform: translate(64.8936px, -199.722px) rotate(-252deg); opacity: 0;">36</div><div class="wheel-item item-second" id="second-37" style="transform: translate(3.85764e-14px, -210px) rotate(-270deg); opacity: 0;">37</div><div class="wheel-item item-second" id="second-38" style="transform: translate(-64.8936px, -199.722px) rotate(-288deg); opacity: 0;">38</div><div class="wheel-item item-second" id="second-39" style="transform: translate(-123.435px, -169.894px) rotate(-306deg); opacity: 0;">39</div><div class="wheel-item item-second" id="second-40" style="transform: translate(-169.894px, -123.435px) rotate(-324deg); opacity: 0;">40</div><div class="wheel-item item-second" id="second-41" style="transform: translate(-199.722px, -64.8936px) rotate(-342deg); opacity: 0;">41</div><div class="wheel-item item-second" id="second-42" style="transform: translate(-210px, -5.14352e-14px) rotate(-360deg); opacity: 0;">42</div><div class="wheel-item item-second" id="second-43" style="transform: translate(-199.722px, 64.8936px) rotate(-378deg); opacity: 0;">43</div><div class="wheel-item item-second" id="second-44" style="transform: translate(-169.894px, 123.435px) rotate(-396deg); opacity: 0;">44</div><div class="wheel-item item-second" id="second-45" style="transform: translate(-123.435px, 169.894px) rotate(-414deg); opacity: 0;">45</div><div class="wheel-item item-second" id="second-46" style="transform: translate(-64.8936px, 199.722px) rotate(-432deg); opacity: 0;">46</div><div class="wheel-item item-second" id="second-47" style="transform: translate(-6.4294e-14px, 210px) rotate(-450deg); opacity: 0;">47</div><div class="wheel-item item-second" id="second-48" style="transform: translate(64.8936px, 199.722px) rotate(-468deg); opacity: 0;">48</div><div class="wheel-item item-second" id="second-49" style="transform: translate(123.435px, 169.894px) rotate(-486deg); opacity: 0;">49</div><div class="wheel-item item-second" id="second-50" style="transform: translate(169.894px, 123.435px) rotate(-504deg); opacity: 0;">50</div><div class="wheel-item item-second" id="second-51" style="transform: translate(199.722px, 64.8936px) rotate(-522deg); opacity: 0;">51</div><div class="wheel-item item-second" id="second-52" style="transform: translate(210px, 7.71527e-14px) rotate(-540deg); opacity: 0;">52</div><div class="wheel-item item-second" id="second-53" style="transform: translate(199.722px, -64.8936px) rotate(522deg); opacity: 0;">53</div><div class="wheel-item item-second" id="second-54" style="transform: translate(169.894px, -123.435px) rotate(504deg); opacity: 0;">54</div><div class="wheel-item item-second" id="second-55" style="transform: translate(123.435px, -169.894px) rotate(486deg); opacity: 0;">55</div><div class="wheel-item item-second" id="second-56" style="transform: translate(64.8936px, -199.722px) rotate(468deg); opacity: 0;">56</div><div class="wheel-item item-second" id="second-57" style="transform: translate(-6.4294e-14px, -210px) rotate(450deg); opacity: 0;">57</div><div class="wheel-item item-second" id="second-58" style="transform: translate(-64.8936px, -199.722px) rotate(432deg); opacity: 0;">58</div><div class="wheel-item item-second" id="second-59" style="transform: translate(-123.435px, -169.894px) rotate(414deg); opacity: 0;">59</div></div>
+    </div>
+    
+    <script>
+        function createWheel(id, total, prefix) {
+            const container = document.getElementById(id);
+            for (let i = 0; i < total; i++) {
+                const el = document.createElement('div');
+                el.className = `wheel-item item-${prefix}`;
+                el.id = `${prefix}-${i}`;
+                container.appendChild(el);
+            }
+        }
+
+        createWheel('wheel-hour', 12, 'hour');
+        createWheel('wheel-minute', 60, 'minute');
+        createWheel('wheel-second', 60, 'second');
+
+        function updateWheel(prefix, total, currentValue, radius, angleStep, visibleRange) {
+            const activeIndex = currentValue % total;
+            
+            for (let i = 0; i < total; i++) {
+                const el = document.getElementById(`${prefix}-${i}`);
+                if (!el) continue;
+                
+                let textNum = i;
+                if (prefix === 'hour' && i === 0) textNum = 12;
+                el.innerText = String(textNum).padStart(2, '0');
+                
+                let offset = i - activeIndex;
+                if (offset > total / 2) offset -= total;
+                if (offset < -total / 2) offset += total;
+                
+                const angle = (offset * angleStep) * (Math.PI / 180);
+                
+                const x = -Math.cos(angle) * radius; 
+                const y = Math.sin(angle) * radius;
+                
+                el.style.transform = `translate(${x}px, ${y}px) rotate(${-offset * angleStep}deg)`;
+                
+                if (offset === 0) {
+                    el.classList.add('active');
+                    el.style.opacity = '1';
+                } else {
+                    el.classList.remove('active');
+                    const distance = Math.abs(offset);
+                    if (distance > visibleRange) {
+                        el.style.opacity = '0';
+                    } else {
+                        el.style.opacity = String(1 - (distance / visibleRange));
+                    }
+                }
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const s = now.getSeconds();
+
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            document.getElementById('date-main').innerText = `${year}.${month}.${day}`;
+            document.getElementById('date-sub').innerText = now.toLocaleDateString('en-US', { weekday: 'long' });
+            
+            // 放大 50% 后的新半径: 570, 390, 210
+            updateWheel('hour', 12, (h % 12), 570, 18, 3.5); 
+            updateWheel('minute', 60, m, 390, 14, 4);        
+            updateWheel('second', 60, s, 210, 18, 3.5);       
+        }
+        
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // 真实日历提取
+        const realUpcomingEvents = [
+            { time: 'Aug 21, 09:30 AM - 10:30 AM', title: 'OFS- New Parent Orientation Morning' }
+        ];
+
+        function renderEvents(events) {
+            const listEl = document.getElementById('events-list');
+            listEl.innerHTML = '';
+            
+            if (!events || events.length === 0) {
+                listEl.innerHTML = '<div class="no-events">No upcoming events</div>';
+                return;
+            }
+            
+            events.forEach(ev => {
+                const item = document.createElement('div');
+                item.className = 'event-item';
+                item.innerHTML = `
+                    <div class="event-time">${ev.time}</div>
+                    <div class="event-title">${ev.title}</div>
+                `;
+                listEl.appendChild(item);
+            });
+        }
+
+        renderEvents(realUpcomingEvents);
+    </script>
+
+
+</body></html>
